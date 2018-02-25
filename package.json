@@ -1,0 +1,34 @@
+{
+  "name": "hse_military",
+  "version": "1.0.0",
+  "description": "Application for HSE Military department schedule and other",
+  "main": "index.js",
+  "keywords": [
+    "hse",
+    "military",
+    "telegram"
+  ],
+  "author": "mvshmakov",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.0",
+    "exceljs": "^0.8.2",
+    "express": "^4.16.2",
+    "firebase-admin": "^5.9.0",
+    "google-news-rss": "^0.4.1",
+    "telegraf": "^3.18.0"
+  },
+  "engines": {
+    "node": "8.9.x",
+    "npm": "5.6.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mvshmakov/hse-military-bot.git"
+  }
+}
