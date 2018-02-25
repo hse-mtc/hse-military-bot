@@ -1,5 +1,4 @@
 node_modules
-secrete
 *.log
 .env
 TODO.md
