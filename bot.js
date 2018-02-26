@@ -348,7 +348,7 @@ bot.hears(menuButtons.stickers, (ctx) => {
 bot.hears(menuButtons.settings, enter('settings'));
 bot.on('message', enter('menu'));
 
-bot.startPolling();
+module.exports = bot;
 
 /* Helpers */
 
