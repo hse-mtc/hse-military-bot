@@ -1,14 +1,15 @@
 const config = {
 	node_env: 				process.env.NODE_ENV,
-	heroku_url: 			process.env.HEROKU_URL,
-	firebase_users_url: 	process.env.FIREBASE_USERS_URL,
-	port: 					process.env.PORT,
-	token: 					process.env.TOKEN,
+	heroku_url: 			process.env.URL 				|| process.env.HEROKU_URL,
+	firebase_users_url: 	process.env.FIREBASE_USERS_URL  || '',
+	port: 					process.env.PORT 				|| 3000,
+	token: 					process.env.TOKEN 				|| '',
 	std_num_of_articles: 	5
 };
 
 const Telegraf = require('telegraf');
-const bot = new Telegraf(config.token, {username: 'hse_military_bot'});
+//const bot = new Telegraf(config.token, {username: 'hse_military_bot'});
+const bot = new Telegraf(config.token);
 
 const Stage = require('telegraf/stage');
 const { enter, leave } = Stage;
@@ -30,6 +31,14 @@ const firebaseUsers = Firebase.initializeApp({
 });
 
 const Schedule = require('./schedule');
+
+const express = require('express');
+const app = express();
+if (config.node_env == 'production') {
+	//console.log(config);
+	bot.telegram.setWebhook(`${config.heroku_url}/bot${confg.token}`);
+	app.use(bot.webhookCallback(`/bot${config.token}`));
+}
 
 const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии'];
 const platoonTypes = ['Офицеры РВСН', 'Офицеры разведки', 'Офицеры ВКС', 'Сержанты МСВ', 'Солдаты разведки'];
@@ -347,6 +356,18 @@ bot.hears(menuButtons.stickers, (ctx) => {
 });
 bot.hears(menuButtons.settings, enter('settings'));
 bot.on('message', enter('menu'));
+
+if (config.node_env == 'development') {
+	bot.telegram.deleteWebhook();
+	bot.startPolling(); 
+};
+
+app.get('/', (req, res) => {
+	res.sendStatus(200);
+});
+app.listen(config.port, () => {
+	console.log(`Server running on port ${config.port}`);
+});
 
 module.exports = bot;
 
