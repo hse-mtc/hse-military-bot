@@ -8,8 +8,7 @@ const config = {
 };
 
 const Telegraf = require('telegraf');
-//const bot = new Telegraf(config.token, {username: 'hse_military_bot'});
-const bot = new Telegraf(config.token);
+const bot = new Telegraf(config.token, {username: 'hse_military_bot'});
 
 const Stage = require('telegraf/stage');
 const { enter, leave } = Stage;
@@ -32,16 +31,16 @@ const firebaseUsers = Firebase.initializeApp({
 
 const Schedule = require('./schedule');
 
-const express = require('express');
-const app = express();
-if (config.node_env == 'production') {
-	console.log({
-		url: config.heroku_url,
-		token: config.token
-	});
-	bot.telegram.setWebhook(`${config.heroku_url}/bot${config.token}`);
-	app.use(bot.webhookCallback(`/bot${config.token}`));
-}
+// const express = require('express');
+// const app = express();
+// if (config.node_env == 'production') {
+// 	console.log({
+// 		url: config.heroku_url,
+// 		token: config.token
+// 	});
+// 	bot.telegram.setWebhook(`${config.heroku_url}/bot${config.token}`);
+// 	app.use(bot.webhookCallback(`/bot${config.token}`));
+// }
 
 const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии'];
 const platoonTypes = ['Офицеры РВСН', 'Офицеры разведки', 'Офицеры ВКС', 'Сержанты МСВ', 'Солдаты разведки'];
@@ -365,12 +364,12 @@ bot.on('message', enter('menu'));
 // 	bot.startPolling(); 
 // };
 
-app.get('/', (req, res) => {
-	res.send('Hello world!');
-});
-app.listen(process.env.PORT, () => {
-	console.log(`Server running on port ${config.port}`);
-});
+// app.get('/', (req, res) => {
+// 	res.send('Hello world!');
+// });
+// app.listen(process.env.PORT, () => {
+// 	console.log(`Server running on port ${config.port}`);
+// });
 
 module.exports = bot;
 

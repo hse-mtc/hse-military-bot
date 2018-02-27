@@ -19,13 +19,12 @@ module.exports = (bot) => {
 	if (process.env.NODE_ENV == 'development') {
 		bot.telegram.deleteWebhook();
 		bot.startPolling();
-
-		app.post('/' + bot.token, (req, res) => {
-			bot.processUpdate(req.body);
-			res.sendStatus(200);
-		});
 	} else {
 		bot.telegram.setWebhook(`${process.env.HEROKU_URL}/bot${process.env.TOKEN}`);
 		app.use(bot.webhookCallback(`/bot${process.env.TOKEN}`));
 	}
+	app.post('/' + bot.token, (req, res) => {
+		bot.processUpdate(req.body);
+		res.sendStatus(200);
+	});
 };
