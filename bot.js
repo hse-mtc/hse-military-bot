@@ -32,13 +32,16 @@ const firebaseUsers = Firebase.initializeApp({
 
 const Schedule = require('./schedule');
 
-// const express = require('express');
-// const app = express();
-// if (config.node_env == 'production') {
-// 	//console.log(config);
-// 	bot.telegram.setWebhook(`${config.heroku_url}/bot${config.token}`);
-// 	app.use(bot.webhookCallback(`/bot${config.token}`));
-// }
+const express = require('express');
+const app = express();
+if (config.node_env == 'production') {
+	console.log({
+		url: config.heroku_url,
+		token: config.token
+	});
+	bot.telegram.setWebhook(`${config.heroku_url}/bot${config.token}`);
+	app.use(bot.webhookCallback(`/bot${config.token}`));
+}
 
 const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии'];
 const platoonTypes = ['Офицеры РВСН', 'Офицеры разведки', 'Офицеры ВКС', 'Сержанты МСВ', 'Солдаты разведки'];
@@ -350,9 +353,9 @@ bot.hears(menuButtons.scheduleDefault, enter('scheduleDefaultDate'));
 bot.hears(menuButtons.schedule, enter('scheduleType'));
 bot.hears(menuButtons.news, enter('news'));
 bot.hears(menuButtons.stickers, (ctx) => {
-	ctx.replyWithSticker('CAADAgADGQADuoh2BvDmu8LdojQmAg').then(() => {
-		ctx.reply('Полный стикерпак: https://t.me/addstickers/HseArmy');
-	});
+	ctx.replyWithSticker('CAADAgADGQADuoh2BvDmu8LdojQmAg', Markup.inlineKeyboard([
+		Markup.urlButton('Полный стикерпак', 'https://t.me/addstickers/HseArmy', false)
+		]).extra());
 });
 bot.hears(menuButtons.settings, enter('settings'));
 bot.on('message', enter('menu'));
@@ -362,12 +365,12 @@ bot.on('message', enter('menu'));
 // 	bot.startPolling(); 
 // };
 
-// app.get('/', (req, res) => {
-// 	res.sendStatus(200);
-// });
-// app.listen(config.port, () => {
-// 	console.log(`Server running on port ${config.port}`);
-// });
+app.get('/', (req, res) => {
+	res.send('Hello world!');
+});
+app.listen(process.env.PORT, () => {
+	console.log(`Server running on port ${config.port}`);
+});
 
 module.exports = bot;
 
