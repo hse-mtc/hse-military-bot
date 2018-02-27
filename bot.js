@@ -1,6 +1,6 @@
 const config = {
 	node_env: 				process.env.NODE_ENV,
-	heroku_url: 			process.env.URL 				|| process.env.HEROKU_URL,
+	heroku_url: 			process.env.HEROKU_URL 			|| '',
 	firebase_users_url: 	process.env.FIREBASE_USERS_URL  || '',
 	port: 					process.env.PORT 				|| 3000,
 	token: 					process.env.TOKEN 				|| '',
@@ -32,13 +32,13 @@ const firebaseUsers = Firebase.initializeApp({
 
 const Schedule = require('./schedule');
 
-const express = require('express');
-const app = express();
-if (config.node_env == 'production') {
-	//console.log(config);
-	bot.telegram.setWebhook(`${config.heroku_url}/bot${config.token}`);
-	app.use(bot.webhookCallback(`bot${config.token}`));
-}
+// const express = require('express');
+// const app = express();
+// if (config.node_env == 'production') {
+// 	//console.log(config);
+// 	bot.telegram.setWebhook(`${config.heroku_url}/bot${config.token}`);
+// 	app.use(bot.webhookCallback(`/bot${config.token}`));
+// }
 
 const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии'];
 const platoonTypes = ['Офицеры РВСН', 'Офицеры разведки', 'Офицеры ВКС', 'Сержанты МСВ', 'Солдаты разведки'];
@@ -357,17 +357,17 @@ bot.hears(menuButtons.stickers, (ctx) => {
 bot.hears(menuButtons.settings, enter('settings'));
 bot.on('message', enter('menu'));
 
-if (config.node_env == 'development') {
-	bot.telegram.deleteWebhook();
-	bot.startPolling(); 
-};
+// if (config.node_env == 'development') {
+// 	bot.telegram.deleteWebhook();
+// 	bot.startPolling(); 
+// };
 
-app.get('/', (req, res) => {
-	res.sendStatus(200);
-});
-app.listen(config.port, () => {
-	console.log(`Server running on port ${config.port}`);
-});
+// app.get('/', (req, res) => {
+// 	res.sendStatus(200);
+// });
+// app.listen(config.port, () => {
+// 	console.log(`Server running on port ${config.port}`);
+// });
 
 module.exports = bot;
 
