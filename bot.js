@@ -37,7 +37,7 @@ const app = express();
 if (config.node_env == 'production') {
 	//console.log(config);
 	bot.telegram.setWebhook(`${config.heroku_url}/bot${config.token}`);
-	app.use(bot.webhookCallback(`/bot${config.token}`));
+	app.use(bot.webhookCallback(`bot${config.token}`));
 }
 
 const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии'];
