@@ -8,11 +8,11 @@
     "military",
     "telegram"
   ],
-  "author": "mvshmakov",
-  "license": "ISC",
+  "author": "Maxim Shmakov <mvshmakov@mail.ru>",
+  "license": "Apache-2.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "dotenv": "^5.0.0",
@@ -29,5 +29,8 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/mvshmakov/hse-military-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mvshmakov/hse-military-bot/issues"
   }
 }
