@@ -1,19 +1,28 @@
-## HSE Military department bot for schedule.
-
+## HSE Military department [https://t.me/hse_military_bot](bot) for schedule.
 
 ## To run an app on local machine:
 ##### 1) Run `npm i` to install all dependences.
-##### 2) Add an `.env` file with following fields:
+##### 2) Add an `.env` file in root directory with following fields:
 * `NODE_ENV=development`
 * `PORT={PortYouWantToRun(etc. 5000)}`
 * `TOKEN={YourTelegramToken}`
-##### 3) Run `node .` to run the server.
+* `METRIKA_TOKEN={YourYandexMetricaToken}`
+* `FIREBASE_USERS_URL={YourFirebaseUsersURL}`
+##### 3) Add your `secreteUsers.json` with Firebase secrete key content in `secrete/` directory.
+##### 4) Run `node .` to run the server in Long Polling mode.
 
 ## How to deploy an app on Heroku:
-##### 1) Configure local variables by heroku-cli after push:
+##### 1) Create an app on Heroku.
+##### 2) Configure local variables by heroku-cli after push:
 * `heroku config:set TOKEN={YourTelegramToken}`
-* `heroku config:set HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)`
-##### 2) Commit and push to Heroku:
-* `git add *`
+* `heroku config:set METRICA_TOKEN={YourYandexMetricaToken}`
+* `heroku config:set HEROKU_URL={YourHerokuUrl}`
+* `heroku config:set FIREBASE_USERS_URL={YourFirebaseUsersURL}`
+##### 3) Commit and push to Heroku:
+* `git add .`
 * `git commit -m "init deploy commit"`
 * `git push heroku master`
+##### 4) Scale an app with heroku-cli to run it with Webhook:
+* `heroku login` -> enter your credentials
+* `heroku ps:scale web=1 -a {YourAppName}` -> to start dyno
+* `heroku ps:scale web=0 -a {YourAppName}` -> to shut down dyno
