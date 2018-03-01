@@ -4,6 +4,7 @@ const config = {
 	firebase_users_url: 	process.env.FIREBASE_USERS_URL  || '',
 	port: 					process.env.PORT 				|| 3000,
 	token: 					process.env.TOKEN 				|| '',
+	metrika_token: 			process.env.METRIKA_TOKEN 		|| '',
 	std_num_of_articles: 	5
 };
 
@@ -28,6 +29,8 @@ const firebaseUsers = Firebase.initializeApp({
 	credential: Firebase.credential.cert(SecreteUsers),
 	databaseURL: config.firebase_users_url
 });
+
+const botan = require('botanio')(config.metrika_token);
 
 const Schedule = require('./schedule');
 
@@ -79,6 +82,8 @@ menuScene.enter(async (ctx) => {
 		}));
 	}));
 });
+menuScene.command('menu', (ctx) => ctx.scene.enter('menu'));
+menuScene.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 menuScene.hears(menuButtons.scheduleDefault, enter('scheduleDefaultDate'));
 menuScene.hears(menuButtons.schedule, enter('scheduleType'));
 menuScene.hears(menuButtons.news, enter('news'));
@@ -105,6 +110,8 @@ settingsScene.enter((ctx) => {
 		}).concat(menuControls.menu));
 	}));
 });
+settingsScene.command('menu', (ctx) => ctx.scene.enter('menu'));
+settingsScene.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 settingsScene.hears(menuControls.menu, enter('menu'));
 settingsScene.hears(settings.defaultPlatoon, enter('settingsType'))
 settingsScene.on('message', (ctx) => {
@@ -121,10 +128,14 @@ settingsTypeScene.enter((ctx) => {
 		.keyboard(platoonTypes.concat(menuControls.menu));
 	}));
 });
+settingsTypeScene.command('menu', (ctx) => ctx.scene.enter('menu'));
+settingsTypeScene.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 settingsTypeScene.hears(menuControls.menu, enter('menu'));
 settingsTypeScene.on('message', async (ctx) => {
 	if (isValueInArray(platoonTypes, ctx.message.text)) {
 		await writeUserSelection(ctx.from.id, 'platoonType', ctx.message.text).then(() => {
+			botan.track(ctx, `Цикл из настроек: ${ctx.message.text}`);
+
 			return ctx.scene.enter('settingsPlatoon');
 		})
 	} else {
@@ -143,12 +154,16 @@ settingsPlatoonScene.enter((ctx) => {
 		.keyboard(platoons[platoonTypes.indexOf(ctx.message.text)].concat(menuControls.menu));
 	}));
 });
+settingsPlatoonScene.command('menu', (ctx) => ctx.scene.enter('menu'));
+settingsPlatoonScene.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 settingsPlatoonScene.hears(menuControls.menu, enter('menu'));
 settingsPlatoonScene.on('message', async (ctx) => {
 	let platoonType = await readUserSelection(ctx.from.id, 'platoonType');
 
 	if (isValueInArray(platoons[platoonTypes.indexOf(platoonType)], ctx.message.text)) {
 		await writeUserSelection(ctx.from.id, 'defaultPlatoon', ctx.message.text).then(() => {
+			botan.track(ctx, `Взвод из настроек: ${ctx.message.text}`);
+
 			return ctx.reply('Настройки сохранены').then(() => {
 				ctx.scene.enter('menu');
 			})
@@ -168,10 +183,14 @@ scheduleTypeScene.enter((ctx) => {
 		.keyboard(platoonTypes.concat(menuControls.menu));
 	}));
 });
+scheduleTypeScene.command('menu', (ctx) => ctx.scene.enter('menu'));
+scheduleTypeScene.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 scheduleTypeScene.hears(menuControls.menu, enter('menu'));
 scheduleTypeScene.on('message', async (ctx) => {
 	if (isValueInArray(platoonTypes, ctx.message.text)) {
 		await writeUserSelection(ctx.from.id, 'platoonType', ctx.message.text).then(() => {
+			botan.track(ctx, `Цикл: ${ctx.message.text}`);
+
 			return ctx.scene.enter('schedulePlatoon');
 		})
 	} else {
@@ -190,12 +209,16 @@ schedulePlatoonScene.enter(async (ctx) => {
 		.keyboard(platoons[platoonTypes.indexOf(ctx.message.text)].concat(menuControls.menu));
 	}))
 });
+schedulePlatoonScene.command('menu', (ctx) => ctx.scene.enter('menu'));
+schedulePlatoonScene.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 schedulePlatoonScene.hears(menuControls.menu, enter('menu'));
 schedulePlatoonScene.on('message', async (ctx) => {
 	let platoonType = await readUserSelection(ctx.from.id, 'platoonType');
 
 	if (isValueInArray(platoons[platoonTypes.indexOf(platoonType)], ctx.message.text)) {
 		await writeUserSelection(ctx.from.id, 'platoon', ctx.message.text).then(() => {
+			botan.track(ctx, `Взвод: ${ctx.message.text}`);
+
 			return ctx.scene.enter('scheduleDate');
 		})
 	} else {
@@ -220,6 +243,8 @@ scheduleDateScene.enter(async (ctx) => {
 		.keyboard(dates[key()].concat(menuControls.menu));
 	}))
 });
+scheduleDateScene.command('menu', (ctx) => ctx.scene.enter('menu'));
+scheduleDateScene.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 scheduleDateScene.hears(menuControls.menu, enter('menu'));
 scheduleDateScene.on('message', async (ctx) => {
 	let platoon = await readUserSelection(ctx.from.id, 'platoon');
@@ -260,6 +285,7 @@ stage.register(scheduleDateScene);
 const scheduleDefaultDateScene = new Scene('scheduleDefaultDate');
 scheduleDefaultDateScene.enter(async (ctx) => {
 	let platoon = await readUserSelection(ctx.from.id, 'defaultPlatoon');
+	botan.track(ctx, `Взвод: ${ctx.message.text}`);
 
 	return ctx.reply(`Ваш взвод: ${platoon}`).then(() => {
 		ctx.reply('Выберите дату', Extra.markup((markup) => {
@@ -274,6 +300,8 @@ scheduleDefaultDateScene.enter(async (ctx) => {
 		}))
 	})
 });
+scheduleDefaultDateScene.command('menu', (ctx) => ctx.scene.enter('menu'));
+scheduleDefaultDateScene.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 scheduleDefaultDateScene.hears(menuControls.menu, enter('menu'));
 scheduleDefaultDateScene.on('message', async (ctx) => {
 	let platoon = await readUserSelection(ctx.from.id, 'defaultPlatoon');
@@ -318,9 +346,13 @@ newsScene.enter((ctx) => {
 		.keyboard(newsTopics.concat(menuControls.menu));
 	}))
 })
+newsScene.command('menu', (ctx) => ctx.scene.enter('menu'));
+newsScene.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 newsScene.hears(menuControls.menu, enter('menu'));
 newsScene.on('message', async (ctx) => {
 	if (isValueInArray(newsTopics, ctx.message.text)) {
+		botan.track(ctx, `Тема новостей: ${ctx.message.text}`);
+
 		let articles = await getNewsArticles(ctx.message.text);
 		articles.forEach((article) => {
 			ctx.reply(article);
@@ -336,6 +368,7 @@ stage.register(newsScene);
 bot.use(session());
 bot.use(stage.middleware());
 
+bot.command('menu', (ctx) => ctx.scene.enter('menu'));
 bot.command('help', (ctx) => ctx.reply('Навигация в боте производится с помощью меню.'));
 bot.hears(menuButtons.scheduleDefault, enter('scheduleDefaultDate'));
 bot.hears(menuButtons.schedule, enter('scheduleType'));
