@@ -1,4 +1,4 @@
-## HSE Military department [https://t.me/hse_military_bot](bot) for schedule.
+## HSE Military department [bot](https://t.me/hse_military_bot) for schedule.
 
 ## To run an app on local machine:
 ##### 1) Run `npm i` to install all dependences.
