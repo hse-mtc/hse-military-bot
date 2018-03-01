@@ -1,4 +1,5 @@
 ## HSE Military department [bot](https://t.me/hse_military_bot) for schedule.
+Simply access HSE military department schedule, prepare news for informating comrades and receive full pack of stickers with people you know well.
 
 ## To run an app on local machine:
 ##### 1) Run `npm i` to install all dependences.
