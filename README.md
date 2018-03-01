@@ -19,11 +19,12 @@ Simply access HSE military department schedule, prepare news for informating com
 * `heroku config:set METRICA_TOKEN={YourYandexMetricaToken}`
 * `heroku config:set HEROKU_URL={YourHerokuUrl}`
 * `heroku config:set FIREBASE_USERS_URL={YourFirebaseUsersURL}`
-##### 3) Commit and push to Heroku:
+##### 3) Add your `secreteUsers.json` with Firebase secrete key content in `secrete/` directory.
+##### 4) Commit and push to Heroku:
 * `git add .`
 * `git commit -m "init deploy commit"`
 * `git push heroku master`
-##### 4) Scale an app with heroku-cli to run it with Webhook:
+##### 5) Scale an app with heroku-cli to run it with Webhook:
 * `heroku login` -> enter your credentials
 * `heroku ps:scale web=1 -a {YourAppName}` -> to start dyno
 * `heroku ps:scale web=0 -a {YourAppName}` -> to shut down dyno
