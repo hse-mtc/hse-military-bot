@@ -285,7 +285,7 @@ stage.register(scheduleDateScene);
 const scheduleDefaultDateScene = new Scene('scheduleDefaultDate');
 scheduleDefaultDateScene.enter(async (ctx) => {
 	let platoon = await readUserSelection(ctx.from.id, 'defaultPlatoon');
-	botan.track(ctx, `Взвод: ${ctx.message.text}`);
+	botan.track(ctx, `Взвод: ${platoon}`);
 
 	return ctx.reply(`Ваш взвод: ${platoon}`).then(() => {
 		ctx.reply('Выберите дату', Extra.markup((markup) => {
