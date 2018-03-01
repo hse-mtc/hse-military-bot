@@ -24,7 +24,7 @@ const Scene = require('telegraf/scenes/base');
 const session = require('telegraf/session');
 
 const Firebase = require('firebase-admin');
-const SecreteUsers = require("./secrete/secreteUsers.json");
+const SecreteUsers = require("../secrete/secrete-users.json");
 const firebaseUsers = Firebase.initializeApp({
 	credential: Firebase.credential.cert(SecreteUsers),
 	databaseURL: config.firebase_users_url
