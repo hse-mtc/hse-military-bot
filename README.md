@@ -1,4 +1,5 @@
 ## HSE Military department [bot](https://t.me/hse_military_bot) for schedule.
+
 Simply access HSE military department schedule, prepare news for informating comrades and receive full pack of stickers with people you know well.
 Stack of technologies used: 
 * Awesome [Telegraf](http://telegraf.js.org/) wrapper for [Telegram API](https://core.telegram.org/).
@@ -35,3 +36,11 @@ Stack of technologies used:
 * `heroku login` -> enter your credentials
 * `heroku ps:scale web=1 -a {YourAppName}` -> to start dyno
 * `heroku ps:scale web=0 -a {YourAppName}` -> to shut down dyno
+
+## How to make a contribution:
+##### 1) Run `npm run lint` and correct all typos (`npm run lint:fix` runs eslint with `--fix` flag).
+##### 2) Push to development branch with:
+* `git add .`
+* `git commit -m "feature/fix commit"`
+* `git push origin HEAD:develop`
+##### 3) Create merge request.

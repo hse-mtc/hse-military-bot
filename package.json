@@ -6,26 +6,34 @@
   "keywords": [
     "hse",
     "military",
-    "telegram"
+    "department",
+    "telegram",
+    "bot"
   ],
   "author": "Maxim Shmakov <mvshmakov@mail.ru>",
   "license": "Apache-2.0",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "botanio": "^0.0.6",
-    "dotenv": "^5.0.0",
-    "exceljs": "^0.8.2",
-    "express": "^4.16.2",
-    "firebase-admin": "^5.9.0",
-    "google-news-rss": "^0.4.1",
-    "telegraf": "^3.18.0"
+    "lint": "eslint *.js scripts/*.js",
+    "lint:fix": "eslint *.js scripts/*.js --fix"
   },
   "engines": {
     "node": "8.9.x",
     "npm": "5.6.x"
+  },
+  "dependencies": {
+    "botanio": "^0.0.6",
+    "dotenv": "^5.0.1",
+    "exceljs": "^0.8.5",
+    "express": "^4.16.2",
+    "firebase-admin": "^5.9.1",
+    "google-news-rss": "^0.4.1",
+    "telegraf": "^3.19.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0"
   },
   "repository": {
     "type": "git",
