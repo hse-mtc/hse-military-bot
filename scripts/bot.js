@@ -2,9 +2,12 @@ const config = {
   node_env: process.env.NODE_ENV,
   heroku_url: process.env.HEROKU_URL || '',
   firebase_users_url: process.env.FIREBASE_USERS_URL || '',
+  firebase_users_project_id: process.env.FIREBASE_USERS_PROJECT_ID || '',
+  firebase_users_client_email: process.env.FIREBASE_USERS_CLIENT_EMAIL || '',
+  firebase_users_private_key: process.env.FIREBASE_USERS_PRIVATE_KEY || '',
+  metrika_token: process.env.METRIKA_TOKEN || '',
   port: process.env.PORT || 3000,
   token: process.env.TOKEN || '',
-  metrika_token: process.env.METRIKA_TOKEN || '',
   std_num_of_articles: 5,
 };
 
@@ -27,10 +30,13 @@ const Scene = require('telegraf/scenes/base');
 const session = require('telegraf/session');
 
 const Firebase = require('firebase-admin');
-const SecreteUsers = require('../secrete/secrete-users.json');
 
 const firebaseUsers = Firebase.initializeApp({
-  credential: Firebase.credential.cert(SecreteUsers),
+  credential: Firebase.credential.cert({
+    projectId: config.firebase_users_project_id,
+    clientEmail: config.firebase_users_client_email,
+    privateKey: config.firebase_users_private_key.replace(/\\n/g, '\n'),
+  }),
   databaseURL: config.firebase_users_url,
 });
 
