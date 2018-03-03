@@ -287,6 +287,7 @@ scheduleDefaultDateScene.enter(async (ctx) => {
 	let platoon = await readUserSelection(ctx.from.id, 'defaultPlatoon');
 
 	return ctx.reply(`Ваш взвод: ${platoon}`).then(() => {
+		botan.track(ctx, `Цикл: &{getTypeFromPlatoon(platoon)}`);
 		botan.track(ctx, `Взвод: ${platoon}`);
 		
 		ctx.reply('Выберите дату', Extra.markup((markup) => {
@@ -411,6 +412,20 @@ function isValueInArray(arr, value) {
 	} else {
 		return false;
 	}
+}
+
+function getTypeFromPlatoon(platoon) {
+	let platoonType = null;
+	
+	platoons.some((item) => {
+		let isInArr = item.indexOf(platoon);
+		if (isInArr != -1) { 
+			platoonType = platoonTypes[isInArr + 1];
+			return platoonType; 
+		};
+	});
+
+	return platoonType;
 }
 
 async function getNewsArticles(topic) {
