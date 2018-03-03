@@ -14,6 +14,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint *.js scripts/*.js",
     "lint:fix": "eslint *.js scripts/*.js --fix"
   },
