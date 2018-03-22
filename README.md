@@ -1,4 +1,6 @@
 ## HSE Military department [bot](https://t.me/hse_military_bot) for schedule [![Build Status](https://travis-ci.org/mvshmakov/hse-military-bot.svg?branch=master)](https://travis-ci.org/mvshmakov/hse-military-bot)
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/mvshmakov/hse-military-bot.svg)](https://greenkeeper.io/)
 Simply access HSE military department schedule, prepare news for informating comrades and receive full pack of stickers with people you know well.
 Stack of technologies used: 
 * Awesome [Telegraf](http://telegraf.js.org/) wrapper for [Telegram API](https://core.telegram.org/).
