@@ -22,9 +22,9 @@
     "npm": "5.6.x"
   },
   "dependencies": {
-    "botanio": "^0.0.5",
+    "botanio": "^0.0.6",
     "dotenv": "^5.0.1",
-    "exceljs": "^1.0.0",
+    "exceljs": "^0.8.5",
     "express": "^4.16.2",
     "firebase-admin": "^5.9.1",
     "google-news-rss": "^0.4.1",
