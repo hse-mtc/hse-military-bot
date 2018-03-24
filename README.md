@@ -1,5 +1,9 @@
 ## HSE Military department [bot](https://t.me/hse_military_bot) for schedule
-[![Build Status](https://travis-ci.org/mvshmakov/hse-military-bot.svg?branch=master)](https://travis-ci.org/mvshmakov/hse-military-bot) [![Greenkeeper badge](https://badges.greenkeeper.io/mvshmakov/hse-military-bot.svg)](https://greenkeeper.io/) [![dependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master) [![devDependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/dev-status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master?type=dev)
+[![License](https://img.shields.io/npm/l/express.svg)](https://github.com/mvshmakov/hse-military-bot/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/mvshmakov/hse-military-bot.svg?branch=master)](https://travis-ci.org/mvshmakov/hse-military-bot)
+[![Greenkeeper badge](https://badges.greenkeeper.io/mvshmakov/hse-military-bot.svg)](https://greenkeeper.io/)
+[![dependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master)
+[![devDependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/dev-status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master?type=dev)
 
 
 Simply access HSE military department schedule, prepare news for informating comrades and receive full pack of stickers with people you know well.
