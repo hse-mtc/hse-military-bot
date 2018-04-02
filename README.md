@@ -54,3 +54,6 @@ Stack of technologies used:
 * `git commit -m "feature/fix commit"`
 * `git push origin HEAD:develop`
 ##### 3) Create merge request.
+
+## User interface:
+![user interface](hse-military-bot.png =20px)
