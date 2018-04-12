@@ -15,7 +15,9 @@
   "scripts": {
     "start": "node index.js",
     "lint": "eslint *.js scripts/*.js",
-    "lint:fix": "eslint *.js scripts/*.js --fix"
+    "lint:fix": "eslint *.js scripts/*.js --fix",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "engines": {
     "node": "8.9.x",
@@ -28,7 +30,8 @@
     "express": "^4.16.2",
     "firebase-admin": "^5.9.1",
     "google-news-rss": "^0.4.1",
-    "telegraf": "^3.19.0"
+    "telegraf": "^3.19.0",
+    "snyk": "^1.71.0"
   },
   "devDependencies": {
     "eslint": "^4.18.2",
@@ -41,5 +44,6 @@
   },
   "bugs": {
     "url": "https://github.com/mvshmakov/hse-military-bot/issues"
-  }
+  },
+  "snyk": true
 }
