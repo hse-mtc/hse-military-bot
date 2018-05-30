@@ -12,12 +12,10 @@ module.exports = (bot) => {
     app.use(bot.webhookCallback(`/bot${process.env.TOKEN}`));
   }
 
-  app.get('/', (req, res) => {
-    res.send('Hello world!');
-  });
+  app.use(express.static(path.join(__dirname, 'public')));
 
-  app.get('/yandex_08bb7e8e4db3bb07.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'yandex_08bb7e8e4db3bb07.html'));
+  app.get('/', (req, res) => {
+    res.sendFile('index.html');
   });
   
   app.listen(process.env.PORT, () => {

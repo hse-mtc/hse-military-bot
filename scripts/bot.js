@@ -144,7 +144,6 @@ async function readUserSelection(chatId, field) {
   }
 }
 
-
 /* Menu scene */
 
 const menuScene = new Scene('menu');
