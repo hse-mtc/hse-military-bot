@@ -1,12 +1,24 @@
 .body {
-	padding-top: 6rem;
+	color: #fff;
+	background: #000 url('backgroung.jpg'); /* Фоновый цвет и фоновый рисунок*/
+	background-size: 100%;
+	background-repeat: no-repeat;
 }
 
 .header__text {
+	padding-top: 2rem;
 	text-align: center;
 }
 
+.header__img {
+	display: block;
+	width: 25%;
+	height: 25%;
+	padding: 1rem;
+	margin: auto;
+}
+
 .main {
-	padding-top: 5rem;
+	padding-top: 2rem;
 	text-align: center;
 }

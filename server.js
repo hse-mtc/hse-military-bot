@@ -1,4 +1,5 @@
 const express = require('express');
+const favicon = require('express-favicon');
 const path = require('path');
 
 const app = express();
@@ -13,6 +14,8 @@ module.exports = (bot) => {
   }
 
   app.use(express.static(path.join(__dirname, 'public')));
+
+  app.use(favicon('favicon.ico'));
 
   app.get('/', (req, res) => {
     res.sendFile('index.html');
