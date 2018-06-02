@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "botanio": "^0.0.6",
-    "dotenv": "^5.0.1",
+    "dotenv": "^6.0.0",
     "exceljs": "^1.0.0",
     "express": "^4.16.3",
     "express-favicon": "^2.0.1",
