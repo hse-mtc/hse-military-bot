@@ -45,18 +45,19 @@ const botan = require('botanio')(config.metrika_token);
 const Schedule = require('./schedule');
 
 const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии'];
+
 const platoonTypes = ['Офицеры РВСН', 'Офицеры разведки', 'Офицеры ВКС', 'Сержанты МСВ', 'Солдаты разведки'];
 const platoons = [
-  ['1601', '1701', '1702', '1501', '1502'],
-  ['1602', '1603', '1604', '1703', '1704', '1705', '1503', '1504', '1505'],
-  ['1605', '1606', '1706', '1707', '1708', '1506', '1507'],
-  ['1607', '1608', '1609', '1610', '1709', '1710', '1711', '1712'],
+  ['1601', '1701', '1702', '1811', '1812'],
+  ['1602', '1603', '1604', '1703', '1704', '1705', '1801', '1802', '1803'],
+  ['1605', '1606', '1706', '1707', '1708', '1807', '1808', '1809', '1810'],
+  ['1607', '1608', '1609', '1610', '1709', '1710', '1711', '1712', '1804', '1805', '1806'],
   ['1616', '1617', '1618', '1713'],
 ];
 const dates = [
-  ['10 января', '17 января', '24 января', '31 января', '7 февраля', '14 февраля', '21 февраля', '28 февраля', '7 марта', '14 марта', '21 марта', '4 апреля', '11 апреля', '18 апреля', '25 апреля'],
-  ['11 января', '18 января', '25 января', '1 февраля', '8 февраля', '15 февраля', '22 февраля', '1 марта', '15 марта', '22 марта', '5 апреля', '12 апреля', '19 апреля', '26 апреля'],
-  ['12 января', '19 января', '26 января', '2 февраля', '9 февраля', '16 февраля', '2 марта', '16 марта', '23 марта', '6 апреля', '13 апреля', '20 апреля', '27 апреля'],
+  ['5 сентября', '12 сентября', '19 сентября', '26 сентября', '3 октября', '10 октября', '17 октября', '24 октября', '31 октября', '7 ноября', '14 ноября', '21 ноября', '28 ноября', '5 декабря', '12 декабря', '19 декабря', '26 декабря'],
+  ['6 сентября', '13 сентября', '20 сентября', '27 сентября', '4 октября', '11 октября', '18 октября', '25 октября', '1 ноября', '8 ноября', '15 ноября', '22 ноября', '29 ноября', '6 декабря', '13 декабря', '20 декабря', '27 декабря'],
+  ['7 сентября', '14 сентября', '21 сентября', '28 сентября', '5 октября', '12 октября', '19 октября', '26 октября', '2 ноября', '9 ноября', '16 ноября', '23 ноября', '30 ноября', '7 декабря', '14 декабря', '21 декабря', '29 декабря'],
 ];
 const menuButtons = {
   scheduleDefault: 'Расписание для своего взвода',
@@ -288,7 +289,7 @@ scheduleDateScene.enter(async (ctx) => {
   return ctx.reply('Выберите дату', Extra.markup((markup) => {
     const year = platoon.split('')[0] + platoon.split('')[1];
     const key = () => {
-      if (year == 16) { return 0; } else if (year == 17) { return 1; } else if (year == 15) { return 2; }
+      if (year == 17) { return 0; } else if (year == 18) { return 1; } else if (year == 16) { return 2; }
     };
     return markup.resize()
       .keyboard(dates[key()].concat(menuControls.menu));
@@ -301,7 +302,7 @@ scheduleDateScene.on('message', async (ctx) => {
   const platoon = await readUserSelection(ctx.from.id, 'platoon');
   const year = platoon.split('')[0] + platoon.split('')[1];
   const key = () => {
-    if (year == 16) { return 0; } else if (year == 17) { return 1; } else if (year == 15) { return 2; }
+    if (year == 17) { return 0; } else if (year == 18) { return 1; } else if (year == 16) { return 2; }
   };
 
   if (!isValueInArray(dates[key()], ctx.message.text)) {
@@ -340,7 +341,7 @@ scheduleDefaultDateScene.enter(async (ctx) => {
     ctx.reply('Выберите дату', Extra.markup((markup) => {
       const year = platoon.split('')[0] + platoon.split('')[1];
       const key = () => {
-        if (year == 16) { return 0; } else if (year == 17) { return 1; } else if (year == 15) { return 2; }
+        if (year == 17) { return 0; } else if (year == 18) { return 1; } else if (year == 16) { return 2; }
       };
       return markup.resize()
         .keyboard(dates[key()].concat(menuControls.menu));
@@ -354,7 +355,7 @@ scheduleDefaultDateScene.on('message', async (ctx) => {
   const platoon = await readUserSelection(ctx.from.id, 'defaultPlatoon');
   const year = platoon.split('')[0] + platoon.split('')[1];
   const key = () => {
-    if (year == 16) { return 0; } else if (year == 17) { return 1; } else if (year == 15) { return 2; }
+    if (year == 17) { return 0; } else if (year == 18) { return 1; } else if (year == 16) { return 2; }
   };
 
   if (!isValueInArray(dates[key()], ctx.message.text)) {
