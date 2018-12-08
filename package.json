@@ -26,12 +26,12 @@
   "dependencies": {
     "botanio": "^0.0.6",
     "dotenv": "^5.0.1",
-    "exceljs": "^1.0.0",
+    "exceljs": "^1.6.0",
     "express": "^4.16.3",
     "express-favicon": "^2.0.1",
     "firebase-admin": "^5.12.1",
     "google-news-rss": "^0.4.1",
-    "snyk": "^1.71.0",
+    "snyk": "^1.82.0",
     "telegraf": "^3.21.2"
   },
   "devDependencies": {
