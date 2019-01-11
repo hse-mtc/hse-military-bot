@@ -15,7 +15,7 @@ function getScheduleForPlatoon(platoon, date) {
       '16:50-17:35',
     ];
 
-    workbook.xlsx.readFile('static/schedule.xlsx')
+    workbook.xlsx.readFile('./static/schedule.xlsx')
       .then(() => {
         const worksheet = workbook.getWorksheet(1);
 
