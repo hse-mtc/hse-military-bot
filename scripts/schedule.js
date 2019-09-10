@@ -23,7 +23,8 @@ function getScheduleForPlatoon(platoon, date) {
 
         const weekdayColumn = getColumnIndexesContainingString(worksheet, 'День недели')[0];
         const forcesColumn = getColumnIndexesContainingString(worksheet, 'ВУС')[0];
-        const trainingsColumn = getColumnIndexesContainingString(worksheet, 'Тренировки:')[0];
+        // const trainingsColumn = getColumnIndexesContainingString(worksheet, 'Тренировки:')[0];
+        const trainingsColumn = 3;
         const weekColumn = getColumnIndexesContainingString(worksheet, date);
 
         const weekday = worksheet.getRow(platoonRow).getCell(weekdayColumn);
