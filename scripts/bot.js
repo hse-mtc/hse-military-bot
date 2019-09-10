@@ -46,19 +46,28 @@ const Schedule = require('./schedule');
 
 const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии'];
 
-const platoonTypes = ['Офицеры РВСН', 'Офицеры разведки', 'Офицеры ВКС', 'Сержанты МСВ', 'Солдаты разведки'];
+const platoonTypes = [
+    'Офицеры РВСН', 'Офицеры разведка', 'Офицеры ВКС', 'Офицеры ЗИТ', 'Сержанты МСВ',
+];
 const platoons = [
-  ['1601', '1701', '1702', '1811', '1812'],
-  ['1602', '1603', '1604', '1703', '1704', '1705', '1801', '1802', '1803'],
-  ['1605', '1606', '1706', '1707', '1708', '1807', '1808', '1809', '1810'],
-  ['1607', '1608', '1609', '1610', '1709', '1710', '1711', '1712', '1804', '1805', '1806'],
-  ['1616', '1617', '1618', '1713'],
+    ['1811', '1812', '1911', '1912', '1701', '1702'],
+    ['1801', '1802', '1803', '1901', '1902', '1903', '1703', '1704', '1705'],
+    ['1807', '1808', '1809', '1907', '1908', '1907', '1706', '1707', '1708'],
+    ['1810', '1910'],
+    ['1804', '1805', '1806', '1904', '1905', '1906'],
 ];
 const dates = [
-  ['9 января', '16 января', '23 января', '30 января', '6 февраля', '13 февраля', '20 февраля', '27 февраля', '6 марта', '13 марта', '20 марта', '27 марта', '3 апреля', '10 апреля', '17 апреля', '24 апреля', '1 мая'],
-  ['10 января', '17 января', '24 января', '31 января', '7 февраля', '14 февраля', '21 февраля', '28 февраля', '7 марта', '14 марта', '21 марта', '28 марта', '4 апреля', '11 апреля', '18 апреля', '25 апреля', '2 мая'],
-  ['11 января', '18 января', '25 января', '1 февраля', '8 февраля', '15 февраля', '22 февраля', '1 марта', '8 марта', '15 марта', '22 марта', '29 марта', '5 апреля', '12 апреля', '19 апреля', '26 апреля', '3 мая', '7 мая', '17 мая'],
+    ['4 сентября', '11 сентября', '18 сентября', '25 января', '2 октября', '9 октября', '16 октября', '23 октября',
+        '30 октября', '6 ноября', '13 ноября', '20 ноября', '27 ноября', '4 декабря', '11 декабря',
+        '18 декабря', '25 декабря'],
+    ['5 сентября', '12 сентября', '19 сентября', '26 января', '3 октября', '10 октября', '17 октября', '24 октября',
+        '31 октября', '7 ноября', '14 ноября', '21 ноября', '28 ноября', '5 декабря', '12 декабря',
+        '19 декабря', '26 декабря'],
+    ['6 сентября', '13 сентября', '20 сентября', '27 января', '4 октября', '11 октября', '18 октября', '25 октября',
+        '1 ноября', '8 ноября', '15 ноября', '22 ноября', '29 ноября', '6 декабря', '13 декабря',
+        '20 декабря', '27 декабря'],
 ];
+
 const menuButtons = {
   scheduleDefault: 'Расписание для своего взвода',
   schedule: 'Общее расписание',
@@ -76,7 +85,8 @@ const settings = {
 
 /* Helpers */
 
-const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 
 function getFormattedDate(dateObj) {
   return `${dateObj.getDate()} ${
@@ -289,7 +299,7 @@ scheduleDateScene.enter(async (ctx) => {
   return ctx.reply('Выберите дату', Extra.markup((markup) => {
     const year = platoon.split('')[0] + platoon.split('')[1];
     const key = () => {
-      if (year == 17) { return 0; } else if (year == 18) { return 1; } else if (year == 16) { return 2; }
+      if (year == 18) { return 0; } else if (year == 19) { return 1; } else if (year == 17) { return 2; }
     };
     return markup.resize()
       .keyboard(dates[key()].concat(menuControls.menu));
@@ -302,7 +312,7 @@ scheduleDateScene.on('message', async (ctx) => {
   const platoon = await readUserSelection(ctx.from.id, 'platoon');
   const year = platoon.split('')[0] + platoon.split('')[1];
   const key = () => {
-    if (year == 17) { return 0; } else if (year == 18) { return 1; } else if (year == 16) { return 2; }
+    if (year == 18) { return 0; } else if (year == 19) { return 1; } else if (year == 17) { return 2; }
   };
 
   if (!isValueInArray(dates[key()], ctx.message.text)) {
@@ -341,7 +351,7 @@ scheduleDefaultDateScene.enter(async (ctx) => {
     ctx.reply('Выберите дату', Extra.markup((markup) => {
       const year = platoon.split('')[0] + platoon.split('')[1];
       const key = () => {
-        if (year == 17) { return 0; } else if (year == 18) { return 1; } else if (year == 16) { return 2; }
+        if (year == 18) { return 0; } else if (year == 19) { return 1; } else if (year == 17) { return 2; }
       };
       return markup.resize()
         .keyboard(dates[key()].concat(menuControls.menu));
@@ -355,7 +365,7 @@ scheduleDefaultDateScene.on('message', async (ctx) => {
   const platoon = await readUserSelection(ctx.from.id, 'defaultPlatoon');
   const year = platoon.split('')[0] + platoon.split('')[1];
   const key = () => {
-    if (year == 17) { return 0; } else if (year == 18) { return 1; } else if (year == 16) { return 2; }
+    if (year == 18) { return 0; } else if (year == 19) { return 1; } else if (year == 17) { return 2; }
   };
 
   if (!isValueInArray(dates[key()], ctx.message.text)) {
