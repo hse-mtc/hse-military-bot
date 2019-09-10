@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.10.2
+version: v1.13.5
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -9,3 +9,76 @@ patch:
   'npm:request:20160119':
     - botanio > request:
         patched: '2018-04-12T16:04:05.835Z'
+  SNYK-JS-AXIOS-174505:
+    - firebase-admin > @google-cloud/firestore > @google-cloud/common > google-auth-library > gcp-metadata > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > @google-cloud/common > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > @google-cloud/common > google-auto-auth > google-auth-library > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > google-gax > google-auto-auth > gcp-metadata > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > @google-cloud/common > google-auto-auth > gcp-metadata > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > gcp-metadata > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > @google-cloud/common > google-auth-library > gtoken > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > google-gax > google-auto-auth > google-auth-library > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > google-auth-library > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > google-auth-library > gtoken > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > @google-cloud/common > google-auto-auth > google-auth-library > gtoken > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > google-gax > google-auto-auth > google-auth-library > gcp-metadata > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > google-auth-library > gcp-metadata > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > @google-cloud/common > google-auto-auth > google-auth-library > gcp-metadata > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > google-gax > google-auto-auth > google-auth-library > gtoken > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > @google-cloud/common > google-auth-library > axios:
+        patched: '2019-09-10T14:15:16.840Z'
+  'npm:extend:20180424':
+    - firebase-admin > @google-cloud/firestore > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > @google-cloud/common > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > request > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > google-gax > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - snyk > proxy-agent > pac-proxy-agent > get-uri > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > @google-cloud/common > request > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > gcs-resumable-upload > request > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > google-gax > google-auto-auth > request > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > google-gax > google-auto-auth > gcp-metadata > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > request > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > @google-cloud/common > google-auto-auth > gcp-metadata > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > gcp-metadata > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > @google-cloud/common > retry-request > request > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > @google-cloud/common > google-auth-library > gcp-metadata > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > @google-cloud/common > google-auto-auth > request > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/firestore > google-gax > google-auto-auth > google-auth-library > gcp-metadata > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > google-auth-library > gcp-metadata > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+    - firebase-admin > @google-cloud/storage > @google-cloud/common > google-auto-auth > google-auth-library > gcp-metadata > extend:
+        patched: '2019-09-10T14:15:16.840Z'
+  'npm:stringstream:20180511':
+    - botanio > request > stringstream:
+        patched: '2019-09-10T14:15:16.840Z'
