@@ -44,7 +44,7 @@ const botan = require('botanio')(config.metrika_token);
 
 const Schedule = require('./schedule');
 
-const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии'];
+const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии', 'Информационная безопасность'];
 
 const platoonTypes = [
     'Офицеры РВСН', 'Офицеры разведка', 'Офицеры ВКС', 'Офицеры ЗИТ', 'Сержанты МСВ',
@@ -129,7 +129,8 @@ async function getNewsArticles(topic) {
   const articlesFinal = [];
   const numOfArticles = config.std_num_of_articles;
 
-  const articles = await googleNews.search(`${topic} РФ`, numOfArticles, 'ru');
+  const finalizedTopic = topic === 'Информационная безопасность' ? ' Военная информационная безопасность РФ' : `${topic} РФ`
+  const articles = await googleNews.search(finalizedTopic, numOfArticles, 'ru');
 
   for (let i = 0; i < numOfArticles; i++) {
     const dateObj = new Date(articles[i].pubDate);
