@@ -56,7 +56,7 @@ function getScheduleForPlatoon(platoon, date) {
 
         resolve(schedule);
       });
-  });
+  }).catch(() => {});
 }
 
 module.exports = getScheduleForPlatoon;

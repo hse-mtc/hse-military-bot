@@ -17,7 +17,8 @@
     "lint": "eslint *.js scripts/*.js",
     "lint:fix": "eslint *.js scripts/*.js --fix",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "ci": "exit 0"
   },
   "engines": {
     "node": "8.9.x",
