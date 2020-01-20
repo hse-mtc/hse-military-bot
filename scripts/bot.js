@@ -6,6 +6,7 @@ const config = {
   firebase_users_client_email: process.env.FIREBASE_USERS_CLIENT_EMAIL || '',
   firebase_users_private_key: process.env.FIREBASE_USERS_PRIVATE_KEY || '',
   metrika_token: process.env.METRIKA_TOKEN || '',
+  metrika_counter: process.env.METRIKA_COUNTER || '',
   port: process.env.PORT || 3000,
   token: process.env.TOKEN || '',
   std_num_of_articles: 5,
@@ -40,7 +41,7 @@ const firebaseUsers = Firebase.initializeApp({
   databaseURL: config.firebase_users_url,
 });
 
-const botan = require('botanio')(config.metrika_token);
+const metrica = require('bot-metrica')(config.metrika_counter);
 
 const Schedule = require('./schedule');
 
@@ -212,8 +213,10 @@ settingsTypeScene.command('help', ctx => ctx.reply('Навигация в бот
 settingsTypeScene.hears(menuControls.menu, enter('menu'));
 settingsTypeScene.on('message', async (ctx) => {
   if (isValueInArray(platoonTypes, ctx.message.text)) {
-    await writeUserSelection(ctx.from.id, 'platoonType', ctx.message.text).then(() => {
-      botan.track(ctx, `Цикл из настроек: ${ctx.message.text}`);
+    const user = ctx.from.id;
+
+    await writeUserSelection(user, 'platoonType', ctx.message.text).then(() => {
+      metrica.track(user, {}, `Цикл из настроек: ${ctx.message.text}`);
 
       return ctx.scene.enter('settingsPlatoon');
     });
@@ -235,8 +238,10 @@ settingsPlatoonScene.on('message', async (ctx) => {
   const platoonType = await readUserSelection(ctx.from.id, 'platoonType');
 
   if (isValueInArray(platoons[platoonTypes.indexOf(platoonType)], ctx.message.text)) {
-    await writeUserSelection(ctx.from.id, 'defaultPlatoon', ctx.message.text).then(() => {
-      botan.track(ctx, `Взвод из настроек: ${ctx.message.text}`);
+    const user = ctx.from.id;
+
+    await writeUserSelection(user, 'defaultPlatoon', ctx.message.text).then(() => {
+      metrica.track(user, {}, `Взвод из настроек: ${ctx.message.text}`);
 
       return ctx.reply('Настройки сохранены').then(() => {
         ctx.scene.enter('menu');
@@ -258,8 +263,10 @@ scheduleTypeScene.command('help', ctx => ctx.reply('Навигация в бот
 scheduleTypeScene.hears(menuControls.menu, enter('menu'));
 scheduleTypeScene.on('message', async (ctx) => {
   if (isValueInArray(platoonTypes, ctx.message.text)) {
-    await writeUserSelection(ctx.from.id, 'platoonType', ctx.message.text).then(() => {
-      botan.track(ctx, `Цикл: ${ctx.message.text}`);
+    const user = ctx.from.id;
+
+    await writeUserSelection(user, 'platoonType', ctx.message.text).then(() => {
+      metrica.track(user, {}, `Цикл: ${ctx.message.text}`);
 
       return ctx.scene.enter('schedulePlatoon');
     });
@@ -281,8 +288,10 @@ schedulePlatoonScene.on('message', async (ctx) => {
   const platoonType = await readUserSelection(ctx.from.id, 'platoonType');
 
   if (isValueInArray(platoons[platoonTypes.indexOf(platoonType)], ctx.message.text)) {
-    await writeUserSelection(ctx.from.id, 'platoon', ctx.message.text).then(() => {
-      botan.track(ctx, `Взвод: ${ctx.message.text}`);
+    const user = ctx.from.id;
+
+    await writeUserSelection(user, 'platoon', ctx.message.text).then(() => {
+      metrica.track(user, {}, `Взвод: ${ctx.message.text}`);
 
       return ctx.scene.enter('scheduleDate');
     });
@@ -343,11 +352,12 @@ stage.register(scheduleDateScene);
 
 const scheduleDefaultDateScene = new Scene('scheduleDefaultDate');
 scheduleDefaultDateScene.enter(async (ctx) => {
-  const platoon = await readUserSelection(ctx.from.id, 'defaultPlatoon');
+  const user = ctx.from.id;
+  const platoon = await readUserSelection(user, 'defaultPlatoon');
 
   return ctx.reply(`Ваш взвод: ${platoon}`).then(() => {
-    botan.track(ctx, `Цикл: ${getTypeFromPlatoon(platoon)}`);
-    botan.track(ctx, `Взвод: ${platoon}`);
+    metrica.track(user, {}, `Цикл: ${getTypeFromPlatoon(platoon)}`);
+    metrica.track(user, {}, `Взвод: ${platoon}`);
 
     ctx.reply('Выберите дату', Extra.markup((markup) => {
       const year = platoon.split('')[0] + platoon.split('')[1];
@@ -402,7 +412,7 @@ newsScene.command('help', ctx => ctx.reply('Навигация в боте пр�
 newsScene.hears(menuControls.menu, enter('menu'));
 newsScene.on('message', async (ctx) => {
   if (isValueInArray(newsTopics, ctx.message.text)) {
-    botan.track(ctx, `Тема для информирования: ${ctx.message.text}`);
+    metrica.track(ctx.from.id, { query: ctx.message.text }, `Тема для информирования`);
 
     const articles = await getNewsArticles(ctx.message.text);
     articles.forEach((article) => {

@@ -7,13 +7,13 @@
 
 
 Simply access HSE military department schedule, prepare news for informating comrades and receive full pack of stickers with people you know well.
-Stack of technologies used: 
+Stack of technologies used:
 * Awesome [Telegraf](http://telegraf.js.org/) wrapper for [Telegram API](https://core.telegram.org/).
 * [Heroku](https://heroku.com/) PaaS as hosting for app.
 * [Firebase API](https://firebase.google.com/) as database for user preferences and in-app data validation.
 * [exceljs](https://github.com/guyonroche/exceljs) for parsing and generating json-formatted schedule with metadata from \*.xlsx file.
 * [google-news-rss](https://github.com/brh55/google-news-rss) for parsing Google RSS feed.
-* [botanio](http://botan.io/) for Yandex AppMetrica statistics tracking.
+* Yandex.Metrica for statistics tracking.
 
 ## To run an app on local machine:
 ##### 1) Run `npm i` to install all dependences.
