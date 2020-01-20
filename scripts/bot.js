@@ -216,7 +216,7 @@ settingsTypeScene.on('message', async (ctx) => {
     const user = ctx.from.id;
 
     await writeUserSelection(user, 'platoonType', ctx.message.text).then(() => {
-      metrica.track(user, {}, `Цикл из настроек: ${ctx.message.text}`);
+      metrica.track(user, {query: ctx.message.text}, `Цикл из настроек`);
 
       return ctx.scene.enter('settingsPlatoon');
     });
@@ -241,7 +241,7 @@ settingsPlatoonScene.on('message', async (ctx) => {
     const user = ctx.from.id;
 
     await writeUserSelection(user, 'defaultPlatoon', ctx.message.text).then(() => {
-      metrica.track(user, {}, `Взвод из настроек: ${ctx.message.text}`);
+      metrica.track(user, {query: ctx.message.text}, `Взвод из настроек`);
 
       return ctx.reply('Настройки сохранены').then(() => {
         ctx.scene.enter('menu');
@@ -266,7 +266,7 @@ scheduleTypeScene.on('message', async (ctx) => {
     const user = ctx.from.id;
 
     await writeUserSelection(user, 'platoonType', ctx.message.text).then(() => {
-      metrica.track(user, {}, `Цикл: ${ctx.message.text}`);
+      metrica.track(user, {query: ctx.message.text}, `Цикл`);
 
       return ctx.scene.enter('schedulePlatoon');
     });
@@ -291,7 +291,7 @@ schedulePlatoonScene.on('message', async (ctx) => {
     const user = ctx.from.id;
 
     await writeUserSelection(user, 'platoon', ctx.message.text).then(() => {
-      metrica.track(user, {}, `Взвод: ${ctx.message.text}`);
+      metrica.track(user, {query: ctx.message.text}, `Взвод`);
 
       return ctx.scene.enter('scheduleDate');
     });
@@ -356,8 +356,8 @@ scheduleDefaultDateScene.enter(async (ctx) => {
   const platoon = await readUserSelection(user, 'defaultPlatoon');
 
   return ctx.reply(`Ваш взвод: ${platoon}`).then(() => {
-    metrica.track(user, {}, `Цикл: ${getTypeFromPlatoon(platoon)}`);
-    metrica.track(user, {}, `Взвод: ${platoon}`);
+    metrica.track(user, {query: getTypeFromPlatoon(platoon)}, `Цикл`);
+    metrica.track(user, {query: platoon}, `Взвод`);
 
     ctx.reply('Выберите дату', Extra.markup((markup) => {
       const year = platoon.split('')[0] + platoon.split('')[1];
