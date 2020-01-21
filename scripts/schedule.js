@@ -2,7 +2,7 @@ const Excel = require('exceljs');
 
 // get rid of Promise and replace it by async/await
 function getScheduleForPlatoon(platoon, date) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const workbook = new Excel.Workbook();
     const schedule = [];
 
@@ -23,6 +23,7 @@ function getScheduleForPlatoon(platoon, date) {
 
         const weekdayColumn = getColumnIndexesContainingString(worksheet, 'День недели')[0];
         const forcesColumn = getColumnIndexesContainingString(worksheet, 'ВУС')[0];
+        // TODO: rewrite it to work
         // const trainingsColumn = getColumnIndexesContainingString(worksheet, 'Тренировки:')[0];
         const trainingsColumn = 3;
         const weekColumn = getColumnIndexesContainingString(worksheet, date);
@@ -34,7 +35,8 @@ function getScheduleForPlatoon(platoon, date) {
 
         const week = [];
         weekColumn.forEach((item) => {
-          if (worksheet.getRow(platoonRow).getCell(item).fill && worksheet.getRow(platoonRow).getCell(item).fill.fgColor.indexed) {
+          if (worksheet.getRow(platoonRow).getCell(item).fill
+              && worksheet.getRow(platoonRow).getCell(item).fill.fgColor.indexed) {
             week.push({
               value: detectColorSimilarity(worksheet, colorPalette, platoonRow, item),
             });
@@ -44,7 +46,7 @@ function getScheduleForPlatoon(platoon, date) {
         });
 
         schedule.push({
-          meta: `${platoon} (${forces})` + `, ${date} (${weekday})` + ':',
+          meta: `${platoon} (${forces}), ${date} (${weekday}):`,
         });
 
         for (let i = 0; i < week.length; i++) {
@@ -70,7 +72,7 @@ function getRowIndexContainingString(worksheet, str) {
   let targetRowNumber = null;
 
   worksheet.eachRow((row, rowNumber) => {
-    row.eachCell((cell, colNumber) => {
+    row.eachCell((cell) => {
       if (tmpValue && tmpValue !== cell.value) {
         if (cell.value == str) {
           targetRowNumber = rowNumber;
@@ -87,7 +89,7 @@ function getColumnIndexesContainingString(worksheet, str) {
   let tmpValue = null;
   const targetColumnNumber = [];
 
-  worksheet.eachRow((row, rowNumber) => {
+  worksheet.eachRow((row) => {
     row.eachCell((cell, colNumber) => {
       if (tmpValue) {
         if (cell.value == str) {

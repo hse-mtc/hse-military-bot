@@ -41,32 +41,36 @@ const firebaseUsers = Firebase.initializeApp({
   databaseURL: config.firebase_users_url,
 });
 
-const metrica = require('bot-metrica')(config.metrika_counter);
+const metrica = require('bot-metrica')(config.metrika_counter, {
+  host: 'hse-military-bot.herokuapp.com',
+  path: '/',
+  pageTitle: 'hse-military-bot',
+});
 
 const Schedule = require('./schedule');
 
 const newsTopics = ['ВКС', 'Разведка', 'РВСН', 'Внутренняя политика', 'Внешняя политика', 'Военные технологии', 'Информационная безопасность'];
 
 const platoonTypes = [
-    'Офицеры РВСН', 'Офицеры разведка', 'Офицеры ВКС', 'Офицеры ЗИТ', 'Сержанты МСВ',
+  'Офицеры РВСН', 'Офицеры разведка', 'Офицеры ВКС', 'Офицеры ЗИТ', 'Сержанты МСВ',
 ];
 const platoons = [
-    ['1811', '1812', '1911', '1912', '1701', '1702'],
-    ['1801', '1802', '1803', '1901', '1902', '1903', '1703', '1704', '1705'],
-    ['1807', '1808', '1809', '1907', '1908', '1909', '1706', '1707', '1708'],
-    ['1810', '1910'],
-    ['1804', '1805', '1806', '1904', '1905', '1906'],
+  ['1811', '1812', '1911', '1912', '1701', '1702'],
+  ['1801', '1802', '1803', '1901', '1902', '1903', '1703', '1704', '1705'],
+  ['1807', '1808', '1809', '1907', '1908', '1909', '1706', '1707', '1708'],
+  ['1810', '1910'],
+  ['1804', '1805', '1806', '1904', '1905', '1906'],
 ];
 const dates = [
-    ['8 января', '15 января', '22 января', '29 января', '5 февраля', '12 февраля', '19 февраля', '26 февраля',
-        '4 марта', '11 марта', '18 марта', '25 марта', '1 апреля', '8 апреля', '15 апреля',
-        '22 апреля', '29 апреля'],
-    ['9 января', '16 января', '23 января', '30 января', '6 февраля', '13 февраля', '20 февраля', '27 февраля',
-        '5 марта', '12 марта', '19 марта', '26 марта', '2 апреля', '9 апреля', '16 апреля',
-        '23 апреля', '30 апреля'],
-    ['10 января', '17 января', '24 января', '31 января', '7 февраля', '14 февраля', '21 февраля', '28 февраля',
-        '6 марта', '13 марта', '20 марта', '27 марта', '3 апреля', '10 апреля', '17 апреля',
-        '24 апреля', '1 мая'],
+  ['8 января', '15 января', '22 января', '29 января', '5 февраля', '12 февраля', '19 февраля', '26 февраля',
+    '4 марта', '11 марта', '18 марта', '25 марта', '1 апреля', '8 апреля', '15 апреля',
+    '22 апреля', '29 апреля'],
+  ['9 января', '16 января', '23 января', '30 января', '6 февраля', '13 февраля', '20 февраля', '27 февраля',
+    '5 марта', '12 марта', '19 марта', '26 марта', '2 апреля', '9 апреля', '16 апреля',
+    '23 апреля', '30 апреля'],
+  ['10 января', '17 января', '24 января', '31 января', '7 февраля', '14 февраля', '21 февраля', '28 февраля',
+    '6 марта', '13 марта', '20 марта', '27 марта', '3 апреля', '10 апреля', '17 апреля',
+    '24 апреля', '1 мая'],
 ];
 
 const menuButtons = {
@@ -87,11 +91,11 @@ const settings = {
 /* Helpers */
 
 const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 
 function getFormattedDate(dateObj) {
   return `${dateObj.getDate()} ${
-  	months[dateObj.getMonth()]} ${
+    months[dateObj.getMonth()]} ${
     dateObj.getFullYear()}, ${
     dateObj.getHours()}:${
     dateObj.getMinutes().toString().length === 1 ? `0${dateObj.getMinutes()}` : dateObj.getMinutes()}`;
@@ -107,10 +111,7 @@ function isValueInObject(obj, value) {
 }
 
 function isValueInArray(arr, value) {
-  if (arr.indexOf(value) !== -1) {
-    return true;
-  }
-  return false;
+  return arr.indexOf(value) !== -1;
 }
 
 function getTypeFromPlatoon(platoon) {
@@ -130,7 +131,7 @@ async function getNewsArticles(topic) {
   const articlesFinal = [];
   const numOfArticles = config.std_num_of_articles;
 
-  const finalizedTopic = topic === 'Информационная безопасность' ? ' Военная информационная безопасность РФ' : `${topic} РФ`
+  const finalizedTopic = topic === 'Информационная безопасность' ? ' Военная информационная безопасность РФ' : `${topic} РФ`;
   const articles = await googleNews.search(finalizedTopic, numOfArticles, 'ru');
 
   for (let i = 0; i < numOfArticles; i++) {
@@ -143,7 +144,10 @@ async function getNewsArticles(topic) {
 
 async function writeUserSelection(chatId, field, value) {
   try {
-    await firebaseUsers.database().ref(`/users/${chatId}/${field}`).set(value);
+    await firebaseUsers
+      .database()
+      .ref(`/users/${chatId}/${field}`)
+      .set(value);
   } catch (err) {
     return null;
   }
@@ -151,7 +155,11 @@ async function writeUserSelection(chatId, field, value) {
 
 async function readUserSelection(chatId, field) {
   try {
-    return await firebaseUsers.database().ref(`/users/${chatId}`).once('value').then(data => platoonFinal = data.val()[field]);
+    return await firebaseUsers
+      .database()
+      .ref(`/users/${chatId}`)
+      .once('value')
+      .then(data => data.val()[field]);
   } catch (err) {
     return null;
   }
@@ -178,6 +186,7 @@ menuScene.hears(menuButtons.scheduleDefault, enter('scheduleDefaultDate'));
 menuScene.hears(menuButtons.schedule, enter('scheduleType'));
 menuScene.hears(menuButtons.news, enter('news'));
 menuScene.hears(menuButtons.stickers, (ctx) => {
+  metrica.track(ctx.from.id, ctx.message.text, 'Выбран стикерпак');
   ctx.replyWithSticker('CAADAgADGQADuoh2BvDmu8LdojQmAg', Markup.inlineKeyboard([
     Markup.urlButton('Полный стикерпак', 'https://t.me/addstickers/HseArmy', false),
   ]).extra());
@@ -192,7 +201,7 @@ settingsScene.enter((ctx) => {
   const settingsArray = Object.keys(settings).map(key => settings[key]);
 
   return ctx.reply('Выберите нужный пункт настроек', Extra.markup(markup => markup.resize()
-    .keyboard(Object.keys(settings).map(key => settings[key]).concat(menuControls.menu))));
+    .keyboard(settingsArray.concat(menuControls.menu))));
 });
 settingsScene.command('menu', ctx => ctx.scene.enter('menu'));
 settingsScene.command('help', ctx => ctx.reply('Навигация в боте производится с помощью меню.'));
@@ -212,14 +221,10 @@ settingsTypeScene.command('menu', ctx => ctx.scene.enter('menu'));
 settingsTypeScene.command('help', ctx => ctx.reply('Навигация в боте производится с помощью меню.'));
 settingsTypeScene.hears(menuControls.menu, enter('menu'));
 settingsTypeScene.on('message', async (ctx) => {
-  if (isValueInArray(platoonTypes, ctx.message.text)) {
-    const user = ctx.from.id;
+  const messageText = ctx.message.text;
 
-    await writeUserSelection(user, 'platoonType', ctx.message.text).then(() => {
-      metrica.track(user, {query: ctx.message.text}, `Цикл из настроек`);
-
-      return ctx.scene.enter('settingsPlatoon');
-    });
+  if (isValueInArray(platoonTypes, messageText)) {
+    await writeUserSelection(ctx.from.id, 'platoonType', messageText).then(() => ctx.scene.enter('settingsPlatoon'));
   } else {
     ctx.reply('Выберите существующий цикл, или вернитесь в меню');
   }
@@ -239,9 +244,10 @@ settingsPlatoonScene.on('message', async (ctx) => {
 
   if (isValueInArray(platoons[platoonTypes.indexOf(platoonType)], ctx.message.text)) {
     const user = ctx.from.id;
+    const messageText = ctx.message.text;
 
-    await writeUserSelection(user, 'defaultPlatoon', ctx.message.text).then(() => {
-      metrica.track(user, {query: ctx.message.text}, `Взвод из настроек`);
+    await writeUserSelection(user, 'defaultPlatoon', messageText).then(() => {
+      metrica.track(user, messageText, 'Выбран дефолтный взвод в настройках');
 
       return ctx.reply('Настройки сохранены').then(() => {
         ctx.scene.enter('menu');
@@ -264,10 +270,10 @@ scheduleTypeScene.hears(menuControls.menu, enter('menu'));
 scheduleTypeScene.on('message', async (ctx) => {
   if (isValueInArray(platoonTypes, ctx.message.text)) {
     const user = ctx.from.id;
+    const messageText = ctx.message.text;
 
-    await writeUserSelection(user, 'platoonType', ctx.message.text).then(() => {
-      metrica.track(user, {query: ctx.message.text}, `Цикл`);
-
+    await writeUserSelection(user, 'platoonType', messageText).then(() => {
+      metrica.track(user, messageText, 'Выбран цикл');
       return ctx.scene.enter('schedulePlatoon');
     });
   } else {
@@ -285,13 +291,14 @@ schedulePlatoonScene.command('menu', ctx => ctx.scene.enter('menu'));
 schedulePlatoonScene.command('help', ctx => ctx.reply('Навигация в боте производится с помощью меню.'));
 schedulePlatoonScene.hears(menuControls.menu, enter('menu'));
 schedulePlatoonScene.on('message', async (ctx) => {
-  const platoonType = await readUserSelection(ctx.from.id, 'platoonType');
+  const user = ctx.from.id;
+  const messageText = ctx.message.text;
 
-  if (isValueInArray(platoons[platoonTypes.indexOf(platoonType)], ctx.message.text)) {
-    const user = ctx.from.id;
+  const platoonType = await readUserSelection(user, 'platoonType');
 
-    await writeUserSelection(user, 'platoon', ctx.message.text).then(() => {
-      metrica.track(user, {query: ctx.message.text}, `Взвод`);
+  if (isValueInArray(platoons[platoonTypes.indexOf(platoonType)], messageText)) {
+    await writeUserSelection(user, 'platoon', messageText).then(() => {
+      metrica.track(user, messageText, 'Выбран взвод');
 
       return ctx.scene.enter('scheduleDate');
     });
@@ -321,16 +328,23 @@ scheduleDateScene.hears(menuControls.menu, enter('menu'));
 scheduleDateScene.on('message', async (ctx) => {
   const platoon = await readUserSelection(ctx.from.id, 'platoon');
   const year = platoon.split('')[0] + platoon.split('')[1];
+
+  const user = ctx.from.id;
+  const messageText = ctx.message.text;
+
   const key = () => {
     if (year == 18) { return 0; } else if (year == 19) { return 1; } else if (year == 17) { return 2; }
   };
 
-  if (!isValueInArray(dates[key()], ctx.message.text)) {
+  if (!isValueInArray(dates[key()], messageText)) {
     return ctx.reply('Выберите существующую дату, или вернитесь в меню');
   }
 
-  await Schedule(platoon, ctx.message.text).then(async (schedule) => {
+  metrica.track(user, messageText, 'Выбрана дата');
+
+  await Schedule(platoon, messageText).then(async (schedule) => {
     let scheduleStringified = null;
+
     schedule.forEach(async (item) => {
       if (!item.meta) {
         // str.replace(/ {1,}/g," ") for removing long spaces
@@ -343,11 +357,22 @@ scheduleDateScene.on('message', async (ctx) => {
         scheduleStringified = `${item.meta}\n\n`;
       }
     });
+
     return ctx.reply(scheduleStringified);
-  }).then(() => ctx.scene.enter('menu'));
+  })
+    .then(() => {
+      metrica.track(user, 'Корректно выдано расписание');
+      return ctx.scene.enter('menu');
+    })
+    .catch(() => {
+      ctx.reply('Что-то пошло не так, попробуйте снова');
+      metrica.track(user, 'Некорректно выдано расписание');
+      return ctx.scene.enter('menu'); // Работает ли это?
+    });
 });
 stage.register(scheduleDateScene);
 
+// TODO: это defaultPlatoonScene
 /* ScheduleDefaultDate scene */
 
 const scheduleDefaultDateScene = new Scene('scheduleDefaultDate');
@@ -356,8 +381,7 @@ scheduleDefaultDateScene.enter(async (ctx) => {
   const platoon = await readUserSelection(user, 'defaultPlatoon');
 
   return ctx.reply(`Ваш взвод: ${platoon}`).then(() => {
-    metrica.track(user, {query: getTypeFromPlatoon(platoon)}, `Цикл`);
-    metrica.track(user, {query: platoon}, `Взвод`);
+    metrica.track(user, platoon, 'Выбрано расписание для дефолтного взвода');
 
     ctx.reply('Выберите дату', Extra.markup((markup) => {
       const year = platoon.split('')[0] + platoon.split('')[1];
@@ -373,17 +397,23 @@ scheduleDefaultDateScene.command('menu', ctx => ctx.scene.enter('menu'));
 scheduleDefaultDateScene.command('help', ctx => ctx.reply('Навигация в боте производится с помощью меню.'));
 scheduleDefaultDateScene.hears(menuControls.menu, enter('menu'));
 scheduleDefaultDateScene.on('message', async (ctx) => {
-  const platoon = await readUserSelection(ctx.from.id, 'defaultPlatoon');
+  const user = ctx.from.id;
+  const messageText = ctx.from.message;
+
+  const platoon = await readUserSelection(user, 'defaultPlatoon');
   const year = platoon.split('')[0] + platoon.split('')[1];
+
   const key = () => {
     if (year == 18) { return 0; } else if (year == 19) { return 1; } else if (year == 17) { return 2; }
   };
 
-  if (!isValueInArray(dates[key()], ctx.message.text)) {
+  if (!isValueInArray(dates[key()], messageText)) {
     return ctx.reply('Выберите существующую дату, или вернитесь в меню');
   }
 
-  await Schedule(platoon, ctx.message.text).then(async (schedule) => {
+  metrica.track(user, messageText, 'Выбрана дата для дефолтного взвода');
+
+  await Schedule(platoon, messageText).then(async (schedule) => {
     let scheduleStringified = null;
     schedule.forEach(async (item) => {
       if (!item.meta) {
@@ -398,7 +428,12 @@ scheduleDefaultDateScene.on('message', async (ctx) => {
       }
     });
     return ctx.reply(scheduleStringified);
-  }).then(() => ctx.scene.enter('menu'));
+  }).then(() => {
+    metrica.track(user, 'Корректно выдано расписание для дефолтного взвода');
+    return ctx.scene.enter('menu');
+  }).catch(() => {
+    metrica.track(user, 'Некорректно выдано расписание для дефолтного взвода');
+  });
 });
 stage.register(scheduleDefaultDateScene);
 
@@ -411,10 +446,12 @@ newsScene.command('menu', ctx => ctx.scene.enter('menu'));
 newsScene.command('help', ctx => ctx.reply('Навигация в боте производится с помощью меню.'));
 newsScene.hears(menuControls.menu, enter('menu'));
 newsScene.on('message', async (ctx) => {
-  if (isValueInArray(newsTopics, ctx.message.text)) {
-    metrica.track(ctx.from.id, { query: ctx.message.text }, `Тема для информирования`);
+  const messageText = ctx.message.text;
 
-    const articles = await getNewsArticles(ctx.message.text);
+  if (isValueInArray(newsTopics, messageText)) {
+    metrica.track(ctx.from.id, messageText, 'Выбрана тема для информирования');
+
+    const articles = await getNewsArticles(messageText);
     articles.forEach((article) => {
       ctx.reply(article);
     });
@@ -435,6 +472,7 @@ bot.hears(menuButtons.scheduleDefault, enter('scheduleDefaultDate'));
 bot.hears(menuButtons.schedule, enter('scheduleType'));
 bot.hears(menuButtons.news, enter('news'));
 bot.hears(menuButtons.stickers, (ctx) => {
+  metrica.track(ctx.from.id, 'Выбран стикерпак');
   ctx.replyWithSticker('CAADAgADGQADuoh2BvDmu8LdojQmAg', Markup.inlineKeyboard([
     Markup.urlButton('Полный стикерпак', 'https://t.me/addstickers/HseArmy', false),
   ]).extra());
