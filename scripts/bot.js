@@ -398,7 +398,7 @@ scheduleDefaultDateScene.command('help', ctx => ctx.reply('Навигация в
 scheduleDefaultDateScene.hears(menuControls.menu, enter('menu'));
 scheduleDefaultDateScene.on('message', async (ctx) => {
   const user = ctx.from.id;
-  const messageText = ctx.from.message;
+  const messageText = ctx.message.text;
 
   const platoon = await readUserSelection(user, 'defaultPlatoon');
   const year = platoon.split('')[0] + platoon.split('')[1];
