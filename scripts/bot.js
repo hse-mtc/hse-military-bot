@@ -361,12 +361,12 @@ scheduleDateScene.on('message', async (ctx) => {
     return ctx.reply(scheduleStringified);
   })
     .then(() => {
-      metrica.track(user, 'Корректно выдано расписание');
+      metrica.track(user, 'Успех', 'Корректно выдано расписание');
       return ctx.scene.enter('menu');
     })
     .catch(() => {
       ctx.reply('Что-то пошло не так, попробуйте снова');
-      metrica.track(user, 'Некорректно выдано расписание');
+      metrica.track(user, 'Ошибка', 'Некорректно выдано расписание');
       return ctx.scene.enter('menu'); // Работает ли это?
     });
 });
@@ -429,10 +429,10 @@ scheduleDefaultDateScene.on('message', async (ctx) => {
     });
     return ctx.reply(scheduleStringified);
   }).then(() => {
-    metrica.track(user, 'Корректно выдано расписание для дефолтного взвода');
+    metrica.track(user, 'Успех', 'Корректно выдано расписание для дефолтного взвода');
     return ctx.scene.enter('menu');
   }).catch(() => {
-    metrica.track(user, 'Некорректно выдано расписание для дефолтного взвода');
+    metrica.track(user, 'Ошибка', 'Некорректно выдано расписание для дефолтного взвода');
   });
 });
 stage.register(scheduleDefaultDateScene);
@@ -472,7 +472,7 @@ bot.hears(menuButtons.scheduleDefault, enter('scheduleDefaultDate'));
 bot.hears(menuButtons.schedule, enter('scheduleType'));
 bot.hears(menuButtons.news, enter('news'));
 bot.hears(menuButtons.stickers, (ctx) => {
-  metrica.track(ctx.from.id, 'Выбран стикерпак');
+  metrica.track(ctx.from.id, 'Стикерпак', 'Отдан стикерпак');
   ctx.replyWithSticker('CAADAgADGQADuoh2BvDmu8LdojQmAg', Markup.inlineKeyboard([
     Markup.urlButton('Полный стикерпак', 'https://t.me/addstickers/HseArmy', false),
   ]).extra());
