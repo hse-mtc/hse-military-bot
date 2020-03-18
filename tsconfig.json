@@ -1,0 +1,23 @@
+{
+	"awesomeTypescriptLoaderOptions": {
+		"reportFiles": ["./src/**/*"]
+	},
+	"compilerOptions": {
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"incremental": true,
+		"lib": ["es5", "es6", "dom"],
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"outDir": "./dist/",
+		"sourceMap": true,
+		"strictNullChecks": true,
+		"target": "es5",
+		"typeRoots": ["./src/typings", "./node_modules/@types"],
+		"types": ["node", "bot-metrica", "google-news-rss"]
+	},
+	"include": ["./src/**/*", "node_modules/@types/jest/index.d.ts"]
+}

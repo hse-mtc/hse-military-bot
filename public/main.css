@@ -1,6 +1,35 @@
+@media(max-width: 480px){
+	.body {
+		background: #000 url('backgroung_480.jpg');
+	}
+}
+
+@media(max-width: 795px){
+	.body {
+		background: #000 url('backgroung_795.jpg');
+	}
+}
+
+@media(max-width: 1050px){
+	.body {
+		background: #000 url('backgroung_1050.jpg');
+	}
+}
+
+@media(max-width: 1261px){
+	.body {
+		background: #000 url('backgroung_1261.jpg');
+	}
+}
+
+@media(min-width: 1262px){
+	.body {
+		background: #000 url('backgroung_1380.jpg');
+	}
+}
+
 .body {
 	color: #fff;
-	background: #000 url('backgroung.jpg');
 	background-size: cover;
 	background-attachment: fixed;
 	background-repeat: no-repeat;
