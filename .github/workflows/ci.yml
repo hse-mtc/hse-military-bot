@@ -2,15 +2,16 @@ name: PerCommitCI
 on: [push]
 
 jobs:
-  build:
-    name: Prettier
-    runs-on: ubuntu-latest
+    build:
+        name: Prettier
+        runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1
-      - run: npm run format
-      - run: git status
-      - uses: mikeal/publish-to-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        steps:
+            - uses: actions/checkout@v1
+            - uses: bahmutov/npm-install@v1
+            - run: npm run prettier:check
+            - run: npm run test:coverage
+            - run: git status
+            - uses: mikeal/publish-to-github-action@master
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
