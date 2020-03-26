@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
     build:
-        name: Prettier
+        name: PerCommitCIBuild
         runs-on: ubuntu-latest
 
         steps:
