@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "bot-metrica": "^1.0.2",
-    "dotenv": "^5.0.1",
+    "dotenv": "^8.2.0",
     "exceljs": "^0.8.5",
     "express": "^4.16.3",
     "express-favicon": "^2.0.1",
