@@ -1,0 +1,244 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2020-03-27T00:22:14.227Z",
+    "__export_source": "insomnia.desktop.app:v7.1.1",
+    "resources": [
+        {
+            "_id": "req_50028f6275f4465ba2b088c89e306b41",
+            "authentication": {},
+            "body": {},
+            "created": 1582366296502,
+            "description": "",
+            "headers": [],
+            "isPrivate": false,
+            "metaSortKey": -1580210941283,
+            "method": "GET",
+            "modified": 1582366311675,
+            "name": "/",
+            "parameters": [],
+            "parentId": "fld_ce2b4a55c33344c9bc3aedace73d44af",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "{{ apiProtocol  }}://{{ apiHost  }}:{{ apiPort  }}/",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_ce2b4a55c33344c9bc3aedace73d44af",
+            "created": 1580210512665,
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1580210512665,
+            "modified": 1580210512665,
+            "name": "API",
+            "parentId": "wrk_db648f62b3b24a2cac4541d49bf15b4a",
+            "_type": "request_group"
+        },
+        {
+            "_id": "wrk_db648f62b3b24a2cac4541d49bf15b4a",
+            "created": 1580210471003,
+            "description": "",
+            "modified": 1580210487023,
+            "name": "HSE Military bot",
+            "parentId": null,
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_a5184fc8d5094be0b631f5536032f0f1",
+            "authentication": {},
+            "body": {},
+            "created": 1580210520058,
+            "description": "",
+            "headers": [
+                {
+                    "description": "",
+                    "id": "pair_a014051aba5a43879e4f5c6e08af0029",
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1580210941258,
+            "method": "GET",
+            "modified": 1582366301811,
+            "name": "/ping",
+            "parameters": [],
+            "parentId": "fld_ce2b4a55c33344c9bc3aedace73d44af",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "{{ apiProtocol  }}://{{ apiHost  }}:{{ apiPort  }}/ping",
+            "_type": "request"
+        },
+        {
+            "_id": "req_42a7a98a61ef4f13963a521130d021ce",
+            "authentication": {},
+            "body": {},
+            "created": 1582366835743,
+            "description": "",
+            "headers": [
+                {
+                    "description": "",
+                    "id": "pair_81a42afd36b24bcca7485a999a3eebc3",
+                    "name": "authorization",
+                    "value": "1"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1580210941245.5,
+            "method": "GET",
+            "modified": 1582368102459,
+            "name": "/getFullSchedule",
+            "parameters": [],
+            "parentId": "fld_ce2b4a55c33344c9bc3aedace73d44af",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "{{ apiProtocol  }}://{{ apiHost  }}:{{ apiPort  }}/getFullSchedule",
+            "_type": "request"
+        },
+        {
+            "_id": "req_5a6a8ed3cf1943abb7a181b4e2e645ac",
+            "authentication": {},
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"platoon\": \"1809\",\n\t\"date\": \"15 января\"\n}\n"
+            },
+            "created": 1580210941233,
+            "description": "",
+            "headers": [
+                {
+                    "id": "pair_428fbbd61d7040b18cebc5462a39cba3",
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "description": "",
+                    "id": "pair_4d1636f65c8244959b98985ac46c3040",
+                    "name": "authorization",
+                    "value": "1"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1580210941233,
+            "method": "POST",
+            "modified": 1583336174920,
+            "name": "/getScheduleForPlatoon",
+            "parameters": [],
+            "parentId": "fld_ce2b4a55c33344c9bc3aedace73d44af",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "{{ apiProtocol  }}://{{ apiHost  }}:{{ apiPort  }}/getScheduleForPlatoon",
+            "_type": "request"
+        },
+        {
+            "_id": "req_1fde585f1f3f4d019e29c527d9d12291",
+            "authentication": {},
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"platoon\": \"1809\"\n}"
+            },
+            "created": 1582366543935,
+            "description": "",
+            "headers": [
+                {
+                    "id": "pair_4d9b4d8a8a684e7c975a0105a79f9d85",
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "description": "",
+                    "id": "pair_b3ef37b7cd974911870018baa13b78c0",
+                    "name": "authorization",
+                    "value": "1"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1580210941183,
+            "method": "POST",
+            "modified": 1583336192064,
+            "name": "/getPlatoonTypeForPlatoon",
+            "parameters": [],
+            "parentId": "fld_ce2b4a55c33344c9bc3aedace73d44af",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "{{ apiProtocol  }}://{{ apiHost  }}:{{ apiPort  }}/getPlatoonTypeForPlatoon",
+            "_type": "request"
+        },
+        {
+            "_id": "env_a9c203d564c42663231d117743280f52740012b9",
+            "color": null,
+            "created": 1580210471038,
+            "data": {},
+            "dataPropertyOrder": null,
+            "isPrivate": false,
+            "metaSortKey": 1580210471038,
+            "modified": 1580210471038,
+            "name": "Base Environment",
+            "parentId": "wrk_db648f62b3b24a2cac4541d49bf15b4a",
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_a9c203d564c42663231d117743280f52740012b9",
+            "cookies": [],
+            "created": 1580210471040,
+            "modified": 1580210471040,
+            "name": "Default Jar",
+            "parentId": "wrk_db648f62b3b24a2cac4541d49bf15b4a",
+            "_type": "cookie_jar"
+        },
+        {
+            "_id": "env_b06d5d5731144423a697e213c53bb82d",
+            "color": "#d70000",
+            "created": 1580210539201,
+            "data": {
+                "apiHost": "hse-military-bot.herokuapp.com",
+                "apiPort": "80",
+                "apiProtocol": "https"
+            },
+            "dataPropertyOrder": { "&": ["apiHost", "apiPort", "apiProtocol"] },
+            "isPrivate": false,
+            "metaSortKey": 1580210539201,
+            "modified": 1582366238261,
+            "name": "Production",
+            "parentId": "env_a9c203d564c42663231d117743280f52740012b9",
+            "_type": "environment"
+        },
+        {
+            "_id": "env_c846487071f34d829afcda4608197e91",
+            "color": "#090085",
+            "created": 1580210586780,
+            "data": {
+                "apiHost": "localhost",
+                "apiPort": 3000,
+                "apiProtocol": "http"
+            },
+            "dataPropertyOrder": { "&": ["apiHost", "apiPort", "apiProtocol"] },
+            "isPrivate": false,
+            "metaSortKey": 1580210586781,
+            "modified": 1582366249548,
+            "name": "Development",
+            "parentId": "env_a9c203d564c42663231d117743280f52740012b9",
+            "_type": "environment"
+        }
+    ]
+}
