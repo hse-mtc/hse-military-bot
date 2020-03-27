@@ -28,7 +28,7 @@
     "bot-metrica": "^1.0.2",
     "dotenv": "^5.0.1",
     "exceljs": "^0.8.5",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "firebase-admin": "^5.12.1",
     "google-news-rss": "^0.4.1",
