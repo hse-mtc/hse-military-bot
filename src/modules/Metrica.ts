@@ -1,28 +1,26 @@
 import BotMetrica, { TMetricaTrackFunction } from "bot-metrica";
 
-import createError from "@/helpers/createError";
+import BaseError from "@/modules/BaseError";
 import { resolveMetricaConfigSync } from "@/resolvers/config";
+
+// TODO: all errors унести from classes
+const MetricaInitError = BaseError.createErrorGenerator("MetricaInitError");
 
 class Metrica {
     private _instance: TMetricaTrackFunction;
 
-    get instance() {
+    get instance(): TMetricaTrackFunction {
         return this._instance;
     }
 
-    public MetricaInitError = createError({
-        name: "MetricaInitError",
-        message: "Cannot initialize BotMetrica",
-    });
-
-    setup() {
+    setup(): void {
         const { counter, ...config } = resolveMetricaConfigSync();
 
         // TODO: capture the whole error! (ReferenceError)
         try {
             this._instance = BotMetrica(counter, config);
         } catch (exception) {
-            throw new this.MetricaInitError();
+            throw MetricaInitError("Cannot initialize BotMetrica");
         }
     }
 }

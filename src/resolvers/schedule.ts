@@ -1,24 +1,26 @@
-import createError from "@/helpers/createError";
 import {
     ScheduleStorage,
-    TScheduleStorageInstance,
-    TSchedule,
+    TScheduleObject,
+    TScheduleDayItem,
+    TScheduleMeta,
 } from "@/modules/Schedule";
+import BaseError from "@/modules/BaseError";
 
-const ScheduleFromPlatoonResolver = createError({
-    name: "ScheduleFromPlatoonResolver",
-    message: "ScheduleFromPlatoonResolver error",
-});
+const ScheduleFromPlatoonResolverError = BaseError.createErrorGenerator(
+    "ScheduleFromPlatoonResolverError",
+);
 
-export const resolveFullSchedule = async (): Promise<
-    TScheduleStorageInstance
-> => {
-    return await ScheduleStorage.fromDumpOrBuild();
-};
+export const resolveFullSchedule = (): TScheduleObject =>
+    ScheduleStorage.instanсe;
 
-export const resolvePlatoonTypeFromPlatoon = async (targetPlatoon: string) => {
+export const resolveScheduleMeta = (): TScheduleMeta =>
+    resolveFullSchedule().meta;
+
+export const resolvePlatoonTypeFromPlatoon = (
+    targetPlatoon: string,
+): string | undefined => {
     let detectedPlatoonType;
-    const scheduleObj = await resolveFullSchedule();
+    const scheduleObj = resolveFullSchedule();
 
     for (const [platoonType, platoons] of Object.entries(
         scheduleObj.meta.platoons,
@@ -33,17 +35,17 @@ export const resolvePlatoonTypeFromPlatoon = async (targetPlatoon: string) => {
     return detectedPlatoonType;
 };
 
-export const resolveScheduleFromPlatoon = async (
+export const resolveScheduleFromPlatoon = (
     platoon: string,
     date: string,
-): Promise<TSchedule> => {
-    const [scheduleObj, platoonType] = await Promise.all([
-        resolveFullSchedule(),
-        resolvePlatoonTypeFromPlatoon(platoon),
-    ]);
+): TScheduleDayItem => {
+    const scheduleObj = resolveFullSchedule();
+    const platoonType = resolvePlatoonTypeFromPlatoon(platoon);
 
     if (!scheduleObj || !platoonType) {
-        throw new ScheduleFromPlatoonResolver();
+        throw ScheduleFromPlatoonResolverError(
+            "ScheduleFromPlatoonResolverError occured",
+        );
     }
 
     return scheduleObj.schedule[platoonType][platoon][date];

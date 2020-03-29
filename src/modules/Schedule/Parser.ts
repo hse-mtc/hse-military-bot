@@ -1,4 +1,4 @@
-import { Workbook, Worksheet } from "exceljs";
+import { Workbook, Worksheet, CellValue, CellRichTextValue } from "exceljs";
 
 import {
     getAllActiveIndeces,
@@ -10,9 +10,23 @@ import {
     getTrainingsColorPalette,
     hasOnlyValuesFromArray,
 } from "@/helpers/schedule";
-import { head } from "@/helpers/general";
+import { head, capitalizeFirstLetter } from "@/helpers/general";
+import BaseError from "@/modules/BaseError";
 
-// TODO: rewrite like Firebase
+import {
+    TSchedule,
+    TScheduleMeta,
+    TScheduleObject,
+    TScheduleMetaPlatoonTypes,
+    TScheduleMetaPlatoons,
+    TScheduleMetaDates,
+} from ".";
+
+const ScheduleParserError = BaseError.createErrorGenerator(
+    "ScheduleParserError",
+);
+
+// A bunch of legacy, that I was too lazy to refactor, sorry ¯\_(ツ)_/¯
 class ScheduleParser {
     /* Triggers for Excel table columns detection */
     private _excelTriggers = {
@@ -23,10 +37,10 @@ class ScheduleParser {
         trainings: "Тренировки:",
     };
 
-    private _formMeta(scheduleObj) {
-        const platoonTypesMeta = [];
-        const platoonsMeta = {};
-        const datesMeta = {};
+    private _buildMeta(scheduleObj: TSchedule): TScheduleMeta {
+        const platoonTypesMeta: TScheduleMetaPlatoonTypes = [];
+        const platoonsMeta: TScheduleMetaPlatoons = {};
+        const datesMeta: TScheduleMetaDates = {};
 
         Object.keys(scheduleObj).forEach((platoonType) => {
             platoonTypesMeta.push(platoonType);
@@ -48,8 +62,8 @@ class ScheduleParser {
 
     private _getAllDateRowsFromActiveIndeces(
         worksheet: Worksheet,
-        activeIndeces,
-    ) {
+        activeIndeces: number[],
+    ): number[] {
         const datesRowIndeces = [
             getRowIndecesContainingString(
                 worksheet,
@@ -57,20 +71,31 @@ class ScheduleParser {
             )[1],
         ];
 
-        return activeIndeces.reduce((prevRowIndex, currRowIndex) => {
+        activeIndeces.reduce((prevRowIndex, currRowIndex) => {
             if (currRowIndex - prevRowIndex !== 1) {
                 datesRowIndeces.push(currRowIndex - 1);
             }
+
             return currRowIndex;
         });
+
+        return datesRowIndeces;
     }
 
-    private getColumnsFromTriggers(worksheet: Worksheet) {
+    private getColumnsFromTriggers(
+        worksheet: Worksheet,
+    ): {
+        platoonTypeColumn: number;
+        platoonColumn: number;
+        weekdayColumn: number;
+        trainingsColumn: number;
+        dateColumn: number;
+    } {
         const {
             platoonType,
             platoon,
             weekday,
-            trainings,
+            // trainings,
             date,
         } = this._excelTriggers;
 
@@ -85,19 +110,21 @@ class ScheduleParser {
                 getColumnIndecesContainingString(worksheet, weekday),
             ),
             trainingsColumn: 3,
-            // trainingsColumn: head(getColumnIndecesContainingString(worksheet, trainings)),
+            // trainingsColumn: head(
+            //     getColumnIndecesContainingString(worksheet, trainings),
+            // ),
             dateColumn: head(getColumnIndecesContainingString(worksheet, date)),
         };
     }
 
-    async parse(path: string) {
-        const schedule = {};
+    async parse(path: string): Promise<TScheduleObject> {
+        const schedule: TSchedule = {};
         const workbook = new Workbook();
 
         try {
             await workbook.xlsx.readFile(path);
         } catch (exception) {
-            throw exception;
+            throw ScheduleParserError("Cannot read xlsx file");
         }
 
         const worksheet = workbook.getWorksheet(1);
@@ -116,9 +143,9 @@ class ScheduleParser {
             this._excelTriggers.platoonType,
         );
 
-        const platoonTypes = [];
-        const platoons = [];
-        const weekdays = [];
+        const platoonTypes: string[] = [];
+        const platoons: string[] = [];
+        const weekdays: string[] = [];
 
         activeIndeces.forEach((rowIndex, iter) => {
             platoonTypes.push(
@@ -155,9 +182,8 @@ class ScheduleParser {
         /* Get schedule for all date columns */
         activeIndeces.forEach((rowIndex, iter) => {
             /* Get current date row */
-            // TODO: remove all @ts-ignores
-            let currDateRow: { row: string; index: number } = {
-                row: "",
+            let currDateRow: { row: number; index: number } = {
+                row: 0,
                 index: 0,
             };
 
@@ -167,28 +193,27 @@ class ScheduleParser {
                     rowIndex < currDateColumn.row
                 ) {
                     currDateRow = { row: prevDateColumn.row, index: index - 1 };
-                    return currDateColumn;
                 } else if (rowIndex > currDateColumn.row) {
                     currDateRow = { row: currDateColumn.row, index };
-                    return currDateColumn;
                 }
-                return null;
+
+                return currDateColumn;
             });
 
             /* Make platoonTypes->platoon obj */
             schedule[platoonTypes[iter]][platoons[iter]] = {};
 
             /* Get full schedule */
-            let scheduleForSingleDay = [];
+            let scheduleForSingleDay: string[] = [];
 
             datesAllColumns[currDateRow.index].dates.reduce(
                 (
                     prevDate,
                     currDate,
-                    datesAllColumnsIterator,
+                    datesAllColumnsIndex,
                     datesAllColumnsArray,
                 ) => {
-                    const currentLesson = getCellFromRowAndColumn(
+                    const currentLesson = getCellFromRowAndColumn<CellValue>(
                         worksheet,
                         rowIndex,
                         prevDate.col,
@@ -199,37 +224,38 @@ class ScheduleParser {
                         prevDate.col,
                     );
 
+                    let relativeLesson = "Самоподготовка";
                     /* Get relative lesson */
                     if (currentLesson) {
-                        if (currentLesson.richText) {
-                            scheduleForSingleDay.push(
-                                currentLesson.richText[0].text.replace(
-                                    /\r\n/g,
-                                    " ",
-                                ),
-                            );
+                        if ((currentLesson as CellRichTextValue).richText) {
+                            relativeLesson = (currentLesson as CellRichTextValue)
+                                .richText[0].text;
                         } else {
-                            scheduleForSingleDay.push(
-                                currentLesson.replace(/\r\n/g, " "),
-                            );
+                            relativeLesson = currentLesson as string;
                         }
                     } else if (currentlessonColor) {
                         colorPalette.forEach((color) => {
                             if (color.index === currentlessonColor) {
-                                scheduleForSingleDay.push(color.value);
+                                relativeLesson = color.value as string;
                             }
                         });
-                    } else {
-                        scheduleForSingleDay.push("Самоподготовка");
                     }
+
+                    scheduleForSingleDay.push(
+                        capitalizeFirstLetter(relativeLesson)
+                            .trim()
+                            .replace(/(\r|\n|\t|\s{2,})/g, " "),
+                    );
 
                     /* Make ...->platoon->dates obj */
                     if (currDate.value !== prevDate.value) {
                         /* Check if day is free */
                         const scheduleCheckFreeDaysArray = colorPalette.map(
-                            ({ value }) => value,
+                            ({ value }) => value as string,
                         );
+
                         scheduleCheckFreeDaysArray.push("Самоподготовка");
+
                         if (
                             hasOnlyValuesFromArray(
                                 scheduleForSingleDay,
@@ -240,7 +266,7 @@ class ScheduleParser {
                         }
 
                         schedule[platoonTypes[iter]][platoons[iter]][
-                            prevDate.value.trim()
+                            (prevDate.value as string).trim()
                         ] = {
                             weekday: weekdays[iter],
                             schedule: scheduleForSingleDay,
@@ -250,8 +276,8 @@ class ScheduleParser {
 
                         /* Get schedule for last day */
                         if (
-                            datesAllColumnsIterator ===
-                            datesAllColumnsArray.length - 1
+                            datesAllColumnsIndex ===
+                            datesAllColumnsArray.length - 6
                         ) {
                             const lesson = getCellFromRowAndColumn(
                                 worksheet,
@@ -260,14 +286,13 @@ class ScheduleParser {
                             );
 
                             if (lesson) {
-                                scheduleForSingleDay.push(
-                                    lesson.replace(/\r\n/g, " "),
-                                );
-                            } else
+                                scheduleForSingleDay.push(lesson);
+                            } else {
                                 scheduleForSingleDay.push("Занятий не будет!");
+                            }
 
                             schedule[platoonTypes[iter]][platoons[iter]][
-                                currDate.value
+                                currDate.value as string
                             ] = {
                                 weekday: weekdays[iter],
                                 schedule: scheduleForSingleDay,
@@ -281,7 +306,7 @@ class ScheduleParser {
         });
 
         return {
-            meta: this._formMeta(schedule),
+            meta: this._buildMeta(schedule),
             schedule,
         };
     }

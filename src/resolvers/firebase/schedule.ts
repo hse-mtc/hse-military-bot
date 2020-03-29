@@ -1,20 +1,22 @@
-import createError from "@/helpers/createError";
+import BaseError from "@/modules/BaseError";
 import { FirebaseSchedule } from "@/modules/Firebase";
 
-const FirebaseScheduleWriteResolverError = createError({
-    name: "FirebaseScheduleWriteResolverError",
-    message: "Error occurred in resolveWriteScheduleSelection resolver",
-});
+const FirebaseScheduleWriteResolverError = BaseError.createErrorGenerator(
+    "FirebaseScheduleWriteResolverError",
+);
 
 export const resolveWriteScheduleSelection = async (
     category: string,
     data: string,
-) => {
-    const firebaseScheduleInstance = FirebaseSchedule.instance;
-
+): Promise<void> => {
     try {
-        await firebaseScheduleInstance.database().ref(`/${category}`).set(data);
+        await FirebaseSchedule.instance
+            .database()
+            .ref(`/${category}`)
+            .set(data);
     } catch (err) {
-        throw new FirebaseScheduleWriteResolverError();
+        throw FirebaseScheduleWriteResolverError(
+            "Error occurred in resolveWriteScheduleSelection resolver",
+        );
     }
 };

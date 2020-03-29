@@ -1,23 +1,16 @@
 import * as tt from "telegraf/typings/telegram-types";
 import { ContextMessageUpdate, Markup, Stage } from "telegraf";
 
+import BaseError from "@/modules/BaseError";
 import track from "@/resolvers/metricaTrack";
-import { TReplyFunction } from "@/helpers/types";
-import createError from "@/helpers/createError";
 import { MENU_SCENARIO } from "@/constants/scenarios";
 import { MILITARY_STICKER_ID } from "@/constants/configuration";
+import { TReplyFunction } from "@/typings/custom";
 
 const { inlineKeyboard, urlButton } = Markup;
 
-const EnsureFromIdError = createError({
-    name: "EnsureFromIdError",
-    message: "EnsureFromIdError should never occur",
-});
-
-const EnsureMessageError = createError({
-    name: "EnsureMessageError",
-    message: "EnsureMessageError should never occur",
-});
+const EnsureFromIdError = BaseError.createErrorGenerator("EnsureFromIdError");
+const EnsureMessageError = BaseError.createErrorGenerator("EnsureMessageError");
 
 export const ensureFromId = async (
     from: tt.User | undefined,
@@ -29,7 +22,7 @@ export const ensureFromId = async (
     }
 
     if (!(from && from.id)) {
-        throw new EnsureFromIdError();
+        throw EnsureFromIdError("EnsureFromIdError should never occur");
     }
 
     return from.id;
@@ -45,7 +38,7 @@ export const ensureMessageText = async (
     }
 
     if (!(message && message.text)) {
-        throw new EnsureMessageError();
+        throw EnsureMessageError("EnsureMessageError should never occur");
     }
 
     return message.text;
@@ -55,7 +48,7 @@ export const ensureFromIdAndMessageText = (
     from: tt.User | undefined,
     message: tt.Message | undefined,
     reply: TReplyFunction,
-) =>
+): Promise<[number, string]> =>
     Promise.all([ensureFromId(from, reply), ensureMessageText(message, reply)]);
 
 export const handleStickerButton = async ({

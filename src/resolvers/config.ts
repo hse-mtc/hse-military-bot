@@ -46,7 +46,10 @@ export const resolveMetricaConfigSync = () => ({
     pageTitle: "hse-military-bot",
 });
 
-export const resolveScheduleFileConfig = () => ({
+export const resolveScheduleFileConfig = (): {
+    schedulePath: string;
+    parsedSchedulePath: string;
+} => ({
     schedulePath: path.join(__dirname, "../static/schedule.xlsx"),
     parsedSchedulePath: path.join(__dirname, "../static/parsedSchedule.json"),
 });

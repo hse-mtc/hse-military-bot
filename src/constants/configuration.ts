@@ -1,4 +1,4 @@
-// TODO: all in big symbols
+// TODO: брать из TScheduleObject
 
 export const PLATOON_TYPES = [
     "Офицеры РВСН",
@@ -6,7 +6,7 @@ export const PLATOON_TYPES = [
     "Офицеры ВКС",
     "Офицеры ЗИТ",
     "Сержанты МСВ",
-] as const;
+];
 
 export const PLATOONS = [
     ["1811", "1812", "1911", "1912", "1701", "1702"],
@@ -14,7 +14,7 @@ export const PLATOONS = [
     ["1807", "1808", "1809", "1907", "1908", "1909", "1706", "1707", "1708"],
     ["1810", "1910"],
     ["1804", "1805", "1806", "1904", "1905", "1906"],
-] as const;
+];
 
 export const SCHEDULE_DATES = [
     [
@@ -74,7 +74,7 @@ export const SCHEDULE_DATES = [
         "24 апреля",
         "1 мая",
     ],
-] as const;
+];
 
 export const NEWS_TOPICS = [
     "ВКС",
@@ -84,7 +84,7 @@ export const NEWS_TOPICS = [
     "Внешняя политика",
     "Военные технологии",
     "Информационная безопасность",
-] as const;
+];
 
 export const DEFAULT_NUM_OF_ARTICLES = 5;
 export const MILITARY_STICKER_ID = "CAADAgADGQADuoh2BvDmu8LdojQmAg";

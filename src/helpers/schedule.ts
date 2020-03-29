@@ -1,27 +1,32 @@
-import { CellValue, Worksheet } from "exceljs";
+import { CellValue, Worksheet, FillPattern } from "exceljs";
 
 import { popSimilarValues } from "@/helpers/general";
 
-type ColumnDates = {
+type TColumnDates = {
     col: number;
     value: CellValue;
 }[];
 
-type ColorPalette = {}[];
-
 export const getAllCellsFromRow = (
     worksheet: Worksheet,
     rowIndeces: number[],
-    startingColumn = 1,
-): { row: number; dates: ColumnDates } => {
-    const arr = [];
+    startingColumn = 0,
+): { row: number; dates: TColumnDates }[] => {
+    const arr: { row: number; dates: TColumnDates }[] = [];
 
     rowIndeces.forEach((item) => {
-        const arrForEachRow: ColumnDates = [];
+        const arrForEachRow: TColumnDates = [];
 
         worksheet.getRow(item).eachCell((cell, colNumber) => {
             if (colNumber >= startingColumn) {
-                arrForEachRow.push({ col: colNumber, value: cell.value });
+                if (!cell.value && cell.model.value) {
+                    arrForEachRow.push({
+                        col: colNumber,
+                        value: cell.model.value,
+                    });
+                } else {
+                    arrForEachRow.push({ col: colNumber, value: cell.value });
+                }
             }
         });
 
@@ -31,63 +36,83 @@ export const getAllCellsFromRow = (
     return arr;
 };
 
-export const getCellFromRowAndColumn = (
+export const getCellFromRowAndColumn = <T = string>(
     worksheet: Worksheet,
     rowIndex: number,
     columnIndex: number,
-) => {
-    return worksheet.getRow(rowIndex).getCell(columnIndex).value;
-};
+): T => (worksheet.getRow(rowIndex).getCell(columnIndex).value as unknown) as T;
 
 export const getColorFromRowAndColumn = (
     worksheet: Worksheet,
     rowIndex: number,
     columnIndex: number,
-) => {
-    const { style } = worksheet.getRow(rowIndex).getCell(columnIndex);
-    // const hasFgColor = fill && fill.fgColor.indexed;
+): number | undefined => {
+    const cell = worksheet.getRow(rowIndex).getCell(columnIndex);
+    const { style } = cell;
 
     if (style.fill && style.fill.type === "pattern" && style.fill.fgColor) {
-        return worksheet.getRow(rowIndex).getCell(columnIndex).fill.fgColor
-            .indexed;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore: type is incomplete in exceljs
+        return (cell.fill as FillPattern).fgColor.indexed;
     }
 
-    return false;
+    return undefined;
 };
 
 export const getAllActiveIndeces = (
     worksheet: Worksheet,
     column: number,
-    trigger,
-) => {
-    const arr = [];
+    trigger: string,
+): number[] => {
+    const arr: number[] = [];
+    const excelColumn = worksheet.getColumn(column);
 
-    worksheet.getColumn(column).eachCell((cell, rowNumber) => {
-        if (cell.value) {
-            if (cell.value === trigger) {
-                return;
+    excelColumn.eachCell &&
+        excelColumn.eachCell((cell, rowNumber) => {
+            if (cell.value) {
+                if (cell.value === trigger) {
+                    return;
+                }
+
+                arr.push(rowNumber);
             }
-            arr.push(rowNumber);
-        }
-    });
+        });
 
     return arr;
 };
 
+type TColorPalette = {
+    index: number;
+    value: CellValue;
+}[];
+
 export const getTrainingsColorPalette = (
     worksheet: Worksheet,
     column: number,
-) => {
-    const colorPalette: ColorPalette = [];
+): TColorPalette => {
+    const colorPalette: TColorPalette = [];
+    const excelColumn = worksheet.getColumn(column);
 
-    worksheet.getColumn(column).eachCell((cell, rowNumber) => {
-        if (cell.fill && cell.fill.fgColor.indexed) {
-            colorPalette.push({
-                index: cell.fill.fgColor.indexed,
-                value: worksheet.getRow(rowNumber).getCell(column + 2).value,
-            });
-        }
-    });
+    excelColumn.eachCell &&
+        excelColumn.eachCell((cell, rowNumber) => {
+            if (!cell.fill) {
+                return;
+            }
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore: type is incomplete in exceljs
+            const fgColor = (cell.fill as FillPattern).fgColor;
+
+            if (fgColor) {
+                colorPalette.push({
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore: type is incomplete in exceljs
+                    index: fgColor.indexed,
+                    value: worksheet.getRow(rowNumber).getCell(column + 2)
+                        .value,
+                });
+            }
+        });
 
     return colorPalette;
 };
@@ -134,17 +159,15 @@ export const getRowIndecesContainingString = (
     return targetColumnNumber;
 };
 
-export const hasOnlyValuesFromArray = <T>(
-    array: T[],
-    triggers: T[],
+export const hasOnlyValuesFromArray = (
+    array: string[],
+    triggers: string[],
 ): boolean => {
-    let counter = 0;
+    for (const element of array) {
+        if (!triggers.includes(element)) {
+            return false;
+        }
+    }
 
-    array.forEach((item) => {
-        triggers.forEach((trigger) => {
-            if (item === trigger) counter++;
-        });
-    });
-
-    return counter === array.length;
+    return true;
 };

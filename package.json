@@ -36,11 +36,11 @@
         "lint": "eslint --fix './src/**/*.{js,ts,json}' './configs/**/*.{js,ts,json}'",
         "ncu": "npx npm-check-updates",
         "ncu:update": "npx npm-check-updates -u",
-        "start": "NODE_ENV=production pm2 start ./dist/bin/starter.js --name node -i max",
-        "start:dev": "NODE_ENV=development nodemon src/bin/starter.ts --config configs/nodemon.json",
-        "start:dev:debug": "DEBUG='express:*' && npm run start:dev",
-        "start:dev:schedule": "NODE_ENV=development nodemon src/bin/starter.ts --mode=downloader --config configs/nodemon.json",
-        "start:dev:serverOnly": "NODE_ENV=development nodemon src/bin/starter.ts --mode=serverOnly --config configs/nodemon.json",
+        "start": "env NODE_HEAPDUMP_OPTIONS=nosignal NODE_ENV=production pm2 start ./dist/bin/starter.js --name node -i max",
+        "start:dev": "env NODE_HEAPDUMP_OPTIONS=nosignal NODE_ENV=development nodemon src/bin/starter.ts --config configs/nodemon.json",
+        "start:dev:debug": "env NODE_HEAPDUMP_OPTIONS=nosignal DEBUG='express:*' && npm run start:dev",
+        "start:dev:schedule": "env NODE_HEAPDUMP_OPTIONS=nosignal NODE_ENV=development nodemon src/bin/starter.ts --mode=downloader --config configs/nodemon.json",
+        "start:dev:serverOnly": "env NODE_HEAPDUMP_OPTIONS=nosignal NODE_ENV=development nodemon src/bin/starter.ts --mode=serverOnly --config configs/nodemon.json",
         "test": "jest --config=configs/jest.json",
         "test:watch": "jest --watch --coverage --config=configs/jest.json",
         "test:coverage": "jest --coverage --config=configs/jest.json"
@@ -52,7 +52,7 @@
     },
     "lint-staged": {
         "*.{js,ts}": [
-            "npm run prettier:check",
+            "npm run prettier",
             "npm run test:coverage"
         ]
     },

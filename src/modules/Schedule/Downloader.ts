@@ -1,38 +1,24 @@
-import { writeFileSync } from "fs";
 import { join } from "path";
-
+import { writeFileSync } from "fs";
 import fetch from "node-fetch";
 import { Parser } from "htmlparser2";
+import BaseError from "@/modules//BaseError";
 
-import Logger from "@/modules/Logger";
-import createError from "@/helpers/createError";
+const ScheduleDownloaderError = BaseError.createErrorGenerator(
+    "ScheduleDownloaderError",
+);
 
 class ScheduleDownloader {
     private _baseUrl = "https://www.hse.ru";
     private _scheduleUrl = `${this._baseUrl}/org/hse/ouk/mil/schedule`;
     private _schedulePath = join(__dirname, "../../static/schedule.xlsx");
 
-    public ScheduleDownloaderError = createError({
-        name: "ScheduleDownloaderError",
-        message: "Cannot download schedule xlsx",
-    });
-
-    public ScheduleDownloaderHrefError = createError({
-        name: "ScheduleDownloaderHrefError",
-        message: "Cannot find href for schedule",
-    });
-
-    public ScheduleDownloaderHtmlError = createError({
-        name: "ScheduleDownloaderHtmlError",
-        message: "Cannot find download html for schedule",
-    });
-
-    public async downloadSchedule() {
+    public async downloadSchedule(): Promise<void> {
         const html = await this._getPlainHtml();
         const scheduleHref = await this._parseHtml(html);
 
         if (scheduleHref === undefined) {
-            throw new this.ScheduleDownloaderHrefError();
+            throw ScheduleDownloaderError("Cannot find href for schedule");
         }
 
         await this._downloadAndSaveXlsx(`${this._baseUrl}${scheduleHref}`);
@@ -42,17 +28,19 @@ class ScheduleDownloader {
         const response = await fetch(this._scheduleUrl);
 
         if (!response.ok) {
-            throw new this.ScheduleDownloaderHtmlError();
+            throw ScheduleDownloaderError(
+                "Cannot find download html for schedule",
+            );
         }
 
         return response.text();
     }
 
     private _parseHtml(html: string): Promise<string | void> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const parser = new Parser(
                 {
-                    onopentag: (name, attribs) => {
+                    onopentag: (name, attribs): void => {
                         if (
                             name === "a" &&
                             attribs.href &&
@@ -77,7 +65,7 @@ class ScheduleDownloader {
 
             writeFileSync(this._schedulePath, xlsxContent, "utf8");
         } catch (exception) {
-            throw new this.ScheduleDownloaderError();
+            throw ScheduleDownloaderError("Cannot download schedule xlsx");
         }
     }
 }

@@ -7,8 +7,8 @@ class FirebaseSchedule extends AbstractFirebase {
         super();
     }
 
-    public setup() {
-        this._init(resolveFirebaseConfigSync("users"));
+    public setup(): void {
+        this._init(resolveFirebaseConfigSync("schedule"));
     }
 }
 

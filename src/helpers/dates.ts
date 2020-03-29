@@ -1,11 +1,10 @@
-import createError from "@/helpers/createError";
-import { TReplyFunction } from "@/helpers/types";
+import BaseError from "@/modules/BaseError";
 import { MONTH_NAMES } from "@/constants/dateTime";
+import { TReplyFunction } from "@/typings/custom";
 
-const UnexistingYearError = createError({
-    name: "UnexistingYearError",
-    message: "UnexistingYearError should never occur",
-});
+const UnexistingYearError = BaseError.createErrorGenerator(
+    "UnexistingYearError",
+);
 
 const formatMinutes = (rawMinutes: number): string => {
     const minutesString = rawMinutes.toString();
@@ -45,6 +44,6 @@ export const getYearIndexFromPlatoonSafe = (
             return 2;
         default:
             reply("Некорректный взвод");
-            throw new UnexistingYearError();
+            throw UnexistingYearError("UnexistingYearError should never occur");
     }
 };

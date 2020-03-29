@@ -1,4 +1,5 @@
-import { Extra, Markup, SceneContextMessageUpdate } from "telegraf";
+import { Message } from "telegraf/typings/telegram-types";
+import { Extra, Markup, SceneContextMessageUpdate, Scene } from "telegraf";
 
 import { NEWS_SCENARIO } from "@/constants/scenarios";
 import { GENERAL_CONTROLS } from "@/constants/controls";
@@ -12,8 +13,11 @@ import resolveNewsArticles from "@/resolvers/news";
 import track from "@/resolvers/metricaTrack";
 import createScene from "@/helpers/createScene";
 import { ensureFromIdAndMessageText } from "@/helpers/scenes";
+import { TReplyOrChangeScene } from "@/typings/custom";
 
-const enterHandler = ({ reply }: SceneContextMessageUpdate) => {
+const enterHandler = ({
+    reply,
+}: SceneContextMessageUpdate): Promise<Message> => {
     const controls = [...NEWS_TOPICS, GENERAL_CONTROLS.menu];
     const markup = Extra.markup(({ resize }: Markup) =>
         resize().keyboard(controls),
@@ -26,7 +30,7 @@ const messageHandler = async ({
     from,
     message,
     reply,
-}: SceneContextMessageUpdate) => {
+}: SceneContextMessageUpdate): Promise<TReplyOrChangeScene> => {
     const [fromId, messageText] = await ensureFromIdAndMessageText(
         from,
         message,
@@ -45,13 +49,14 @@ const messageHandler = async ({
         for (const article of articles) {
             await reply(article);
         }
-        return;
+
+        return reply("На сегодня хватит...");
     } else {
         return reply("Выберите существующую тему, или вернитесь в меню");
     }
 };
 
-export default () =>
+export default (): Scene<SceneContextMessageUpdate> =>
     createScene({
         name: NEWS_SCENARIO.NEWS_SCENE,
         enterHandler,

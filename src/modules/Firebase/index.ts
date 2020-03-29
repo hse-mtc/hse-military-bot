@@ -1,26 +1,24 @@
 import Firebase from "firebase-admin";
 
-import createError from "@/helpers/createError";
+import BaseError from "@/modules/BaseError";
 import { TFirebaseConfig } from "@/resolvers/config";
 
+const FirebaseError = BaseError.createErrorGenerator("FirebaseInitError");
+
+// TODO: добавить везде возвращаемые типы (прогнать ts по всем ворнингам)
 export default abstract class AbstractFirebase {
     private _instance: Firebase.app.App;
 
-    get instance() {
+    get instance(): Firebase.app.App {
         return this._instance;
     }
-
-    public FirebaseInitError = createError({
-        name: "FirebaseInitError",
-        message: "Cannot initialize Firebase",
-    });
 
     protected _init({
         databaseURL,
         projectId,
         clientEmail,
         privateKey,
-    }: TFirebaseConfig) {
+    }: TFirebaseConfig): void {
         try {
             this._instance = Firebase.initializeApp({
                 credential: Firebase.credential.cert({
@@ -31,7 +29,7 @@ export default abstract class AbstractFirebase {
                 databaseURL,
             });
         } catch (exception) {
-            throw new this.FirebaseInitError();
+            throw FirebaseError("Cannot initialize Firebase");
         }
     }
 }

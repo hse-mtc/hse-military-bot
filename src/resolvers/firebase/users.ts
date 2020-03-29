@@ -1,27 +1,24 @@
-import createError from "@/helpers/createError";
+import BaseError from "@/modules/BaseError";
 import { FirebaseUsers } from "@/modules/Firebase";
 
-const FirebaseUsersReadResolverError = createError({
-    name: "FirebaseUsersReadResolverError",
-    message: "Error occurred in resolveReadUserSelection resolver",
-});
+const FirebaseUsersResolverError = BaseError.createErrorGenerator(
+    "FirebaseUsersResolverError",
+);
 
-const FirebaseUsersWriteResolverError = createError({
-    name: "FirebaseUsersWriteResolverError",
-    message: "Error occurred in resolveWriteUserSelection resolver",
-});
-
-export async function resolveReadUserSelection(fromId: number, field: string) {
-    const firebaseUsersInstance = FirebaseUsers.instance;
-
+export async function resolveReadUserSelection(
+    fromId: number,
+    field: string,
+): Promise<string> {
     try {
-        return firebaseUsersInstance
+        return FirebaseUsers.instance
             .database()
             .ref(`/users/${fromId}`)
             .once("value")
             .then(({ val }) => val()[field]);
     } catch (exception) {
-        throw new FirebaseUsersReadResolverError();
+        throw FirebaseUsersResolverError(
+            "Error occurred in resolveReadUserSelection resolver",
+        );
     }
 }
 
@@ -29,15 +26,15 @@ export async function resolveWriteUserSelection(
     chatId: number,
     field: string,
     value: string,
-) {
-    const firebaseUsersInstance = FirebaseUsers.instance;
-
+): Promise<void> {
     try {
-        return await firebaseUsersInstance
+        return await FirebaseUsers.instance
             .database()
             .ref(`/users/${chatId}/${field}`)
             .set(value);
     } catch (exception) {
-        throw new FirebaseUsersWriteResolverError();
+        throw FirebaseUsersResolverError(
+            "Error occurred in resolveWriteUserSelection resolver",
+        );
     }
 }

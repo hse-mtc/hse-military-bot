@@ -6,7 +6,6 @@ import {
     Scene,
 } from "telegraf";
 
-import { MENU_CONTROLS } from "@/constants/controls";
 import {
     MENU_SCENARIO,
     NEWS_SCENARIO,
@@ -14,15 +13,15 @@ import {
     SCHEDULE_SCENARIO,
     DEFAULT_SCHEDULE_SCENARIO,
 } from "@/constants/scenarios";
-
+import { MENU_CONTROLS } from "@/constants/controls";
+import { TReplyOrChangeScene } from "@/typings/custom";
 import { resolveReadUserSelection } from "@/resolvers/firebase";
-
 import createScene from "@/helpers/createScene";
 import { ensureFromId, handleStickerButton } from "@/helpers/scenes";
 
 const { enter } = Stage;
 
-const constructMenuControls = (defaultPlatoon: string) => {
+const constructMenuControls = (defaultPlatoon: string): string[] => {
     return Object.entries(MENU_CONTROLS).reduce(
         (accumulator, [key, buttonText]) => {
             if (!defaultPlatoon && key === MENU_CONTROLS.SCHEDULE_DEFAULT) {
@@ -35,7 +34,10 @@ const constructMenuControls = (defaultPlatoon: string) => {
     );
 };
 
-const enterHandler = async ({ from, reply }: SceneContextMessageUpdate) => {
+const enterHandler = async ({
+    from,
+    reply,
+}: SceneContextMessageUpdate): Promise<TReplyOrChangeScene> => {
     const fromId = await ensureFromId(from, reply);
     const defaultPlatoon = await resolveReadUserSelection(
         fromId,
@@ -50,7 +52,7 @@ const enterHandler = async ({ from, reply }: SceneContextMessageUpdate) => {
     return reply("Выберите нужный пункт меню", markup);
 };
 
-export default () =>
+export default (): Scene<SceneContextMessageUpdate> =>
     createScene({
         name: MENU_SCENARIO.MAIN_SCENE,
         enterHandler,

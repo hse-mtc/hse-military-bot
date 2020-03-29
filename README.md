@@ -1,7 +1,7 @@
 ## <img src="public/logo.png" width="20"> HSE Military department [bot](https://t.me/hse_military_bot) for schedule
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/mvshmakov/hse-military-bot/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/mvshmakov/hse-military-bot.svg?branch=master)](https://travis-ci.org/mvshmakov/hse-military-bot)
+[![Build Status](https://github.com/mvshmakov/hse-military-bot/workflows/PerCommitCI/badge.svg?branch=master)](https://github.com/mvshmakov/hse-military-bot/actions?query=workflow%3APerCommitCI+branch%3Amaster)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=mvshmakov/hse-military-bot)](https://dependabot.com)
 [![dependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master)
 [![devDependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/dev-status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master?type=dev)
@@ -73,7 +73,7 @@ Stack of technologies used:
 
 ## User interface:
 
-![user interface](public/hse-military-bot.png)
+![user interface](public/gui.png)
 Обязательно используем 13 ноду (хипдамп может не собраться)
 
 ## Tests:
@@ -102,5 +102,4 @@ https://github.com/oauthjs/express-oauth-server/blob/master/test/unit/index_test
 TODO:
 
 -   Правильный хендл всех ошибок про асинхронщину (async/await)
--   Prettier
 -   Префиксуем T/I для типов и интерфейсов

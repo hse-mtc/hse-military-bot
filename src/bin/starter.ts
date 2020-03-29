@@ -15,13 +15,13 @@ program
     .version("1.0.0")
     .option(
         "-m, --mode <string>",
-        "Available modes: debug, serverOnly, development",
+        "Available modes: debug, serverOnly, development, production, downloader, parser",
         "development",
     )
     .parse(process.argv);
 
 // TODO: npm audit/npm dedupe (-p)/npm ci
-const starter = async () => {
+const starter = async (): Promise<void> => {
     const { mode = "development" } = program;
 
     const { env } = resolveEnvironmentSync();
@@ -46,13 +46,13 @@ const starter = async () => {
             FirebaseUsers.setup();
 
             Bot.setup();
-            Server.setup({ useBot: true });
+            await Server.setup({ useBot: true });
 
             break;
         }
         case "serverOnly": {
             Metrica.setup();
-            Server.setup({ useBot: false });
+            await Server.setup({ useBot: false });
 
             break;
         }
@@ -63,6 +63,7 @@ const starter = async () => {
                 Logger.error(
                     `Error happened in ScheduleDownloader: ${exception}`,
                 );
+                process.exit(1);
             }
 
             break;
@@ -84,6 +85,4 @@ const starter = async () => {
     process.on("uncaughtException", (error) => Logger.error(error));
 };
 
-starter()
-    .then(() => Logger.info("Successfully!"))
-    .catch((error) => Logger.error(error));
+starter();

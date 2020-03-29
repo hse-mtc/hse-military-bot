@@ -1,5 +1,15 @@
-import { Extra, Markup, SceneContextMessageUpdate, Stage } from "telegraf";
+import {
+    Extra,
+    Markup,
+    SceneContextMessageUpdate,
+    Stage,
+    Scene,
+} from "telegraf";
 
+import {
+    MENU_SCENARIO,
+    DEFAULT_SCHEDULE_SCENARIO,
+} from "@/constants/scenarios";
 import {
     DEFAULT_PLATOON_SCHEDULE_SUCCESS,
     DEFAULT_PLATOON_SCHEDULE_FAILURE,
@@ -7,10 +17,6 @@ import {
 } from "@/constants/metricaGoals";
 import { SCHEDULE_DATES } from "@/constants/configuration";
 import { GENERAL_CONTROLS } from "@/constants/controls";
-import {
-    MENU_SCENARIO,
-    DEFAULT_SCHEDULE_SCENARIO,
-} from "@/constants/scenarios";
 
 import track from "@/resolvers/metricaTrack";
 import { resolveReadUserSelection } from "@/resolvers/firebase";
@@ -19,11 +25,15 @@ import { resolveScheduleFromPlatoon } from "@/resolvers/schedule";
 import createScene from "@/helpers/createScene";
 import { getYearIndexFromPlatoonSafe } from "@/helpers/dates";
 import { ensureFromId, ensureFromIdAndMessageText } from "@/helpers/scenes";
+import { TReplyOrChangeScene } from "@/typings/custom";
 
-const enterHandler = async ({ from, reply }: SceneContextMessageUpdate) => {
+const enterHandler = async ({
+    from,
+    reply,
+}: SceneContextMessageUpdate): Promise<TReplyOrChangeScene> => {
+    let platoon = "";
     const fromId = await ensureFromId(from, reply);
 
-    let platoon = "";
     try {
         platoon = await resolveReadUserSelection(fromId, "defaultPlatoon");
 
@@ -60,7 +70,7 @@ const messageHandler = async ({
     from,
     message,
     reply,
-}: SceneContextMessageUpdate) => {
+}: SceneContextMessageUpdate): Promise<TReplyOrChangeScene> => {
     const [fromId, messageText] = await ensureFromIdAndMessageText(
         from,
         message,
@@ -77,10 +87,7 @@ const messageHandler = async ({
     track(fromId, messageText, DEFAULT_PLATOON_SCHEDULE_IS_CHOSEN.goal);
 
     try {
-        const { schedule } = await resolveScheduleFromPlatoon(
-            platoon,
-            messageText,
-        );
+        const { schedule } = resolveScheduleFromPlatoon(platoon, messageText);
 
         track(
             fromId,
@@ -103,7 +110,7 @@ const messageHandler = async ({
     }
 };
 
-export default () =>
+export default (): Scene<SceneContextMessageUpdate> =>
     createScene({
         name: DEFAULT_SCHEDULE_SCENARIO.DATE_SCENE,
         enterHandler,

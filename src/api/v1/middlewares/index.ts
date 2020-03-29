@@ -6,14 +6,16 @@ export const authMiddleware = (
     req: Request,
     res: Response,
     next: NextFunction,
-) => {
+): void => {
     const { authorization } = req.headers;
 
     if (!authorization) {
-        return res
-            .status(401)
-            .send("You should provide 'authorization' header with valid token");
+        res.status(401).send(
+            "You should provide 'authorization' header with valid token",
+        );
+
+        return;
     }
 
-    return next();
+    next();
 };

@@ -1,4 +1,4 @@
-import { ContextMessageUpdate, Middleware, Stage } from "telegraf";
+import { SceneContextMessageUpdate, Stage } from "telegraf";
 
 import createMenuScene from "./menu";
 
@@ -14,7 +14,7 @@ import createDefaultScheduleDateScene from "./defaultSchedule/date";
 
 import createNewsScene from "./news";
 
-export default function registerScenes() {
+export default function registerScenes(): Stage<SceneContextMessageUpdate> {
     return new Stage([
         createMenuScene(),
 

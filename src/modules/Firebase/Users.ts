@@ -7,7 +7,7 @@ class FirebaseUsers extends AbstractFirebase {
         super();
     }
 
-    public setup() {
+    public setup(): void {
         this._init(resolveFirebaseConfigSync("users"));
     }
 }
