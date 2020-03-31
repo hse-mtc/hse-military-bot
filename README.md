@@ -1,4 +1,4 @@
-## See actual code from [feature/brand-new-bot](https://github.com/mvshmakov/hse-military-bot/tree/feature/brand-new-bot).
+## See actual code from [feature/brand-new-bot](https://github.com/mvshmakov/hse-military-bot/tree/develop).
 
 ## <img src="logo.png" width="20"> HSE Military department [bot](https://t.me/hse_military_bot) for schedule
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/mvshmakov/hse-military-bot/blob/master/LICENSE)
