@@ -244,7 +244,8 @@ class ScheduleParser {
                     scheduleForSingleDay.push(
                         capitalizeFirstLetter(relativeLesson)
                             .trim()
-                            .replace(/(\r|\n|\t|\s{2,})/g, " "),
+                            .replace(/(\r|\n|\t)/g, " ")
+                            .replace(/\s{2,}/g, " "),
                     );
 
                     /* Make ...->platoon->dates obj */

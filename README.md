@@ -1,3 +1,7 @@
+<p align="center">
+<img style="width: 60%;" src="public/logo.png" alt="MacOS Config Icon"/>
+</p>
+
 ## <img src="public/logo.png" width="20"> HSE Military department [bot](https://t.me/hse_military_bot) for schedule
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/mvshmakov/hse-military-bot/blob/master/LICENSE)
@@ -73,8 +77,16 @@ Stack of technologies used:
 
 ## User interface:
 
-![user interface](public/gui.png)
-Обязательно используем 13 ноду (хипдамп может не собраться)
+<p align="center">
+    <img style="width: 80%;" src="public/gui.png" alt="Graphical User Interface"/>
+</p>
+
+## Yandex.Metrica example stats:
+
+<p align="center">
+    <img style="width: 80%;" src="public/metrica_1.png" alt="Yandex.Metrica stats 1"/>
+    <img style="width: 80%;" src="public/metrica_2.png" alt="Yandex.Metrica stats 2"/>
+</p>
 
 ## Tests:
 
@@ -86,4 +98,5 @@ TODO:
 -   Правильный хендл всех ошибок про асинхронщину (async/await)
 -   Префиксуем T/I для типов и интерфейсов
 
+Обязательно используем 13 ноду (хипдамп может не собраться)
 Разработка из-под впн (vpnbook)
