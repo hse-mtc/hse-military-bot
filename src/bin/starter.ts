@@ -9,7 +9,6 @@ import Logger from "@/modules/Logger";
 import Metrica from "@/modules/Metrica";
 import { FirebaseUsers } from "@/modules/Firebase";
 import { ScheduleDownloader, ScheduleStorage } from "@/modules/Schedule";
-import { resolveEnvironmentSync } from "@/resolvers/config";
 
 program
     .version("1.0.0")
@@ -20,21 +19,13 @@ program
     )
     .parse(process.argv);
 
-// TODO: npm audit/npm dedupe (-p)/npm ci
+// TODO: npm audit fix/npm dedupe (-p)/npm ci
 const starter = async (): Promise<void> => {
     const { mode = "development" } = program;
 
-    const { env } = resolveEnvironmentSync();
-    const dotenvConf = { path: join(__dirname, "../../configs") };
-
-    if (env === "development") {
-        dotenv.config({
-            ...dotenvConf,
-            debug: true,
-        });
-    } else {
-        dotenv.config(dotenvConf);
-    }
+    dotenv.config({
+        path: join(__dirname, "..", "..", ".env"),
+    });
 
     Logger.info(`Starting ${mode} mode...`);
 

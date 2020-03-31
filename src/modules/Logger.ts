@@ -42,4 +42,6 @@ const EXPRESS_LOGGER_OPTIONS = {
 };
 
 export default createLogger(LOGGER_OPTIONS);
+// export default console;
+
 export const ExpressLogger = expressLogger(EXPRESS_LOGGER_OPTIONS);

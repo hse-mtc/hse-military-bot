@@ -9,9 +9,9 @@ export async function resolveReadUserSelection(
     fromId: number,
     field: string,
 ): Promise<string> {
+    console.log(fromId, field);
     try {
         return FirebaseUsers.instance
-            .database()
             .ref(`/users/${fromId}`)
             .once("value")
             .then(({ val }) => val()[field]);
@@ -29,7 +29,6 @@ export async function resolveWriteUserSelection(
 ): Promise<void> {
     try {
         return await FirebaseUsers.instance
-            .database()
             .ref(`/users/${chatId}/${field}`)
             .set(value);
     } catch (exception) {

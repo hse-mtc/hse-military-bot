@@ -7,6 +7,7 @@
     "testRegex": "/src/__tests__/.*\\.js$",
     "moduleDirectories": ["node_modules"],
     "execMap": {
-        "ts": "./node_modules/.bin/ts-node"
+        "ts": "./node_modules/.bin/ts-node",
+        "js": "node"
     }
 }

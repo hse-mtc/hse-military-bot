@@ -1,16 +1,41 @@
 const { resolve } = require("path");
-const { CheckerPlugin } = require("awesome-typescript-loader");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-    .BundleAnalyzerPlugin;
 
-const basePlugins = [new CheckerPlugin()];
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+
+const basePlugins = [new CleanWebpackPlugin()];
 
 module.exports = {
-    resolve: {
-        extensions: [".ts", ".js"],
-    },
+    mode: "production",
+    entry: "./bin/starter.ts",
+    devtool: "source-map",
     target: "node",
     context: resolve(__dirname, "../../src"),
+    output: {
+        filename: "server.min.js",
+        path: resolve(__dirname, "../../dist"),
+        publicPath: "/",
+    },
+    performance: {
+        hints: false,
+    },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                test: /\.json(\?.*)?$/i,
+            }),
+        ],
+    },
+    resolve: {
+        alias: {
+            "@": resolve(__dirname, "../../src"),
+        },
+        extensions: [".ts", ".js", "jpeg", "png", "gif"],
+        modules: ["../../node_modules", "../../src"],
+    },
     module: {
         rules: [
             {
@@ -20,7 +45,8 @@ module.exports = {
             },
             {
                 test: /\.tsx?$/,
-                use: ["babel-loader", "awesome-typescript-loader"],
+                use: ["babel-loader", "ts-loader"],
+                exclude: /node_modules/,
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
@@ -36,7 +62,7 @@ module.exports = {
               ...basePlugins,
               new BundleAnalyzerPlugin(
                   new BundleAnalyzerPlugin({
-                      analyzerMode: "server",
+                      analyzerMode: "server", // "static" generates file instead of starting a web server
                       analyzerHost: "localhost",
                       analyzerPort: 8888,
                       reportFilename: "report.html",
@@ -50,7 +76,4 @@ module.exports = {
               ),
           ]
         : basePlugins,
-    performance: {
-        hints: false,
-    },
 };

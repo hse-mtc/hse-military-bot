@@ -1,5 +1,5 @@
 declare module "bot-metrica" {
-    export type TBotMetricaConfig = {
+    type TBotMetricaConfig = {
         host: string;
         path: string;
         token: string;

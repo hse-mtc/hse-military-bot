@@ -1,4 +1,4 @@
-import Firebase from "firebase-admin";
+import * as Firebase from "firebase-admin";
 
 import BaseError from "@/modules/BaseError";
 import { TFirebaseConfig } from "@/resolvers/config";
@@ -7,9 +7,9 @@ const FirebaseError = BaseError.createErrorGenerator("FirebaseInitError");
 
 // TODO: добавить везде возвращаемые типы (прогнать ts по всем ворнингам)
 export default abstract class AbstractFirebase {
-    private _instance: Firebase.app.App;
+    private _instance: Firebase.database.Database;
 
-    get instance(): Firebase.app.App {
+    get instance(): Firebase.database.Database {
         return this._instance;
     }
 
@@ -27,7 +27,7 @@ export default abstract class AbstractFirebase {
                     privateKey,
                 }),
                 databaseURL,
-            });
+            }).database();
         } catch (exception) {
             throw FirebaseError("Cannot initialize Firebase");
         }

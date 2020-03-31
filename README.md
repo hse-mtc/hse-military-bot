@@ -81,25 +81,9 @@ Stack of technologies used:
 https://github.com/oauthjs/express-oauth-server/blob/master/test/integration/index_test.js
 https://github.com/oauthjs/express-oauth-server/blob/master/test/unit/index_test.js
 
-'bodyParser',
-'compress',
-'cookieSession',
-'session',
-'logger',
-'cookieParser',
-'favicon',
-'responseTime',
-'errorHandler',
-'timeout',
-'methodOverride',
-'vhost',
-'csrf',
-'directory',
-'limit',
-'multipart',
-'staticCache',
-
 TODO:
 
 -   Правильный хендл всех ошибок про асинхронщину (async/await)
 -   Префиксуем T/I для типов и интерфейсов
+
+Разработка из-под впн (vpnbook)

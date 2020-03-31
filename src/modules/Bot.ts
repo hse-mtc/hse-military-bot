@@ -1,4 +1,5 @@
 import Telegraf, { Stage, session, ContextMessageUpdate } from "telegraf";
+import TelegrafLogger from "telegraf-logger";
 
 // TODO: check everywhere order of imports
 import {
@@ -8,9 +9,13 @@ import {
     SCHEDULE_SCENARIO,
     SETTINGS_SCENARIO,
 } from "@/constants/scenarios";
+import {
+    resolveBotConfigSync,
+    resolveEnvironmentSync,
+} from "@/resolvers/config";
+import Logger from "@/modules/Logger";
 import registerScenes from "@/scenes";
 import { MENU_CONTROLS } from "@/constants/controls";
-import { resolveBotConfigSync } from "@/resolvers/config";
 import { handleStickerButton } from "@/helpers/scenes";
 
 const { enter } = Stage;
@@ -25,17 +30,23 @@ class Bot {
 
     public setup(): void {
         const { token } = resolveBotConfigSync();
+        const { env } = resolveEnvironmentSync();
 
         this._instance = new Telegraf(token, {
             username: this._username,
             // TODO: wtf and use it in production?
             telegram: {
-                webhookReply: true,
+                webhookReply: env === "production",
             },
         });
 
-        this._instance.use(registerScenes().middleware());
+        const logger = new TelegrafLogger({
+            log: Logger.log,
+        });
+        this._instance.use(logger.middleware());
+
         this._instance.use(session());
+        this._instance.use(registerScenes().middleware());
 
         this._initMainListeners();
     }

@@ -2,6 +2,10 @@ import path from "path";
 
 import helmet from "helmet";
 import favicon from "serve-favicon";
+import timeout from "connect-timeout";
+import compression from "compression";
+import cookieParser from "cookie-parser";
+import responseTime from "response-time";
 import rateLimit from "express-rate-limit";
 import addRequestId from "express-request-id";
 import express, { Application } from "express";
@@ -91,12 +95,24 @@ class ExpressApp {
         /* Add some security */
         this._app.use(helmet());
 
+        /* Add some compression */
+        this._app.use(compression());
+
         /* Log before the routes */
         this._app.use(ExpressLogger);
+
+        /* Timeout 5s for all requests */
+        this._app.use(timeout("5s"));
 
         /* Body Parser */
         this._app.use(express.json());
         this._app.use(express.urlencoded({ extended: true }));
+
+        /* Cookie Parser */
+        this._app.use(cookieParser());
+
+        /* X-Response-Time header */
+        this._app.use(responseTime());
 
         this._app.use(express.static(path.join(__dirname, this._publicPath)));
         this._app.use(favicon("public/favicon.ico"));
@@ -105,6 +121,13 @@ class ExpressApp {
         this._app.use(commonRoutes);
         this._app.use(scheduleRoutes);
         this._app.use(debugRoutes);
+
+        /* Timeout checker */
+        this._app.use((req, _res, next) => {
+            if (!req.timedout) {
+                next();
+            }
+        });
 
         this._app.listen(port, () => {
             Logger.info(`Server running on port ${port}`);

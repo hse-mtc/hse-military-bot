@@ -10,10 +10,7 @@ export const resolveWriteScheduleSelection = async (
     data: string,
 ): Promise<void> => {
     try {
-        await FirebaseSchedule.instance
-            .database()
-            .ref(`/${category}`)
-            .set(data);
+        await FirebaseSchedule.instance.ref(`/${category}`).set(data);
     } catch (err) {
         throw FirebaseScheduleWriteResolverError(
             "Error occurred in resolveWriteScheduleSelection resolver",

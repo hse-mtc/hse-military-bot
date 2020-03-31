@@ -1,5 +1,5 @@
 declare module "google-news-rss" {
-    export type TArticle = {
+    type TArticle = {
         title: string;
         link: string;
         pubDate: string;
