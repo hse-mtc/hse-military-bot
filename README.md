@@ -1,5 +1,5 @@
 <p align="center">
-<img style="width: 60%;" src="public/logo.png" alt="MacOS Config Icon"/>
+<img style="max-width: 40%;" src="public/logo.png" alt="MacOS Config Icon"/>
 </p>
 
 ## <img src="public/logo.png" width="20"> HSE Military department [bot](https://t.me/hse_military_bot) for schedule
@@ -84,8 +84,8 @@ Stack of technologies used:
 ## Yandex.Metrica example stats:
 
 <p align="center">
-    <img style="width: 80%;" src="public/metrica_1.png" alt="Yandex.Metrica stats 1"/>
-    <img style="width: 80%;" src="public/metrica_2.png" alt="Yandex.Metrica stats 2"/>
+    <img style="max-width: 80%;" src="public/metrica_1.png" alt="Yandex.Metrica stats 1"/>
+    <img style="max-width: 80%;" src="public/metrica_2.png" alt="Yandex.Metrica stats 2"/>
 </p>
 
 ## Tests:
