@@ -1,16 +1,38 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" itemscope itemtype="http://schema.org/WebPage">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
 
         <!-- Other meta tags -->
-        <meta name="description" content="Get HSE Military schedule" />
         <meta name="author" content="mvshmakov" />
+        <meta property="og:locale" content="ru_RU" />
+        <meta
+            property="og:site_name"
+            content="Расписание военного учебного центра НИУ ВШЭ"
+        />
+        <meta
+            name="og:description"
+            content="Расписание военного учебного центра НИУ ВШЭ"
+        />
+
+        <!-- Logo meta tags -->
+        <meta
+            property="og:image"
+            content="http://hse-military-bot.herokuapp.com/logo.png"
+        />
+        <meta
+            property="og:image:secure_url"
+            content="https://hse-military-bot.herokuapp.com/logo.png"
+        />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="641" />
+        <meta property="og:image:height" content="641" />
 
         <!-- CSS -->
         <link rel="stylesheet" href="/main.css" type="text/css" />
@@ -19,39 +41,52 @@
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-        <title>Военная кафедра ВШЭ</title>
+        <!-- Favicon -->
+        <link rel="manifest" href="/manifest.json" />
+
+        <title>Расписание Военного учебного центра НИУ ВШЭ</title>
     </head>
     <body class="body">
-        <header class="header__container">
-            <img class="header__img" src="/logo.png" alt="logo" />
-            <h1 class="header__text">Чат-бот для Военной кафедры ВШЭ</h1>
-        </header>
+        <aside class="aside">
+            <header class="header__container">
+                <img class="header__img" src="/logo.png" alt="logo" />
+                <h1 class="header__text">
+                    Чат-бот для Военного учебного центра НИУ ВШЭ
+                </h1>
+            </header>
 
-        <main class="main">
-            <div class="main__official">
-                <span>Официальный сайт Военной кафедры ВШЭ - </span>
-                <a href="https://www.hse.ru/org/hse/ouk/mil/"
-                    >https://www.hse.ru/org/hse/ouk/mil/</a
-                >
-            </div>
+            <main class="main">
+                <div class="main__content">
+                    <div class="main__link">
+                        <span>
+                            Официальный сайт Военного учебного центра НИУ ВШЭ -
+                        </span>
+                        <a href="https://www.hse.ru/org/hse/ouk/mil/">
+                            https://www.hse.ru/org/hse/ouk/mil/
+                        </a>
+                    </div>
 
-            <div class="main__telegram">
-                <span>Телеграм-бот для Военной кафедры ВШЭ - </span>
-                <a href="https://t.me/hse_military_bot"
-                    >https://t.me/hse_military_bot</a
-                >
-            </div>
+                    <div class="main__link">
+                        <span>
+                            Телеграм-бот для Военного учебного центра НИУ ВШЭ -
+                        </span>
+                        <a href="https://t.me/hse_military_bot">
+                            https://t.me/hse_military_bot
+                        </a>
+                    </div>
 
-            <div class="main__telegram_if-blocked">
-                <span>Если ссылка не открывается - </span>
-                <a href="https://teleg.run/hse_military_bot"
-                    >https://teleg.run/hse_military_bot</a
-                >
-            </div>
-        </main>
+                    <div class="main__link">
+                        <span>Если ссылка не открывается - </span>
+                        <a href="https://teleg.run/hse_military_bot">
+                            https://teleg.run/hse_military_bot
+                        </a>
+                    </div>
+                </div>
+            </main>
+        </aside>
 
         <!-- Yandex.Metrica counter -->
-        <script type="text/javascript">
+        <script>
             (function (m, e, t, r, i, k, a) {
                 m[i] =
                     m[i] ||

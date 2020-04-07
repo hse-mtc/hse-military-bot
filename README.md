@@ -2,7 +2,7 @@
 <img style="max-width: 40%;" src="public/logo.png" alt="MacOS Config Icon"/>
 </p>
 
-## <img src="public/logo.png" width="20"> HSE Military department [bot](https://t.me/hse_military_bot) for schedule
+## <img src="public/logo.png" width="20"> HSE Military Training Center [bot](https://t.me/hse_military_bot) for schedule
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/mvshmakov/hse-military-bot/blob/master/LICENSE)
 [![Build Status](https://github.com/mvshmakov/hse-military-bot/workflows/PerCommitCI/badge.svg?branch=master)](https://github.com/mvshmakov/hse-military-bot/actions?query=workflow%3APerCommitCI+branch%3Amaster)
@@ -10,7 +10,7 @@
 [![dependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master)
 [![devDependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/dev-status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master?type=dev)
 
-Simply access HSE military department schedule, prepare news for informating comrades and receive full pack of stickers with people you know well.
+Simply access HSE Military Training Center schedule, prepare news for informating comrades and receive full pack of stickers with people you know well.
 Stack of technologies used:
 
 -   Awesome [Telegraf](http://telegraf.js.org/) wrapper for [Telegram API](https://core.telegram.org/).

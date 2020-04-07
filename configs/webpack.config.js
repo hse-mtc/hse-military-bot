@@ -11,10 +11,10 @@ module.exports = {
     entry: "./bin/starter.ts",
     devtool: "source-map",
     target: "node",
-    context: resolve(__dirname, "../../src"),
+    context: resolve(__dirname, "../src"),
     output: {
         filename: "server.min.js",
-        path: resolve(__dirname, "../../dist"),
+        path: resolve(__dirname, "../dist"),
         publicPath: "/",
     },
     performance: {
@@ -31,10 +31,10 @@ module.exports = {
     },
     resolve: {
         alias: {
-            "@": resolve(__dirname, "../../src"),
+            "@": resolve(__dirname, "../src"),
         },
-        extensions: [".ts", ".js", "jpeg", "png", "gif"],
-        modules: ["../../node_modules", "../../src"],
+        extensions: [".mjs", ".ts", ".js", "jpeg", "png", "gif"],
+        modules: ["../node_modules", "../src"],
     },
     module: {
         rules: [
@@ -54,6 +54,11 @@ module.exports = {
                     "file-loader?hash=sha512&digest=hex&name=img/[hash].[ext]",
                     "image-webpack-loader?bypassOnDebug&optipng.optimizationLevel=7&gifsicle.interlaced=false",
                 ],
+            },
+            {
+                test: /\.mjs$/,
+                include: /node_modules/,
+                type: "javascript/auto",
             },
         ],
     },
