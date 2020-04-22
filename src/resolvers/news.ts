@@ -16,7 +16,7 @@ const finalizeTopic = (topic: string): string =>
 
 export default async function resolveNewsArticles(
     topic: string,
-    numOfArticles: number,
+    numOfArticles = 25,
 ): Promise<string[]> {
     let rawArticles;
 

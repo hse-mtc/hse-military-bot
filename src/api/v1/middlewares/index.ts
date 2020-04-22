@@ -10,8 +10,8 @@ export const authMiddleware = (
     const { authorization } = req.headers;
 
     if (!authorization) {
-        res.status(401).send(
-            "You should provide 'authorization' header with valid token",
+        res.status(403).send(
+            "Forbidden. You should provide 'authorization' header with valid token",
         );
 
         return;

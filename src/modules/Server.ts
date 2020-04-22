@@ -17,7 +17,7 @@ import {
 import Bot from "@/modules/Bot";
 import BaseError from "@/modules/BaseError";
 import Logger, { ExpressLogger } from "@/modules/Logger";
-import { commonRoutes, scheduleRoutes, debugRoutes } from "@/api/v1/routes";
+import setupRoutes from "@/api/v1/routes";
 
 const WebHookError = BaseError.createErrorGenerator("WebHookError");
 const ExpressInitError = BaseError.createErrorGenerator("ExpressInitError");
@@ -82,6 +82,7 @@ class ExpressApp {
             await this._initializeBot(url, env);
         }
 
+        /* Add request id */
         this._app.use(addRequestId());
 
         /* Limit overall RPS to 5 RPS per user */
@@ -118,9 +119,7 @@ class ExpressApp {
         this._app.use(favicon("public/favicon.ico"));
 
         /* Routes */
-        this._app.use(commonRoutes);
-        this._app.use(scheduleRoutes);
-        this._app.use(debugRoutes);
+        setupRoutes(this._app);
 
         /* Timeout checker */
         this._app.use((req, _res, next) => {
