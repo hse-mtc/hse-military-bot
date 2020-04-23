@@ -30,7 +30,7 @@
     "exceljs": "^0.8.5",
     "express": "^4.16.3",
     "express-favicon": "^2.0.1",
-    "firebase-admin": "^5.12.1",
+    "firebase-admin": "^8.11.0",
     "google-news-rss": "^0.4.1",
     "snyk": "^1.71.0",
     "telegraf": "^3.21.2"
