@@ -40,14 +40,14 @@ class ExpressApp {
             await this._configure();
             Logger.info("Server started!");
         } catch (exception) {
-            Logger.error(`Error during starting server: {${exception}`);
+            Logger.error(`Error during starting server: ${exception}`);
         }
     }
 
     private async _initializeBot(url: string, env: string): Promise<void> {
         if (!this._bot || this._bot.instance === null) {
             throw ExpressInitError(
-                'Provide bot and use property "useBot: true"',
+                'Provide bot and use property "{ useBot: true }"',
             );
         }
 
@@ -55,19 +55,17 @@ class ExpressApp {
         const botInstance = this._bot.instance;
 
         if (env === "development") {
-            const isWebHookDeleted = await botInstance.telegram.deleteWebhook();
-
-            if (!isWebHookDeleted) {
-                throw WebHookError("Cannot delete WebHook in development");
+            try {
+                await botInstance.telegram.deleteWebhook();
+            } catch (exception) {
+                Logger.warn("Cannot delete WebHook in development");
             }
 
             botInstance.startPolling();
         } else {
-            const isWebHookSet = botInstance.telegram.setWebhook(
-                `${url}/bot${token}`,
-            );
-
-            if (!isWebHookSet) {
+            try {
+                await botInstance.telegram.setWebhook(`${url}/bot${token}`);
+            } catch (exception) {
                 throw WebHookError("Cannot set WebHook in production");
             }
 

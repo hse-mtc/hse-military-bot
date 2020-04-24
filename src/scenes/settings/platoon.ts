@@ -1,31 +1,39 @@
-import { Extra, Markup, SceneContextMessageUpdate, Stage } from "telegraf";
+import {
+    Extra,
+    Markup,
+    SceneContextMessageUpdate,
+    Scene,
+    Stage,
+} from "telegraf";
 
 import { GENERAL_CONTROLS } from "@/constants/controls";
-import { PLATOONS, PLATOON_TYPES } from "@/constants/configuration";
 import { MENU_SCENARIO, SETTINGS_SCENARIO } from "@/constants/scenarios";
 
-import track from "@/resolvers/metricaTrack";
 import {
-    resolveReadUserSelection,
+    // resolveReadUserSelection,
     resolveWriteUserSelection,
 } from "@/resolvers/firebase";
+import track from "@/resolvers/metricaTrack";
+import { resolvePlatoonsFromPlatoonType } from "@/resolvers/schedule";
 
-import createScene from "@/helpers/createScene";
 import {
     ensureFromIdAndMessageText,
     ensureMessageText,
 } from "@/helpers/scenes";
+import createScene from "@/helpers/createScene";
+import { makeKeyboardColumns } from "@/helpers/scenes";
+import { SceneContextMessageUpdateWithSession } from "@/typings/custom";
 
-const enterHandler = async ({ reply, message }: SceneContextMessageUpdate) => {
-    const messageText = await ensureMessageText(message, reply);
+const enterHandler = ({ reply, message }: SceneContextMessageUpdate) => {
+    const platoonType = ensureMessageText(message, reply);
+    const platoonsControls = resolvePlatoonsFromPlatoonType(platoonType);
 
-    // Validation was on the previous step, so we are sure that messageText is one of PLATOON_TYPES
-    const platoonTypeIndex = PLATOON_TYPES.indexOf(messageText as any);
-    const controls = [...PLATOONS[platoonTypeIndex], GENERAL_CONTROLS.menu];
+    const controls = [
+        ...makeKeyboardColumns(platoonsControls, 2),
+        [GENERAL_CONTROLS.BACK, GENERAL_CONTROLS.MENU],
+    ];
 
-    const markup = Extra.markup(({ resize }: Markup) =>
-        resize().keyboard(controls),
-    );
+    const markup = Extra.markup(Markup.keyboard(controls));
     return reply("Выберите нужный взвод", markup);
 };
 
@@ -33,31 +41,43 @@ const messageHandler = async ({
     from,
     message,
     reply,
-}: SceneContextMessageUpdate) => {
-    const [fromId, messageText] = await ensureFromIdAndMessageText(
+    scene,
+    session,
+}: SceneContextMessageUpdateWithSession<{ platoonType: string }>) => {
+    const [fromId, messageText] = ensureFromIdAndMessageText(
         from,
         message,
         reply,
     );
 
-    const platoonType = await resolveReadUserSelection(fromId, "platoonType");
-    const validPlatoonType = PLATOONS[PLATOON_TYPES.indexOf(platoonType)];
+    const platoonType = session.platoonType;
+    const platoons = resolvePlatoonsFromPlatoonType(platoonType);
 
-    if (messageText in validPlatoonType) {
+    if (platoons.includes(messageText)) {
         await resolveWriteUserSelection(fromId, "defaultPlatoon", messageText);
+
         track(fromId, messageText, "Выбран дефолтный взвод в настройках");
+        reply("Настройки сохранены 💾");
 
-        await reply("Настройки сохранены");
-
-        return Stage.enter(MENU_SCENARIO.MAIN_SCENE);
+        return scene.enter(MENU_SCENARIO.MAIN_SCENE);
     } else {
-        return reply("Выберите существующий взвод, или вернитесь в меню");
+        return reply(
+            "Выберите существующий взвод, или вернитесь в меню",
+            Extra.markup(Markup.resize(true)),
+        );
     }
 };
 
-export default () =>
-    createScene({
-        name: SETTINGS_SCENARIO.PLATOON_SCENE,
-        enterHandler,
-        messageHandler,
-    });
+export default createScene({
+    name: SETTINGS_SCENARIO.PLATOON_SCENE,
+    enterHandler,
+    messageHandler,
+    resultProcessor: (scene: Scene<SceneContextMessageUpdate>) => {
+        scene.hears(
+            GENERAL_CONTROLS.BACK,
+            Stage.enter(SETTINGS_SCENARIO.PLATOON_TYPE_SCENE),
+        );
+
+        return scene;
+    },
+});

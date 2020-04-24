@@ -1,6 +1,9 @@
 import { CellValue, Worksheet, FillPattern } from "exceljs";
 
 import { popSimilarValues } from "@/helpers/general";
+import { TScheduleDayItem } from "@/modules/Schedule";
+import { SCHEDULE_TIME } from "@/constants/dateTime";
+import { resolvePlatoonTypeFromPlatoon } from "@/resolvers/schedule";
 
 type TColumnDates = {
     col: number;
@@ -170,4 +173,23 @@ export const hasOnlyValuesFromArray = (
     }
 
     return true;
+};
+
+export const formatHtmlScheduleResponse = (
+    platoon: string,
+    date: string,
+    { weekday, schedule }: TScheduleDayItem,
+): string => {
+    const platoonType = resolvePlatoonTypeFromPlatoon(platoon);
+    const header = `${platoon} (${platoonType}), ${date} (${weekday}):\n`;
+
+    if (schedule.length === 1) {
+        return `${header}\n<b>${schedule[0]}</b>`;
+    }
+
+    const scheduleStringified = schedule.reduce((result, lesson, index) => {
+        return `${result}\n${SCHEDULE_TIME[index]} - <b>${lesson}</b>`;
+    }, "");
+
+    return `${header}${scheduleStringified}`;
 };

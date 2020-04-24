@@ -9,12 +9,11 @@ export async function resolveReadUserSelection(
     fromId: number,
     field: string,
 ): Promise<string> {
-    console.log(fromId, field);
     try {
         return FirebaseUsers.instance
             .ref(`/users/${fromId}`)
             .once("value")
-            .then(({ val }) => val()[field]);
+            .then((snapshot) => snapshot.val()[field]);
     } catch (exception) {
         throw FirebaseUsersResolverError(
             "Error occurred in resolveReadUserSelection resolver",

@@ -15,3 +15,9 @@ export type TReplyFunction = (
 export type TReplyOrChangeScene =
     | tt.Message
     | telegraf.Middleware<telegraf.SceneContextMessageUpdate>;
+
+export type SceneContextMessageUpdateWithSession<
+    T
+> = telegraf.SceneContextMessageUpdate & {
+    session: T;
+};

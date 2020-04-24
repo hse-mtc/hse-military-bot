@@ -1,5 +1,11 @@
 import * as tt from "telegraf/typings/telegram-types";
-import { ContextMessageUpdate, Markup, Stage } from "telegraf";
+import {
+    ContextMessageUpdate,
+    Markup,
+    Stage,
+    SceneContextMessageUpdate,
+    Extra,
+} from "telegraf";
 
 import BaseError from "@/modules/BaseError";
 import track from "@/resolvers/metricaTrack";
@@ -12,12 +18,12 @@ const { inlineKeyboard, urlButton } = Markup;
 const EnsureFromIdError = BaseError.createErrorGenerator("EnsureFromIdError");
 const EnsureMessageError = BaseError.createErrorGenerator("EnsureMessageError");
 
-export const ensureFromId = async (
+export const ensureFromId = (
     from: tt.User | undefined,
     reply: TReplyFunction,
-): Promise<number> => {
+): number => {
     if (!from) {
-        await reply("Метод не поддерживается");
+        reply("Метод не поддерживается");
         Stage.enter(MENU_SCENARIO.MAIN_SCENE);
     }
 
@@ -28,12 +34,12 @@ export const ensureFromId = async (
     return from.id;
 };
 
-export const ensureMessageText = async (
+export const ensureMessageText = (
     message: tt.Message | undefined,
     reply: TReplyFunction,
-): Promise<string> => {
+): string => {
     if (!message) {
-        await reply("Метод не поддерживается");
+        reply("Метод не поддерживается");
         Stage.enter(MENU_SCENARIO.MAIN_SCENE);
     }
 
@@ -48,15 +54,17 @@ export const ensureFromIdAndMessageText = (
     from: tt.User | undefined,
     message: tt.Message | undefined,
     reply: TReplyFunction,
-): Promise<[number, string]> =>
-    Promise.all([ensureFromId(from, reply), ensureMessageText(message, reply)]);
+): [number, string] => [
+    ensureFromId(from, reply),
+    ensureMessageText(message, reply),
+];
 
 export const handleStickerButton = async ({
     from,
     reply,
     replyWithSticker,
 }: ContextMessageUpdate): Promise<tt.MessageSticker | tt.Message> => {
-    const fromId = await ensureFromId(from, reply);
+    const fromId = ensureFromId(from, reply);
     track(fromId, "Стикерпак", "Выбран стикерпак");
 
     const button = urlButton(
@@ -68,4 +76,26 @@ export const handleStickerButton = async ({
         MILITARY_STICKER_ID,
         inlineKeyboard([button]).extra(),
     );
+};
+
+export const handleUnhandledMessageDefault = ({
+    reply,
+}: SceneContextMessageUpdate): Promise<tt.Message> =>
+    reply(
+        "Выберите существующий пункт меню, или вернитесь в главное меню",
+        Extra.markup(Markup.resize(true)),
+    );
+
+export const makeKeyboardColumns = (
+    controls: string[],
+    numOfColumns: number,
+): string[][] => {
+    return controls.reduce((result: string[][], platoonDateControl, index) => {
+        if (index === 0 || result[result.length - 1].length >= numOfColumns) {
+            result.push([]);
+        }
+
+        result[result.length - 1].push(platoonDateControl);
+        return result;
+    }, []);
 };

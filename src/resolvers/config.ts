@@ -53,3 +53,7 @@ export const resolveScheduleFileConfig = (): {
     schedulePath: path.join(__dirname, "../static/schedule.xlsx"),
     parsedSchedulePath: path.join(__dirname, "../static/parsedSchedule.json"),
 });
+
+export const resolveNewsFileConfig = (): { newsPath: string } => ({
+    newsPath: path.join(__dirname, "../static/news.json"),
+});

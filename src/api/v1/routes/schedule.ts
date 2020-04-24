@@ -2,8 +2,10 @@ import { Router, Response, Request } from "express";
 import {
     resolveFullSchedule,
     resolveScheduleMeta,
+    resolvePlatoonTypes,
     resolveScheduleFromPlatoon,
     resolvePlatoonTypeFromPlatoon,
+    resolveAvailableDatesFromPlatoon,
 } from "@/resolvers/schedule";
 import { CustomRequest } from "@/typings/custom";
 import { authMiddleware } from "../middlewares";
@@ -21,6 +23,13 @@ scheduleRoutes.get("/getScheduleMeta", [
     authMiddleware,
     (_req: Request, res: Response): void => {
         res.status(200).send(resolveScheduleMeta());
+    },
+]);
+
+scheduleRoutes.get("/getPlatoonTypes", [
+    authMiddleware,
+    (_req: Request, res: Response): void => {
+        res.status(200).send(resolvePlatoonTypes());
     },
 ]);
 
@@ -66,6 +75,27 @@ scheduleRoutes.post("/getPlatoonTypeForPlatoon", [
         }
 
         res.status(200).send(resolvePlatoonTypeFromPlatoon(platoon));
+    },
+]);
+
+type TGetAvailableDatesForPlatoonRequestBody = {
+    platoon: string;
+};
+
+scheduleRoutes.post("/getAvailableDatesForPlatoon", [
+    authMiddleware,
+    (
+        req: CustomRequest<TGetAvailableDatesForPlatoonRequestBody>,
+        res: Response,
+    ): void => {
+        const { platoon } = req.body;
+
+        if (!platoon) {
+            res.status(400).send("'platoon' should be provided");
+            return;
+        }
+
+        res.status(200).send(resolveAvailableDatesFromPlatoon(platoon));
     },
 ]);
 

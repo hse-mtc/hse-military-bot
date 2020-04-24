@@ -1,7 +1,8 @@
-import GoogleNewsRss from "google-news-rss";
+import GoogleNewsRss, { TArticle } from "google-news-rss";
 
 import BaseError from "@/modules/BaseError";
 import { getFormattedDate } from "@/helpers/dates";
+import { DEFAULT_NUM_OF_ARTICLES } from "@/constants/configuration";
 
 const googleNews = new GoogleNewsRss();
 
@@ -11,13 +12,13 @@ const NewsArticlesResolverError = BaseError.createErrorGenerator(
 
 const finalizeTopic = (topic: string): string =>
     topic === "Информационная безопасность"
-        ? "Военная информационная безопасность РФ"
-        : `${topic} РФ`;
+        ? "Военная информационная безопасность России"
+        : `${topic} России`;
 
 export default async function resolveNewsArticles(
     topic: string,
-    numOfArticles = 25,
-): Promise<string[]> {
+    numOfArticles = DEFAULT_NUM_OF_ARTICLES,
+): Promise<TArticle[]> {
     let rawArticles;
 
     try {
@@ -32,14 +33,10 @@ export default async function resolveNewsArticles(
         );
     }
 
-    const articles = [];
-
-    for (const rawArticle of rawArticles) {
-        const { pubDate, title, link } = rawArticle;
-        const date = getFormattedDate(new Date(pubDate));
-
-        articles.push(`${title}\n\n${link}\n\n${date}`);
-    }
-
-    return articles;
+    return rawArticles.slice(0, numOfArticles).map(
+        (article: TArticle): TArticle => {
+            article.pubDate = getFormattedDate(new Date(article.pubDate));
+            return article;
+        },
+    );
 }

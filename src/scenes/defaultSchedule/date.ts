@@ -1,10 +1,4 @@
-import {
-    Extra,
-    Markup,
-    SceneContextMessageUpdate,
-    Stage,
-    Scene,
-} from "telegraf";
+import { Extra, Markup } from "telegraf";
 
 import {
     MENU_SCENARIO,
@@ -15,27 +9,41 @@ import {
     DEFAULT_PLATOON_SCHEDULE_FAILURE,
     DEFAULT_PLATOON_SCHEDULE_IS_CHOSEN,
 } from "@/constants/metricaGoals";
-import { SCHEDULE_DATES } from "@/constants/configuration";
 import { GENERAL_CONTROLS } from "@/constants/controls";
 
 import track from "@/resolvers/metricaTrack";
 import { resolveReadUserSelection } from "@/resolvers/firebase";
-import { resolveScheduleFromPlatoon } from "@/resolvers/schedule";
+import {
+    resolveScheduleFromPlatoon,
+    resolveAvailableDatesFromPlatoon,
+} from "@/resolvers/schedule";
 
 import createScene from "@/helpers/createScene";
-import { getYearIndexFromPlatoonSafe } from "@/helpers/dates";
-import { ensureFromId, ensureFromIdAndMessageText } from "@/helpers/scenes";
-import { TReplyOrChangeScene } from "@/typings/custom";
+import {
+    TReplyOrChangeScene,
+    SceneContextMessageUpdateWithSession,
+} from "@/typings/custom";
+import { formatHtmlScheduleResponse } from "@/helpers/schedule";
+import {
+    ensureFromId,
+    ensureFromIdAndMessageText,
+    makeKeyboardColumns,
+} from "@/helpers/scenes";
 
 const enterHandler = async ({
     from,
     reply,
-}: SceneContextMessageUpdate): Promise<TReplyOrChangeScene> => {
+    scene,
+    session,
+}: SceneContextMessageUpdateWithSession<{ defaultPlatoon: string }>): Promise<
+    TReplyOrChangeScene
+> => {
     let platoon = "";
-    const fromId = await ensureFromId(from, reply);
+    const fromId = ensureFromId(from, reply);
 
     try {
         platoon = await resolveReadUserSelection(fromId, "defaultPlatoon");
+        session.defaultPlatoon = platoon;
 
         reply(`Ваш взвод: ${platoon}`);
         track(fromId, platoon, "Выбрано расписание для дефолтного взвода");
@@ -44,75 +52,79 @@ const enterHandler = async ({
         reply("Не удалось определить взвод");
         track(
             fromId,
-            DEFAULT_PLATOON_SCHEDULE_FAILURE.message,
-            DEFAULT_PLATOON_SCHEDULE_FAILURE.goal,
+            DEFAULT_PLATOON_SCHEDULE_FAILURE.MESSAGE,
+            DEFAULT_PLATOON_SCHEDULE_FAILURE.GOAL,
         );
 
         // TODO: throw exception?
-        // TODO: is it working properly?
-        return Stage.enter(MENU_SCENARIO.MAIN_SCENE);
+        return scene.enter(MENU_SCENARIO.MAIN_SCENE);
     }
 
-    const platoonYearIndex = getYearIndexFromPlatoonSafe(platoon, reply);
-
+    const platoonDatesControls = resolveAvailableDatesFromPlatoon(platoon);
     const controls = [
-        ...SCHEDULE_DATES[platoonYearIndex],
-        ...Object.keys(GENERAL_CONTROLS.menu),
+        ...makeKeyboardColumns(platoonDatesControls, 2),
+        [GENERAL_CONTROLS.MENU],
     ];
-    const markup = Extra.markup(({ resize }: Markup) =>
-        resize().keyboard(controls),
-    );
 
-    return reply("Выберите дату", markup);
+    const markup = Extra.markup(Markup.keyboard(controls));
+    return reply("Выберите дату 📅", markup);
 };
 
-const messageHandler = async ({
+const messageHandler = ({
     from,
     message,
     reply,
-}: SceneContextMessageUpdate): Promise<TReplyOrChangeScene> => {
-    const [fromId, messageText] = await ensureFromIdAndMessageText(
+    replyWithHTML,
+    scene,
+    session,
+}: SceneContextMessageUpdateWithSession<{ defaultPlatoon: string }>): Promise<
+    TReplyOrChangeScene
+> => {
+    const [fromId, messageText] = ensureFromIdAndMessageText(
         from,
         message,
         reply,
     );
 
-    const platoon = await resolveReadUserSelection(fromId, "defaultPlatoon");
-    const platoonYearIndex = getYearIndexFromPlatoonSafe(platoon, reply);
+    const platoon = session.defaultPlatoon;
+    const platoonDates = resolveAvailableDatesFromPlatoon(platoon);
 
-    if (messageText in SCHEDULE_DATES[platoonYearIndex]) {
-        return reply("Выберите существующую дату, или вернитесь в меню");
+    if (!platoonDates.includes(messageText)) {
+        return reply(
+            "Выберите существующую дату, или вернитесь в меню",
+            Extra.markup(Markup.resize(true)),
+        );
     }
 
-    track(fromId, messageText, DEFAULT_PLATOON_SCHEDULE_IS_CHOSEN.goal);
+    track(fromId, messageText, DEFAULT_PLATOON_SCHEDULE_IS_CHOSEN.GOAL);
 
     try {
-        const { schedule } = resolveScheduleFromPlatoon(platoon, messageText);
+        const schedule = resolveScheduleFromPlatoon(platoon, messageText);
 
         track(
             fromId,
-            DEFAULT_PLATOON_SCHEDULE_SUCCESS.message,
-            DEFAULT_PLATOON_SCHEDULE_SUCCESS.goal,
+            DEFAULT_PLATOON_SCHEDULE_SUCCESS.MESSAGE,
+            DEFAULT_PLATOON_SCHEDULE_SUCCESS.GOAL,
         );
 
-        return reply(schedule.join("\n\n"));
+        return replyWithHTML(
+            formatHtmlScheduleResponse(platoon, messageText, schedule),
+        );
     } catch (exception) {
-        reply("Что-то пошло не так, попробуйте снова");
+        reply("Что-то пошло не так, попробуйте снова 🧐");
         track(
             fromId,
-            DEFAULT_PLATOON_SCHEDULE_FAILURE.message,
-            DEFAULT_PLATOON_SCHEDULE_FAILURE.goal,
+            DEFAULT_PLATOON_SCHEDULE_FAILURE.MESSAGE,
+            DEFAULT_PLATOON_SCHEDULE_FAILURE.GOAL,
         );
-
         // TODO: throw exception
-        // TODO: is it working properly?
-        return Stage.enter(MENU_SCENARIO.MAIN_SCENE);
     }
+
+    return scene.enter(MENU_SCENARIO.MAIN_SCENE);
 };
 
-export default (): Scene<SceneContextMessageUpdate> =>
-    createScene({
-        name: DEFAULT_SCHEDULE_SCENARIO.DATE_SCENE,
-        enterHandler,
-        messageHandler,
-    });
+export default createScene({
+    name: DEFAULT_SCHEDULE_SCENARIO.DATE_SCENE,
+    enterHandler,
+    messageHandler,
+});

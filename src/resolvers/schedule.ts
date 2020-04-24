@@ -10,20 +10,27 @@ const ScheduleFromPlatoonResolverError = BaseError.createErrorGenerator(
     "ScheduleFromPlatoonResolverError",
 );
 
+const AvailableDatesFromPlatoonResolverError = BaseError.createErrorGenerator(
+    "AvailableDatesFromPlatoonResolverError",
+);
+
 export const resolveFullSchedule = (): TScheduleObject =>
     ScheduleStorage.instanсe;
 
 export const resolveScheduleMeta = (): TScheduleMeta =>
     resolveFullSchedule().meta;
 
+export const resolvePlatoonTypes = (): string[] =>
+    resolveScheduleMeta().platoonTypes;
+
 export const resolvePlatoonTypeFromPlatoon = (
     targetPlatoon: string,
 ): string | undefined => {
     let detectedPlatoonType;
-    const scheduleObj = resolveFullSchedule();
+    const scheduleMeta = resolveScheduleMeta();
 
     for (const [platoonType, platoons] of Object.entries(
-        scheduleObj.meta.platoons,
+        scheduleMeta.platoons,
     )) {
         for (const platoon of platoons) {
             if (platoon === targetPlatoon) {
@@ -49,4 +56,30 @@ export const resolveScheduleFromPlatoon = (
     }
 
     return scheduleObj.schedule[platoonType][platoon][date];
+};
+
+export const resolvePlatoonsFromPlatoonType = (
+    platoonType: string,
+): string[] => {
+    const scheduleMeta = resolveScheduleMeta();
+
+    if (!scheduleMeta || !platoonType) {
+        throw ScheduleFromPlatoonResolverError(
+            "ScheduleFromPlatoonResolverError occured",
+        );
+    }
+
+    return scheduleMeta.platoons[platoonType];
+};
+
+export const resolveAvailableDatesFromPlatoon = (platoon: string): string[] => {
+    const scheduleMeta = resolveScheduleMeta();
+
+    if (!scheduleMeta || !platoon) {
+        throw AvailableDatesFromPlatoonResolverError(
+            "AvailableDatesFromPlatoonResolverError occured",
+        );
+    }
+
+    return scheduleMeta.dates[platoon];
 };
