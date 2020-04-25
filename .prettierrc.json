@@ -1,0 +1,14 @@
+{
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": false,
+    "overrides": [
+        {
+            "files": ".{prettierrc,babelrc,json}",
+            "options": {
+                "parser": "json"
+            }
+        }
+    ]
+}

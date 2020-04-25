@@ -1,0 +1,13 @@
+{
+    "watch": ["src"],
+    "ext": "ts",
+    "coverageReporters": ["html"],
+    "coverageDirectory": "<rootDir>/__tests__/__coverage__/",
+    "ignore": ["node_modules/**", "src/**/*.spec.ts"],
+    "testRegex": "/src/__tests__/.*\\.js$",
+    "moduleDirectories": ["node_modules"],
+    "execMap": {
+        "ts": "./node_modules/.bin/ts-node",
+        "js": "node"
+    }
+}

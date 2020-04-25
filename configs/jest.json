@@ -1,0 +1,16 @@
+{
+    "rootDir": "..",
+    "coverageDirectory": "<rootDir>/src/__tests__/__coverage__/",
+    "roots": ["<rootDir>/src/"],
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx"],
+    "transform": {
+        "^.+\\.(ts|tsx)$": "<rootDir>/configs/jest.preprocessor.js"
+    },
+    "transformIgnorePatterns": ["/node_modules/"],
+    "testRegex": "/__tests__/.*\\.spec.(ts|tsx)$",
+    "moduleDirectories": ["node_modules"],
+    "globals": {
+        "DEVELOPMENT": false,
+        "FAKE_SERVER": false
+    }
+}
