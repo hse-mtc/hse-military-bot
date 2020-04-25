@@ -1,29 +1,25 @@
-import {
-    Stage,
-    Extra,
-    SceneContextMessageUpdate,
-    Markup,
-    Scene,
-} from "telegraf";
+import { Stage, Extra, Markup } from "telegraf";
 
-import createScene from "@/helpers/createScene";
 import { SETTINGS_SCENARIO } from "@/constants/scenarios";
 import { GENERAL_CONTROLS, SETTINGS_CONTROLS } from "@/constants/controls";
 
-const enterHandler = async ({ reply }: SceneContextMessageUpdate) => {
+import createScene from "@/helpers/createScene";
+import { SceneHandler } from "@/typings/custom";
+
+const enterHandler: SceneHandler = async ({ reply }) => {
     const controls = [
         [SETTINGS_CONTROLS.DEFAULT_PLATOON, SETTINGS_CONTROLS.ABOUT],
         [GENERAL_CONTROLS.MENU],
     ];
 
     const markup = Extra.markup(Markup.keyboard(controls));
-    return reply("Выберите нужный пункт настроек", markup);
+    return reply("Выберите нужный пункт настроек:", markup);
 };
 
 export default createScene({
     name: SETTINGS_SCENARIO.MAIN_SCENE,
     enterHandler,
-    resultProcessor: (scene: Scene<SceneContextMessageUpdate>) => {
+    resultProcessor: (scene) => {
         scene.hears(
             SETTINGS_CONTROLS.DEFAULT_PLATOON,
             Stage.enter(SETTINGS_SCENARIO.PLATOON_TYPE_SCENE),

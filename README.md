@@ -26,7 +26,6 @@ Stack of technologies used:
 
 ##### 2) Add an `.env` file in root directory with following fields:
 
--   `NODE_ENV=development`
 -   `PORT={Port you want to run on(etc. 5000)}`
 -   `BOT_TOKEN={Your Telegram token}`
 -   `METRICA_TOKEN={Your Yandex AppMetrica token}`
@@ -98,5 +97,5 @@ TODO:
 -   Правильный хендл всех ошибок про асинхронщину (async/await)
 -   Префиксуем T/I для типов и интерфейсов
 
-Обязательно используем 13 ноду (хипдамп может не собраться)
+Обязательно используем 14 ноду (хипдамп может не собраться)
 Разработка из-под впн (vpnbook)

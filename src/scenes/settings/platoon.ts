@@ -1,49 +1,49 @@
-import {
-    Extra,
-    Markup,
-    SceneContextMessageUpdate,
-    Scene,
-    Stage,
-} from "telegraf";
+import { Extra, Markup, Stage } from "telegraf";
 
 import { GENERAL_CONTROLS } from "@/constants/controls";
 import { MENU_SCENARIO, SETTINGS_SCENARIO } from "@/constants/scenarios";
 
 import {
-    // resolveReadUserSelection,
     resolveWriteUserSelection,
+    resolveReadUserSelection,
 } from "@/resolvers/firebase";
 import track from "@/resolvers/metricaTrack";
 import { resolvePlatoonsFromPlatoonType } from "@/resolvers/schedule";
 
-import {
-    ensureFromIdAndMessageText,
-    ensureMessageText,
-} from "@/helpers/scenes";
 import createScene from "@/helpers/createScene";
+import { ensureFromIdAndMessageText } from "@/helpers/scenes";
+
+import { SceneHandler } from "@/typings/custom";
 import { makeKeyboardColumns } from "@/helpers/scenes";
-import { SceneContextMessageUpdateWithSession } from "@/typings/custom";
 
-const enterHandler = ({ reply, message }: SceneContextMessageUpdate) => {
-    const platoonType = ensureMessageText(message, reply);
+const enterHandler: SceneHandler = async ({ from, message, reply }) => {
+    const [fromId, platoonType] = ensureFromIdAndMessageText(
+        from,
+        message,
+        reply,
+    );
+
+    const defaultPlatoon = await resolveReadUserSelection(
+        fromId,
+        "defaultPlatoon",
+    );
+
     const platoonsControls = resolvePlatoonsFromPlatoonType(platoonType);
-
     const controls = [
         ...makeKeyboardColumns(platoonsControls, 2),
         [GENERAL_CONTROLS.BACK, GENERAL_CONTROLS.MENU],
     ];
 
     const markup = Extra.markup(Markup.keyboard(controls));
-    return reply("Выберите нужный взвод", markup);
+    return reply(
+        `Ваш текущий взвод: ${defaultPlatoon}. Выберите нужный взвод:`,
+        markup,
+    );
 };
 
-const messageHandler = async ({
-    from,
-    message,
-    reply,
-    scene,
-    session,
-}: SceneContextMessageUpdateWithSession<{ platoonType: string }>) => {
+const messageHandler: SceneHandler<{
+    platoonType: string;
+}> = async ({ from, message, reply, scene, session }) => {
     const [fromId, messageText] = ensureFromIdAndMessageText(
         from,
         message,
@@ -72,7 +72,7 @@ export default createScene({
     name: SETTINGS_SCENARIO.PLATOON_SCENE,
     enterHandler,
     messageHandler,
-    resultProcessor: (scene: Scene<SceneContextMessageUpdate>) => {
+    resultProcessor: (scene) => {
         scene.hears(
             GENERAL_CONTROLS.BACK,
             Stage.enter(SETTINGS_SCENARIO.PLATOON_TYPE_SCENE),

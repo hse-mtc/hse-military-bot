@@ -1,5 +1,6 @@
 declare module "telegraf-logger" {
-    import { ContextMessageUpdate } from "telegraf";
+    import { Middleware } from "telegraf";
+    import { TelegrafContext } from "telegraf/typings/context";
 
     type TOptions = {
         log: Function;
@@ -7,14 +8,9 @@ declare module "telegraf-logger" {
         contentLength?: number;
     };
 
-    type TMiddlewareFunction = (
-        ctx: ContextMessageUpdate,
-        next?: (() => any) | undefined,
-    ) => any;
-
     export default class BotMetrica {
         constructor(options: TOptions);
 
-        middleware(): TMiddlewareFunction;
+        middleware(): Middleware<TelegrafContext>;
     }
 }

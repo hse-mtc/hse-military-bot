@@ -29,15 +29,13 @@ const EXPRESS_LOGGER_OPTIONS = {
         timestamp(),
         splat(),
         printf(
-            ({ timestamp: time, level, message, meta }) =>
-                `${time}\t${level}\t${message}\t${
-                    meta ? JSON.stringify(meta) : ""
-                }`,
+            ({ timestamp: time, level, message }) =>
+                `${time}\t${level}\t${message}\t`,
         ),
         colorize(),
     ),
     msg:
-        "HTTP {{req.method}}\t{{req.url}}\t{{res.statusCode}}\t{{res.responseTime}}",
+        "HTTP {{req.method}}\t{{req.url}}\t{{JSON.stringify(req.body)}}\t{{res.statusCode}}\t{{res.responseTime}}",
     colorize: true,
 };
 

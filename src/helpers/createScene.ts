@@ -1,20 +1,17 @@
-import Telegraf, {
-    Stage,
-    Scene,
-    BaseScene,
-    SceneContextMessageUpdate,
-} from "telegraf";
+import Telegraf, { Stage, BaseScene } from "telegraf";
+import { SceneContextMessageUpdate, Scene } from "telegraf/typings/stage";
 
 import { MENU_SCENARIO } from "@/constants/scenarios";
 import { GENERAL_CONTROLS } from "@/constants/controls";
 import { handleUnhandledMessageDefault } from "@/helpers/scenes";
+import { SceneHandler } from "@/typings/custom";
 
 const { enter } = Stage;
 
 type TCreateSceneParams = {
     name: string;
-    enterHandler?: (ctx: SceneContextMessageUpdate) => any;
-    messageHandler?: (ctx: SceneContextMessageUpdate) => any;
+    enterHandler?: SceneHandler;
+    messageHandler?: SceneHandler;
     resultProcessor?: (
         scene: Scene<SceneContextMessageUpdate>,
     ) => Scene<SceneContextMessageUpdate>;

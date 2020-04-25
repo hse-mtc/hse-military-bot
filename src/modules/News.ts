@@ -2,7 +2,7 @@ import { existsSync, readFileSync, writeFileSync } from "fs";
 import { TArticle } from "google-news-rss";
 
 import BaseError from "@/modules/BaseError";
-import resolveNewsArticles from "@/resolvers/news";
+// import resolveNewsArticles from "@/resolvers/news";
 import { resolveNewsFileConfig } from "@/resolvers/config";
 
 const NewsStorageError = BaseError.createErrorGenerator("NewsStorageError");
@@ -32,7 +32,7 @@ class NewsStorage {
 
     async buildNews(newsPath: string): Promise<void> {
         try {
-            this._instance = await resolveNewsArticles();
+            // this._instance = await resolveNewsArticles();
             this.dumpNews(this._instance, newsPath);
         } catch (exception) {
             throw NewsStorageError("Cannot build NewsStorage");

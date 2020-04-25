@@ -11,38 +11,49 @@ import {
 } from "@/constants/metricaGoals";
 import { GENERAL_CONTROLS } from "@/constants/controls";
 
-import track from "@/resolvers/metricaTrack";
-import { resolveReadUserSelection } from "@/resolvers/firebase";
 import {
     resolveScheduleFromPlatoon,
     resolveAvailableDatesFromPlatoon,
+    resolvePlatoons,
 } from "@/resolvers/schedule";
+import track from "@/resolvers/metricaTrack";
+import { resolveReadUserSelection } from "@/resolvers/firebase";
 
-import createScene from "@/helpers/createScene";
-import {
-    TReplyOrChangeScene,
-    SceneContextMessageUpdateWithSession,
-} from "@/typings/custom";
-import { formatHtmlScheduleResponse } from "@/helpers/schedule";
 import {
     ensureFromId,
     ensureFromIdAndMessageText,
     makeKeyboardColumns,
 } from "@/helpers/scenes";
+import createScene from "@/helpers/createScene";
+import { formatHtmlScheduleResponse } from "@/helpers/schedule";
 
-const enterHandler = async ({
+import { SceneHandler } from "@/typings/custom";
+
+type TSession = {
+    defaultPlatoon: string;
+};
+
+const enterHandler: SceneHandler<TSession> = async ({
     from,
     reply,
     scene,
     session,
-}: SceneContextMessageUpdateWithSession<{ defaultPlatoon: string }>): Promise<
-    TReplyOrChangeScene
-> => {
+}) => {
     let platoon = "";
     const fromId = ensureFromId(from, reply);
 
     try {
         platoon = await resolveReadUserSelection(fromId, "defaultPlatoon");
+        const platoons = resolvePlatoons();
+
+        if (!platoons.includes(platoon)) {
+            reply(
+                `Выбран неактуальный взвод: ${platoon}. Смените в настройках`,
+            );
+            track(fromId, platoon, "Выбран неактуальный взвод");
+            return scene.enter(MENU_SCENARIO.MAIN_SCENE);
+        }
+
         session.defaultPlatoon = platoon;
 
         reply(`Ваш взвод: ${platoon}`);
@@ -70,16 +81,14 @@ const enterHandler = async ({
     return reply("Выберите дату 📅", markup);
 };
 
-const messageHandler = ({
+const messageHandler: SceneHandler<TSession> = ({
     from,
     message,
     reply,
     replyWithHTML,
     scene,
     session,
-}: SceneContextMessageUpdateWithSession<{ defaultPlatoon: string }>): Promise<
-    TReplyOrChangeScene
-> => {
+}) => {
     const [fromId, messageText] = ensureFromIdAndMessageText(
         from,
         message,
@@ -107,8 +116,13 @@ const messageHandler = ({
             DEFAULT_PLATOON_SCHEDULE_SUCCESS.GOAL,
         );
 
-        return replyWithHTML(
+        replyWithHTML(
             formatHtmlScheduleResponse(platoon, messageText, schedule),
+        );
+
+        return reply(
+            "Выберите дату или вернитесь в меню",
+            Extra.markup(Markup.resize(true)),
         );
     } catch (exception) {
         reply("Что-то пошло не так, попробуйте снова 🧐");

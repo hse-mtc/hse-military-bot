@@ -29,7 +29,7 @@ export const resolveFirebaseConfigSync = (
           };
 
 export const resolveEnvironmentSync = () => ({
-    env: process.env.NODE_ENV || "development",
+    env: process.env.ENV || "development",
     port: process.env.PORT || 3000,
     url: process.env.HEROKU_URL || "",
 });
@@ -50,10 +50,18 @@ export const resolveScheduleFileConfig = (): {
     schedulePath: string;
     parsedSchedulePath: string;
 } => ({
-    schedulePath: path.join(__dirname, "../static/schedule.xlsx"),
-    parsedSchedulePath: path.join(__dirname, "../static/parsedSchedule.json"),
+    schedulePath: path.join(
+        process.env.NODE_PATH ?? ".",
+        "static",
+        "schedule.xlsx",
+    ),
+    parsedSchedulePath: path.join(
+        process.env.NODE_PATH ?? ".",
+        "static",
+        "parsedSchedule.json",
+    ),
 });
 
 export const resolveNewsFileConfig = (): { newsPath: string } => ({
-    newsPath: path.join(__dirname, "../static/news.json"),
+    newsPath: path.join(process.env.NODE_PATH ?? ".", "static", "news.json"),
 });

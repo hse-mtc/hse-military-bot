@@ -1,10 +1,4 @@
-import {
-    Stage,
-    Extra,
-    SceneContextMessageUpdate,
-    Markup,
-    Scene,
-} from "telegraf";
+import { Stage, Extra, Markup } from "telegraf";
 
 import {
     MENU_SCENARIO,
@@ -13,31 +7,27 @@ import {
     SCHEDULE_SCENARIO,
     DEFAULT_SCHEDULE_SCENARIO,
 } from "@/constants/scenarios";
-import createScene from "@/helpers/createScene";
 import { MENU_CONTROLS } from "@/constants/controls";
-import { TReplyOrChangeScene } from "@/typings/custom";
 import { resolveReadUserSelection } from "@/resolvers/firebase";
+
+import createScene from "@/helpers/createScene";
 import { ensureFromId, handleStickerButton } from "@/helpers/scenes";
+
+import { SceneHandler } from "@/typings/custom";
 
 const { enter } = Stage;
 
 const constructMenuControls = (defaultPlatoon: string): string[] => {
-    return Object.entries(MENU_CONTROLS).reduce(
-        (accumulator, [key, buttonText]) => {
-            if (!defaultPlatoon && key === MENU_CONTROLS.SCHEDULE_DEFAULT) {
-                return accumulator;
-            }
+    return Object.values(MENU_CONTROLS).reduce((accumulator, buttonText) => {
+        if (!defaultPlatoon && buttonText === MENU_CONTROLS.SCHEDULE_DEFAULT) {
+            return accumulator;
+        }
 
-            return [...accumulator, buttonText];
-        },
-        [],
-    );
+        return [...accumulator, buttonText];
+    }, []);
 };
 
-const enterHandler = async ({
-    from,
-    reply,
-}: SceneContextMessageUpdate): Promise<TReplyOrChangeScene> => {
+const enterHandler: SceneHandler = async ({ from, reply }) => {
     const fromId = ensureFromId(from, reply);
     const defaultPlatoon = await resolveReadUserSelection(
         fromId,
@@ -47,13 +37,13 @@ const enterHandler = async ({
     const controls = constructMenuControls(defaultPlatoon);
     const markup = Extra.markup(Markup.keyboard(controls));
 
-    return reply("Выберите нужный пункт меню", markup);
+    return reply("Выберите нужный пункт меню:", markup);
 };
 
 export default createScene({
     name: MENU_SCENARIO.MAIN_SCENE,
     enterHandler,
-    resultProcessor: (scene: Scene<SceneContextMessageUpdate>) => {
+    resultProcessor: (scene) => {
         scene.hears(
             MENU_CONTROLS.SCHEDULE_DEFAULT,
             enter(DEFAULT_SCHEDULE_SCENARIO.DATE_SCENE),

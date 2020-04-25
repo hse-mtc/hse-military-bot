@@ -1,6 +1,3 @@
-// import "firebase/auth";
-// import "firebase/database";
-// import * as firebase from "firebase/app";
 import * as firebase from "firebase-admin";
 
 import BaseError from "@/modules/BaseError";

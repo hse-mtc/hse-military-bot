@@ -102,8 +102,6 @@ export const getTrainingsColorPalette = (
                 return;
             }
 
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore: type is incomplete in exceljs
             const fgColor = (cell.fill as FillPattern).fgColor;
 
             if (fgColor) {

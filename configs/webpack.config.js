@@ -1,5 +1,6 @@
 const { resolve } = require("path");
 
+const nodeExternals = require("webpack-node-externals");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -12,6 +13,7 @@ module.exports = {
     devtool: "source-map",
     target: "node",
     context: resolve(__dirname, "../src"),
+    externals: [nodeExternals()],
     output: {
         filename: "server.min.js",
         path: resolve(__dirname, "../dist"),
@@ -33,8 +35,17 @@ module.exports = {
         alias: {
             "@": resolve(__dirname, "../src"),
         },
-        extensions: [".mjs", ".ts", ".js", "jpeg", "png", "gif"],
-        modules: ["../node_modules", "../src"],
+        extensions: [
+            ".cjs",
+            ".mjs",
+            ".ts",
+            ".js",
+            ".json",
+            ".jpeg",
+            ".png",
+            ".gif",
+        ],
+        modules: ["node_modules", "src"],
     },
     module: {
         rules: [
@@ -67,7 +78,8 @@ module.exports = {
               ...basePlugins,
               new BundleAnalyzerPlugin(
                   new BundleAnalyzerPlugin({
-                      analyzerMode: "server", // "static" generates file instead of starting a web server
+                      // "static" generates file instead of starting a web server
+                      analyzerMode: "server",
                       analyzerHost: "localhost",
                       analyzerPort: 8888,
                       reportFilename: "report.html",

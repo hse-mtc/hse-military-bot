@@ -1,6 +1,5 @@
 import { TArticle } from "google-news-rss";
-import { Message } from "telegraf/typings/telegram-types";
-import { Extra, Markup, SceneContextMessageUpdate } from "telegraf";
+import { Extra, Markup } from "telegraf";
 
 import { NEWS_SCENARIO } from "@/constants/scenarios";
 import { GENERAL_CONTROLS } from "@/constants/controls";
@@ -14,7 +13,7 @@ import {
     makeKeyboardColumns,
 } from "@/helpers/scenes";
 import createScene from "@/helpers/createScene";
-import { TReplyOrChangeScene } from "@/typings/custom";
+import { SceneHandler } from "@/typings/custom";
 
 const ARTICLES_DELIMETER = "*********************";
 
@@ -30,23 +29,17 @@ const buildArticlesResponse = (articles: TArticle[]): string => {
     );
 };
 
-const enterHandler = ({
-    reply,
-}: SceneContextMessageUpdate): Promise<Message> => {
+const enterHandler: SceneHandler = ({ reply }) => {
     const controls = [
         ...makeKeyboardColumns(NEWS_TOPICS, 2),
         [GENERAL_CONTROLS.MENU],
     ];
     const markup = Extra.markup(Markup.keyboard(controls));
 
-    return reply("Выберите тему для проведения информирования", markup);
+    return reply("Выберите тему для проведения информирования:", markup);
 };
 
-const messageHandler = async ({
-    from,
-    message,
-    reply,
-}: SceneContextMessageUpdate): Promise<TReplyOrChangeScene> => {
+const messageHandler: SceneHandler = async ({ from, message, reply }) => {
     const [fromId, messageText] = ensureFromIdAndMessageText(
         from,
         message,

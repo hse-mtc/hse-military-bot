@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import responseTime from "response-time";
 import rateLimit from "express-rate-limit";
 import addRequestId from "express-request-id";
-import express, { Application } from "express";
+import express from "express";
 
 import {
     resolveBotConfigSync,
@@ -24,10 +24,16 @@ const ExpressInitError = BaseError.createErrorGenerator("ExpressInitError");
 
 // TODO: all functions from classes should have modifiers (private, public, readonly)
 class ExpressApp {
-    private _app: Application;
+    // TODO: wtf??
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    private _app;
     private _bot: typeof Bot | null = null;
 
-    private readonly _publicPath = "../../public";
+    private readonly _publicPath = path.join(
+        process.env.NODE_PATH ?? "",
+        "public",
+    );
 
     async setup({ useBot }: { useBot: boolean }): Promise<void> {
         this._app = express();
@@ -38,7 +44,6 @@ class ExpressApp {
 
         try {
             await this._configure();
-            Logger.info("Server started!");
         } catch (exception) {
             Logger.error(`Error during starting server: ${exception}`);
         }
@@ -63,9 +68,11 @@ class ExpressApp {
 
             botInstance.startPolling();
         } else {
-            try {
-                await botInstance.telegram.setWebhook(`${url}/bot${token}`);
-            } catch (exception) {
+            const isWebhookSet = await botInstance.telegram.setWebhook(
+                `${url}/bot${token}`,
+            );
+
+            if (!isWebhookSet) {
                 throw WebHookError("Cannot set WebHook in production");
             }
 
@@ -113,13 +120,16 @@ class ExpressApp {
         /* X-Response-Time header */
         this._app.use(responseTime());
 
-        this._app.use(express.static(path.join(__dirname, this._publicPath)));
+        this._app.use(express.static(this._publicPath));
         this._app.use(favicon("public/favicon.ico"));
 
         /* Routes */
         setupRoutes(this._app);
 
         /* Timeout checker */
+        // TODO: wtf??
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         this._app.use((req, _res, next) => {
             if (!req.timedout) {
                 next();
@@ -127,7 +137,7 @@ class ExpressApp {
         });
 
         this._app.listen(port, () => {
-            Logger.info(`Server running on port ${port}`);
+            Logger.info(`Server is running on port ${port}!`);
         });
     }
 }

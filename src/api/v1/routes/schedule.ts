@@ -2,6 +2,7 @@ import { Router, Response, Request } from "express";
 import {
     resolveFullSchedule,
     resolveScheduleMeta,
+    resolvePlatoons,
     resolvePlatoonTypes,
     resolveScheduleFromPlatoon,
     resolvePlatoonTypeFromPlatoon,
@@ -46,10 +47,19 @@ scheduleRoutes.post("/getScheduleForPlatoon", [
         res: Response,
     ): void => {
         const { platoon, date } = req.body;
+        const platoons = resolvePlatoons();
 
         if (!platoon || !date) {
-            res.status(400).send("'platoon' and 'date' should be provided");
+            res.status(400).send(
+                "Bad Request. 'platoon' and 'date' should be provided",
+            );
             return;
+        }
+
+        if (!platoons.includes(platoon)) {
+            res.status(404).send(
+                "Bad Request. Platoon is outdated or absent in schedule",
+            );
         }
 
         res.status(200).send(resolveScheduleFromPlatoon(platoon, date));
@@ -68,10 +78,17 @@ scheduleRoutes.post("/getPlatoonTypeForPlatoon", [
         res: Response,
     ): void => {
         const { platoon } = req.body;
+        const platoons = resolvePlatoons();
 
         if (!platoon) {
-            res.status(400).send("'platoon' should be provided");
+            res.status(400).send("Bad Request. 'platoon' should be provided");
             return;
+        }
+
+        if (!platoons.includes(platoon)) {
+            res.status(404).send(
+                "Bad Request. Platoon is outdated or absent in schedule",
+            );
         }
 
         res.status(200).send(resolvePlatoonTypeFromPlatoon(platoon));
@@ -89,10 +106,17 @@ scheduleRoutes.post("/getAvailableDatesForPlatoon", [
         res: Response,
     ): void => {
         const { platoon } = req.body;
+        const platoons = resolvePlatoons();
 
         if (!platoon) {
-            res.status(400).send("'platoon' should be provided");
+            res.status(400).send("Bad Request. 'platoon' should be provided");
             return;
+        }
+
+        if (!platoons.includes(platoon)) {
+            res.status(404).send(
+                "Bad Request. Platoon is outdated or absent in schedule",
+            );
         }
 
         res.status(200).send(resolveAvailableDatesFromPlatoon(platoon));

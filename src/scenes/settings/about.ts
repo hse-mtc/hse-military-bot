@@ -1,17 +1,12 @@
-import {
-    Stage,
-    Extra,
-    SceneContextMessageUpdate,
-    Markup,
-    Scene,
-} from "telegraf";
+import { Stage, Extra, Markup } from "telegraf";
 
-import { SETTINGS_SCENARIO } from "@/constants/scenarios";
 import { GENERAL_CONTROLS } from "@/constants/controls";
+import { SETTINGS_SCENARIO } from "@/constants/scenarios";
 
 import createScene from "@/helpers/createScene";
+import { SceneHandler } from "@/typings/custom";
 
-const enterHandler = ({ reply }: SceneContextMessageUpdate) => {
+const enterHandler: SceneHandler = ({ reply }) => {
     reply(
         "Бот версии 2.0. Был создан @mvshmakov при поддержке взвода 1606.",
         Extra.markup(
@@ -39,7 +34,7 @@ const enterHandler = ({ reply }: SceneContextMessageUpdate) => {
     const controls = [[GENERAL_CONTROLS.BACK, GENERAL_CONTROLS.MENU]];
 
     return reply(
-        "Выберите нужный пункт меню",
+        "Выберите нужный пункт меню:",
         Extra.markup(Markup.keyboard(controls)),
     );
 };
@@ -47,7 +42,7 @@ const enterHandler = ({ reply }: SceneContextMessageUpdate) => {
 export default createScene({
     name: SETTINGS_SCENARIO.ABOUT_SCENE,
     enterHandler,
-    resultProcessor: (scene: Scene<SceneContextMessageUpdate>) => {
+    resultProcessor: (scene) => {
         scene.hears(
             GENERAL_CONTROLS.BACK,
             Stage.enter(SETTINGS_SCENARIO.MAIN_SCENE),

@@ -1,11 +1,8 @@
 import * as tt from "telegraf/typings/telegram-types";
-import {
-    ContextMessageUpdate,
-    Markup,
-    Stage,
-    SceneContextMessageUpdate,
-    Extra,
-} from "telegraf";
+import { Markup, Stage, Extra } from "telegraf";
+
+import { TelegrafContext } from "telegraf/typings/context";
+import { SceneContextMessageUpdate } from "telegraf/typings/stage";
 
 import BaseError from "@/modules/BaseError";
 import track from "@/resolvers/metricaTrack";
@@ -63,7 +60,7 @@ export const handleStickerButton = async ({
     from,
     reply,
     replyWithSticker,
-}: ContextMessageUpdate): Promise<tt.MessageSticker | tt.Message> => {
+}: TelegrafContext): Promise<tt.MessageSticker | tt.Message> => {
     const fromId = ensureFromId(from, reply);
     track(fromId, "Стикерпак", "Выбран стикерпак");
 
@@ -74,7 +71,8 @@ export const handleStickerButton = async ({
     );
     return replyWithSticker(
         MILITARY_STICKER_ID,
-        inlineKeyboard([button]).extra(),
+        // TODO: get rid of as
+        inlineKeyboard([button]).extra() as tt.ExtraSticker,
     );
 };
 

@@ -11,7 +11,8 @@ const debugRoutes = Router();
 debugRoutes.get("/heapdump", [
     authMiddleware,
     (_req: Request, res: Response): void => {
-        const profilePath = global.process.env.LOGS_DIR || global.process.cwd();
+        const profilePath =
+            process.env.LOGS_DIR || process.env.NODE_PATH || ".";
 
         const profileFilename = format(
             new Date(),

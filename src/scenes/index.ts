@@ -1,4 +1,5 @@
-import { SceneContextMessageUpdate, Stage } from "telegraf";
+import { Stage } from "telegraf";
+import { SceneContextMessageUpdate } from "telegraf/typings/stage";
 
 import createMenuScene from "./menu";
 

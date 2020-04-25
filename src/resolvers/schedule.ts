@@ -23,6 +23,12 @@ export const resolveScheduleMeta = (): TScheduleMeta =>
 export const resolvePlatoonTypes = (): string[] =>
     resolveScheduleMeta().platoonTypes;
 
+export const resolvePlatoons = (): string[] =>
+    Object.values(resolveScheduleMeta().platoons).reduce(
+        (result, platoons) => [...result, ...platoons],
+        [],
+    );
+
 export const resolvePlatoonTypeFromPlatoon = (
     targetPlatoon: string,
 ): string | undefined => {

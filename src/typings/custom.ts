@@ -1,7 +1,8 @@
-import * as telegraf from "telegraf";
-import * as tt from "telegraf/typings/telegram-types";
-
 import { Request } from "express";
+
+import { Middleware } from "telegraf/typings/composer";
+import { SceneContextMessageUpdate } from "telegraf/typings/stage";
+import { ExtraReplyMessage, Message } from "telegraf/typings/telegram-types";
 
 export interface CustomRequest<T> extends Request {
     body: T;
@@ -9,15 +10,15 @@ export interface CustomRequest<T> extends Request {
 
 export type TReplyFunction = (
     text: string,
-    extra?: tt.ExtraReplyMessage,
-) => Promise<tt.Message>;
+    extra?: ExtraReplyMessage,
+) => Promise<Message>;
 
 export type TReplyOrChangeScene =
-    | tt.Message
-    | telegraf.Middleware<telegraf.SceneContextMessageUpdate>;
+    | Message
+    | Middleware<SceneContextMessageUpdate>;
 
-export type SceneContextMessageUpdateWithSession<
-    T
-> = telegraf.SceneContextMessageUpdate & {
-    session: T;
-};
+export type SceneHandler<T = {}> = (
+    ctx: SceneContextMessageUpdate & {
+        session: T;
+    },
+) => Promise<TReplyOrChangeScene>;

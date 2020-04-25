@@ -21,10 +21,16 @@ program
 
 // TODO: npm audit fix/npm dedupe (-p)/npm ci
 const starter = async (): Promise<void> => {
-    const { mode = "development" } = program;
+    const { mode = "production" } = program;
+    const rootPath = process.env.NODE_PATH;
+
+    if (!rootPath) {
+        Logger.error("Please, provide NODE_PATH env variable");
+        process.exit(1);
+    }
 
     dotenv.config({
-        path: join(__dirname, "..", "..", ".env"),
+        path: join(rootPath, ".env"),
     });
 
     Logger.info(`Starting ${mode} mode...`);

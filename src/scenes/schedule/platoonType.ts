@@ -1,4 +1,4 @@
-import { Extra, Markup, SceneContextMessageUpdate } from "telegraf";
+import { Extra, Markup } from "telegraf";
 
 import { GENERAL_CONTROLS } from "@/constants/controls";
 import { SCHEDULE_SCENARIO } from "@/constants/scenarios";
@@ -11,9 +11,9 @@ import {
     makeKeyboardColumns,
 } from "@/helpers/scenes";
 import createScene from "@/helpers/createScene";
-import { SceneContextMessageUpdateWithSession } from "@/typings/custom";
+import { SceneHandler } from "@/typings/custom";
 
-const enterHandler = ({ reply }: SceneContextMessageUpdate) => {
+const enterHandler: SceneHandler = ({ reply }) => {
     const platoonTypesControls = resolvePlatoonTypes();
     const controls = [
         ...makeKeyboardColumns(platoonTypesControls, 2),
@@ -21,16 +21,12 @@ const enterHandler = ({ reply }: SceneContextMessageUpdate) => {
     ];
 
     const markup = Extra.markup(Markup.keyboard(controls));
-    return reply("Выберите цикл", markup);
+    return reply("Выберите цикл:", markup);
 };
 
-const messageHandler = ({
-    from,
-    message,
-    reply,
-    scene,
-    session,
-}: SceneContextMessageUpdateWithSession<{ platoonType: string }>) => {
+const messageHandler: SceneHandler<{
+    platoonType: string;
+}> = ({ from, message, reply, scene, session }) => {
     const [fromId, platoonType] = ensureFromIdAndMessageText(
         from,
         message,

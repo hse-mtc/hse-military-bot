@@ -1,10 +1,4 @@
-import {
-    Extra,
-    Markup,
-    SceneContextMessageUpdate,
-    Scene,
-    Stage,
-} from "telegraf";
+import { Extra, Markup, Stage } from "telegraf";
 
 import { GENERAL_CONTROLS } from "@/constants/controls";
 import { SCHEDULE_SCENARIO } from "@/constants/scenarios";
@@ -18,9 +12,9 @@ import {
     makeKeyboardColumns,
 } from "@/helpers/scenes";
 import createScene from "@/helpers/createScene";
-import { SceneContextMessageUpdateWithSession } from "@/typings/custom";
+import { SceneHandler } from "@/typings/custom";
 
-const enterHandler = ({ message, reply }: SceneContextMessageUpdate) => {
+const enterHandler: SceneHandler = ({ message, reply }) => {
     const platoonType = ensureMessageText(message, reply);
 
     // Validation was on the previous step, so we are sure that messageText is one of PLATOON_TYPES
@@ -31,19 +25,13 @@ const enterHandler = ({ message, reply }: SceneContextMessageUpdate) => {
     ];
 
     const markup = Extra.markup(Markup.keyboard(controls));
-    return reply("Выберите взвод", markup);
+    return reply("Выберите взвод:", markup);
 };
 
-const messageHandler = ({
-    from,
-    message,
-    reply,
-    scene,
-    session,
-}: SceneContextMessageUpdateWithSession<{
+const messageHandler: SceneHandler<{
     platoonType: string;
     platoon: string;
-}>) => {
+}> = ({ from, message, reply, scene, session }) => {
     const [fromId, platoon] = ensureFromIdAndMessageText(from, message, reply);
 
     const platoonType = session.platoonType;
@@ -66,7 +54,7 @@ export default createScene({
     name: SCHEDULE_SCENARIO.PLATOON_SCENE,
     enterHandler,
     messageHandler,
-    resultProcessor: (scene: Scene<SceneContextMessageUpdate>) => {
+    resultProcessor: (scene) => {
         scene.hears(
             GENERAL_CONTROLS.BACK,
             Stage.enter(SCHEDULE_SCENARIO.PLATOON_TYPE_SCENE),

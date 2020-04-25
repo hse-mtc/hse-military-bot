@@ -4,7 +4,9 @@ import { Router, Request, Response } from "express";
 const commonRoutes = Router();
 
 commonRoutes.get("/", (_req: Request, res: Response) =>
-    res.sendFile(path.join(__dirname, "index.html")),
+    res.sendFile(
+        path.join(process.env.NODE_PATH ?? ".", "public", "index.html"),
+    ),
 );
 
 commonRoutes.get("/ping", (_req: Request, res: Response) =>

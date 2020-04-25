@@ -7,15 +7,16 @@ export const authMiddleware = (
     res: Response,
     next: NextFunction,
 ): void => {
+    // TODO: wtf??
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     const { authorization } = req.headers;
 
     if (!authorization) {
         res.status(403).send(
             "Forbidden. You should provide 'authorization' header with valid token",
         );
-
-        return;
+    } else {
+        next();
     }
-
-    next();
 };

@@ -13,7 +13,7 @@ export async function resolveReadUserSelection(
         return FirebaseUsers.instance
             .ref(`/users/${fromId}`)
             .once("value")
-            .then((snapshot) => snapshot.val()[field]);
+            .then((snapshot) => snapshot.val() && snapshot.val()[field]);
     } catch (exception) {
         throw FirebaseUsersResolverError(
             "Error occurred in resolveReadUserSelection resolver",
@@ -24,7 +24,7 @@ export async function resolveReadUserSelection(
 export async function resolveWriteUserSelection(
     chatId: number,
     field: string,
-    value: string,
+    value: string | object,
 ): Promise<void> {
     try {
         return await FirebaseUsers.instance
