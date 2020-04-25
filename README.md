@@ -1,5 +1,5 @@
 <p align="center">
-<img style="max-width: 40%;" src="public/logo.png" alt="MacOS Config Icon"/>
+  <img style="max-width: 40%;" src="public/logo.png" alt="MacOS Config Icon"/>
 </p>
 
 ## <img src="public/logo.png" width="20"> HSE Military Training Center [bot](https://t.me/hse_military_bot) for schedule
