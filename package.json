@@ -26,12 +26,12 @@
         "npm": "6.14.x"
     },
     "scripts": {
-        "build": "webpack --progress -p --config=configs/webpack.config.js",
-        "build:bundle-analyzer": "BUNDLE_ANALYZER=true && npm run build",
+        "build": "webpack --progress -p --config=configs/webpack.config.js && npm run build:finalize",
+        "build:bundle-analyzer": "BUNDLE_ANALYZER=true && npm run build && npm run build:finalize",
+        "build:finalize": "npm prune && npm shrinkwrap && npm audit fix && npm run configure",
         "clean": "rm -rfd node_modules webpack-bundle-analyzer.html && npm run clean:dist",
         "clean:dist": "rm -rfd dist",
         "configure": "ln -snf ../src ./node_modules/@",
-        "postinstall": "npm prune && npm shrinkwrap && npm audit fix && npm run configure",
         "prettier": "prettier --write './src/**/*.{js,ts,json}' './configs/**/*.{js,ts,json}'",
         "prettier:check": "prettier --check './src/**/*.{js,ts,json}' './configs/**/*.{js,ts,json}'",
         "lint": "eslint --fix './src/**/*.{js,ts,json}' './configs/**/*.{js,ts,json}'",
