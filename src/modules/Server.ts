@@ -60,6 +60,7 @@ class ExpressApp {
         const botInstance = this._bot.instance;
 
         if (env === "development") {
+            Logger.info("Setting the LongPolling mode...");
             try {
                 await botInstance.telegram.deleteWebhook();
             } catch (exception) {
@@ -68,6 +69,8 @@ class ExpressApp {
 
             botInstance.startPolling();
         } else {
+            Logger.info("Setting the WebHook mode...");
+
             const isWebhookSet = await botInstance.telegram.setWebhook(
                 `${url}/bot${token}`,
             );
