@@ -47,7 +47,7 @@ const enterHandler: SceneHandler<TSession> = async ({
         const platoons = resolvePlatoons();
 
         if (!platoons.includes(platoon)) {
-            reply(
+            await reply(
                 `Выбран неактуальный взвод: ${platoon}. Смените в настройках`,
             );
             track(fromId, platoon, "Выбран неактуальный взвод");
@@ -56,11 +56,11 @@ const enterHandler: SceneHandler<TSession> = async ({
 
         session.defaultPlatoon = platoon;
 
-        reply(`Ваш взвод: ${platoon}`);
+        await reply(`Ваш взвод: ${platoon}`);
         track(fromId, platoon, "Выбрано расписание для дефолтного взвода");
     } catch (exception) {
         // TODO: make correct exception handling
-        reply("Не удалось определить взвод");
+        await reply("Не удалось определить взвод");
         track(
             fromId,
             DEFAULT_PLATOON_SCHEDULE_FAILURE.MESSAGE,
@@ -81,7 +81,7 @@ const enterHandler: SceneHandler<TSession> = async ({
     return reply("Выберите дату 📅", markup);
 };
 
-const messageHandler: SceneHandler<TSession> = ({
+const messageHandler: SceneHandler<TSession> = async ({
     from,
     message,
     reply,
@@ -116,7 +116,7 @@ const messageHandler: SceneHandler<TSession> = ({
             DEFAULT_PLATOON_SCHEDULE_SUCCESS.GOAL,
         );
 
-        replyWithHTML(
+        await replyWithHTML(
             formatHtmlScheduleResponse(platoon, messageText, schedule),
         );
 
@@ -125,7 +125,7 @@ const messageHandler: SceneHandler<TSession> = ({
             Extra.markup(Markup.resize(true)),
         );
     } catch (exception) {
-        reply("Что-то пошло не так, попробуйте снова 🧐");
+        await reply("Что-то пошло не так, попробуйте снова 🧐");
         track(
             fromId,
             DEFAULT_PLATOON_SCHEDULE_FAILURE.MESSAGE,

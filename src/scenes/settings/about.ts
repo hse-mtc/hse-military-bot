@@ -6,8 +6,8 @@ import { SETTINGS_SCENARIO } from "@/constants/scenarios";
 import createScene from "@/helpers/createScene";
 import { SceneHandler } from "@/typings/custom";
 
-const enterHandler: SceneHandler = ({ reply }) => {
-    reply(
+const enterHandler: SceneHandler = async ({ reply }) => {
+    await reply(
         "Бот версии 2.0. Был создан @mvshmakov при поддержке взвода 1606.",
         Extra.markup(
             Markup.inlineKeyboard([

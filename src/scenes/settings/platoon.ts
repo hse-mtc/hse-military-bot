@@ -57,7 +57,7 @@ const messageHandler: SceneHandler<{
         await resolveWriteUserSelection(fromId, "defaultPlatoon", messageText);
 
         track(fromId, messageText, "Выбран дефолтный взвод в настройках");
-        reply("Настройки сохранены 💾");
+        await reply("Настройки сохранены 💾");
 
         return scene.enter(MENU_SCENARIO.MAIN_SCENE);
     } else {

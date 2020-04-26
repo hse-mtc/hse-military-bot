@@ -3,7 +3,7 @@ import path from "path";
 import helmet from "helmet";
 import favicon from "serve-favicon";
 import timeout from "connect-timeout";
-import compression from "compression";
+// import compression from "compression";
 import cookieParser from "cookie-parser";
 import responseTime from "response-time";
 import rateLimit from "express-rate-limit";

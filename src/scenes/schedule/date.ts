@@ -60,13 +60,13 @@ const messageHandler: SceneHandler<{
         const schedule = resolveScheduleFromPlatoon(platoon, messageText);
         track(fromId, "Успех", "Корректно выдано расписание");
 
-        replyWithHTML(
+        await replyWithHTML(
             formatHtmlScheduleResponse(platoon, messageText, schedule),
         );
 
         return reply("Выберите дату или вернитесь в меню");
     } catch (exception) {
-        reply("Что-то пошло не так, попробуйте снова 🧐");
+        await reply("Что-то пошло не так, попробуйте снова 🧐");
         track(fromId, "Ошибка", "Некорректно выдано расписание");
         // TODO: throw exception?
         return scene.enter(MENU_SCENARIO.MAIN_SCENE);

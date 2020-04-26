@@ -56,7 +56,7 @@ const messageHandler: SceneHandler = async ({ from, message, reply }) => {
         track(fromId, cleanMessageText, "Выбрана тема для информирования");
 
         const articles = await resolveNewsArticles(cleanMessageText);
-        reply(buildArticlesResponse(articles));
+        await reply(buildArticlesResponse(articles));
 
         return reply("На сегодня хватит...");
     } else {
