@@ -28,17 +28,29 @@ export const resolveFirebaseConfigSync = (
               ).replace(/\\n/g, "\n"),
           };
 
-export const resolveEnvironmentSync = () => ({
+export const resolveEnvironmentSync = (): {
+    env: string;
+    port: number;
+    url: string;
+} => ({
     env: process.env.ENV || "development",
-    port: process.env.PORT || 3000,
+    port: parseInt(process.env.PORT || "") || 3000,
     url: process.env.HEROKU_URL || "",
 });
 
-export const resolveBotConfigSync = () => ({
+export const resolveBotConfigSync = (): {
+    token: string;
+} => ({
     token: process.env.BOT_TOKEN || "",
 });
 
-export const resolveMetricaConfigSync = () => ({
+export const resolveMetricaConfigSync = (): {
+    token: string;
+    counter: string;
+    host: string;
+    path: string;
+    pageTitle: string;
+} => ({
     token: process.env.METRICA_TOKEN || "",
     counter: process.env.METRICA_COUNTER || "",
     host: "hse-military-bot.herokuapp.com",

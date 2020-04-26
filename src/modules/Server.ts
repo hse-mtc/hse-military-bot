@@ -3,7 +3,7 @@ import path from "path";
 import helmet from "helmet";
 import favicon from "serve-favicon";
 import timeout from "connect-timeout";
-// import compression from "compression";
+import compression from "compression";
 import cookieParser from "cookie-parser";
 import responseTime from "response-time";
 import rateLimit from "express-rate-limit";
@@ -71,6 +71,7 @@ class ExpressApp {
         } else {
             Logger.info("Setting the WebHook mode...");
 
+            this._app.use(botInstance.webhookCallback(`/bot${token}`));
             const isWebhookSet = await botInstance.telegram.setWebhook(
                 `${url}/bot${token}`,
             );
@@ -78,8 +79,6 @@ class ExpressApp {
             if (!isWebhookSet) {
                 throw WebHookError("Cannot set WebHook in production");
             }
-
-            this._app.use(botInstance.webhookCallback(`/bot${token}`));
         }
     }
 
@@ -105,7 +104,7 @@ class ExpressApp {
         this._app.use(helmet());
 
         /* Add some compression */
-        // this._app.use(compression());
+        this._app.use(compression());
 
         /* Log before the routes */
         this._app.use(ExpressLogger);
