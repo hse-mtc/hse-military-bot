@@ -47,7 +47,7 @@
         "test": "jest --config=configs/jest.json",
         "test:watch": "jest --watch --coverage --config=configs/jest.json",
         "test:coverage": "jest --coverage --config=configs/jest.json",
-        "type-check": "tsc --noEmit",
+        "type-check": "tsc --noEmit --incremental false",
         "type-check:watch": "npm run type-check -- --watch"
     },
     "husky": {
@@ -57,6 +57,7 @@
     },
     "lint-staged": {
         "*.{js,ts}": [
+            "npm run type-check",
             "npm run prettier",
             "npm run lint",
             "npm run test:coverage -- --passWithNoTests"

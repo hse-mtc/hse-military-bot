@@ -9,10 +9,13 @@ jobs:
         steps:
             - uses: actions/checkout@v1
             - uses: bahmutov/npm-install@v1
-
             - run: npm run configure
+
+            - run: npm run type-check
             - run: npm run prettier:check
+            - run: npm run lint
             - run: npm run test:coverage
+
             - run: npm run build
 
             - run: git status
