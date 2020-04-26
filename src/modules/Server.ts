@@ -105,7 +105,7 @@ class ExpressApp {
         this._app.use(helmet());
 
         /* Add some compression */
-        this._app.use(compression());
+        // this._app.use(compression());
 
         /* Log before the routes */
         this._app.use(ExpressLogger);
