@@ -23,7 +23,7 @@
     "main": "dist/server.min.js",
     "engines": {
         "node": "14.0.x",
-        "npm": "6.9.x"
+        "npm": "6.14.x"
     },
     "scripts": {
         "build": "webpack --progress -p --config=configs/webpack.config.js",
