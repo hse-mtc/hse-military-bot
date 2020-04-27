@@ -2,10 +2,13 @@
   <img style="max-width: 40%;" src="public/images/logo.png" alt="HSE Military Bot Icon"/>
 </p>
 
-## <img src="public/logo.png" width="20"> HSE Military Training Center [bot](https://t.me/hse_military_bot) for schedule
+## <img src="public/images/logo.png" width="20"> HSE Military Training Center [bot](https://t.me/hse_military_bot) for schedule
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/mvshmakov/hse-military-bot/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/mvshmakov/hse-military-bot.svg)](https://github.com/mvshmakov/hse-military-bot/releases/)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 [![Build Status](https://github.com/mvshmakov/hse-military-bot/workflows/PerCommitCI/badge.svg?branch=master)](https://github.com/mvshmakov/hse-military-bot/actions?query=workflow%3APerCommitCI+branch%3Amaster)
+[![Coverage Status](https://coveralls.io/repos/github/mvshmakov/hse-military-bot/badge.svg?branch=master)](https://coveralls.io/github/mvshmakov/hse-military-bot?branch=master)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=mvshmakov/hse-military-bot)](https://dependabot.com)
 [![dependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master)
 [![devDependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/dev-status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master?type=dev)
@@ -95,7 +98,6 @@ https://github.com/oauthjs/express-oauth-server/blob/master/test/unit/index_test
 TODO:
 
 -   Правильный хендл всех ошибок про асинхронщину (async/await)
--   Префиксуем T/I для типов и интерфейсов
 
 Обязательно используем 14 ноду (хипдамп может не собраться)
 Разработка из-под впн (vpnbook)

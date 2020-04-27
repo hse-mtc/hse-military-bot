@@ -48,9 +48,9 @@ jobs:
             - name: Check for outdated packages
               run: npm run packages:outdated
 
-            # May be useful for swagger
+            # TODO: May be useful for swagger
             - run: git status
-              # TODO: Is used for pushing (etc. Coverage results updating)
+              # Is used for pushing (etc. Coverage results updating)
               # - uses: mikeal/publish-to-github-action@master
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

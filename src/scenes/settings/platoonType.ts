@@ -62,7 +62,6 @@ const messageHandler: SceneHandler<{
     const messageText = ensureMessageText(message, reply);
     const platoonTypes = resolvePlatoonTypes();
 
-    // TODO: поправить сцены!!
     if (platoonTypes.includes(messageText)) {
         session.platoonType = messageText;
         return scene.enter(SETTINGS_SCENARIO.PLATOON_SCENE);

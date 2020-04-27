@@ -19,7 +19,6 @@ program
     )
     .parse(process.argv);
 
-// TODO: npm audit fix/npm dedupe (-p)/npm ci
 const starter = async (): Promise<void> => {
     const { mode = "production" } = program;
     const rootPath = process.env.NODE_PATH;

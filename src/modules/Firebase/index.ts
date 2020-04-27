@@ -5,7 +5,6 @@ import { TFirebaseConfig } from "@/resolvers/config";
 
 const FirebaseError = BaseError.createErrorGenerator("FirebaseInitError");
 
-// TODO: добавить везде возвращаемые типы (прогнать ts по всем ворнингам)
 export default abstract class AbstractFirebase {
     private _instance: firebase.database.Database;
 
