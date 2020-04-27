@@ -12,32 +12,32 @@
 
     "icons": [
         {
-            "src": "http://hse-military-bot.herokuapp.com/icons/icon-128.png",
+            "src": "http://hse-military-bot.herokuapp.com/images/icon-128.png",
             "sizes": "128x128",
             "type": "image/png"
         },
         {
-            "src": "http://hse-military-bot.herokuapp.com/icons/icon-144.png",
+            "src": "http://hse-military-bot.herokuapp.com/images/icon-144.png",
             "sizes": "144x144",
             "type": "image/png"
         },
         {
-            "src": "http://hse-military-bot.herokuapp.com/icons/icon-152.png",
+            "src": "http://hse-military-bot.herokuapp.com/images/icon-152.png",
             "sizes": "152x152",
             "type": "image/png"
         },
         {
-            "src": "http://hse-military-bot.herokuapp.com/icons/icon-192.png",
+            "src": "http://hse-military-bot.herokuapp.com/images/icon-192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "http://hse-military-bot.herokuapp.com/icons/icon-384.png",
+            "src": "http://hse-military-bot.herokuapp.com/images/icon-384.png",
             "sizes": "384x384",
             "type": "image/png"
         },
         {
-            "src": "http://hse-military-bot.herokuapp.com/icons/icon-512.png",
+            "src": "http://hse-military-bot.herokuapp.com/images/icon-512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
