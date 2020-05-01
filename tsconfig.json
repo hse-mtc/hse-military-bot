@@ -34,5 +34,5 @@
         "typeRoots": ["./src/typings", "./node_modules/@types"]
     },
     "include": ["./src/**/*"],
-    "exclude": ["node_modules", ".history"]
+    "exclude": ["node_modules", ".history", "admin"]
 }

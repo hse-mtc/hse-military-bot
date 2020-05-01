@@ -34,7 +34,7 @@
         "postinstall": "npm dedupe && npm audit fix && npm run configure",
         "prettier": "prettier --write './src/**/*.{js,ts,json}' './configs/**/*.{js,ts,json}'",
         "prettier:check": "prettier --check './src/**/*.{js,ts,json}' './configs/**/*.{js,ts,json}'",
-        "lint": "eslint --fix './src/**/*.{js,ts,json}' './configs/**/*.{js,ts,json}'",
+        "lint": "eslint --fix './src/**/*.{js,ts,json}'",
         "packages:outdated": "npm outdated",
         "packages:update": "npm update",
         "packages:prune": "npm prune",
@@ -48,7 +48,7 @@
         "test": "jest --config=configs/jest.json",
         "test:watch": "jest --watch --coverage --config=configs/jest.json",
         "test:coverage": "jest --coverage --config=configs/jest.json",
-        "type-check": "tsc --noEmit --pretty --incremental false",
+        "type-check": "tsc --noEmit --pretty --incremental false --allowJs",
         "type-check:watch": "npm run type-check -- --watch"
     },
     "husky": {

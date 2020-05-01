@@ -80,14 +80,14 @@ Stack of technologies used:
 ## User interface:
 
 <p align="center">
-    <img style="width: 80%;" src="public/docs_assets/gui.png" alt="Graphical User Interface"/>
+    <img style="width: 80%;" src="docs_assets/gui.png" alt="Graphical User Interface"/>
 </p>
 
 ## Yandex.Metrica example stats:
 
 <p align="center">
-    <img style="max-width: 80%;" src="public/docs_assets/metrica_1.png" alt="Yandex.Metrica stats 1"/>
-    <img style="max-width: 80%;" src="public/docs_assets/metrica_2.png" alt="Yandex.Metrica stats 2"/>
+    <img style="max-width: 80%;" src="docs_assets/metrica_1.png" alt="Yandex.Metrica stats 1"/>
+    <img style="max-width: 80%;" src="docs_assets/metrica_2.png" alt="Yandex.Metrica stats 2"/>
 </p>
 
 ## Tests:
@@ -101,3 +101,4 @@ TODO:
 
 Обязательно используем 14 ноду (хипдамп может не собраться)
 Разработка из-под впн (vpnbook)
+jupyter lab (не notebook)

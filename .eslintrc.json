@@ -17,5 +17,6 @@
         "no-var": "error",
         "no-console": "error",
         "@typescript-eslint/explicit-function-return-type": "error"
-    }
+    },
+    "ignorePatterns": ["admin", "configs"]
 }
