@@ -127,7 +127,7 @@
         "husky": "^4.2.5",
         "image-webpack-loader": "^6.0.0",
         "jest": "^25.4.0",
-        "jest-cli": "^25.4.0",
+        "jest-cli": "^25.5.4",
         "lint-staged": "^10.1.7",
         "nodemon": "^2.0.3",
         "prettier": "^2.0.5",
