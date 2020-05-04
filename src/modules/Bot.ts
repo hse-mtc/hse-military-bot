@@ -18,7 +18,7 @@ import Logger from "@/modules/Logger";
 import registerScenes from "@/scenes";
 import { MENU_CONTROLS } from "@/constants/controls";
 import { handleStickerButton } from "@/helpers/scenes";
-import { resolveWriteUserSelection } from "@/resolvers/firebase";
+import { resolveUpdateUserSelection } from "@/resolvers/firebase";
 
 const { enter } = Stage;
 
@@ -42,16 +42,15 @@ class Bot {
         const { from, chat, date } = message;
 
         if (from.id === chat.id) {
-            resolveWriteUserSelection(from.id, "debug", {
-                user: {
-                    ...from,
-                    type: chat.type,
-                },
+            resolveUpdateUserSelection(from.id, {
+                ...from,
+                type: chat.type,
                 lastAccess: date,
             });
         } else {
-            resolveWriteUserSelection(from.id, "debug", {
-                user: from,
+            resolveUpdateUserSelection(from.id, {
+                ...from,
+                type: chat.type,
                 chat,
                 lastAccess: date,
             });

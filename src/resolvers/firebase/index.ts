@@ -1,2 +1,2 @@
 export { resolveWriteScheduleSelection } from "./schedule";
-export { resolveReadUserSelection, resolveWriteUserSelection } from "./users";
+export { resolveReadUserSelection, resolveWriteUserSelection, resolveUpdateUserSelection } from "./users";

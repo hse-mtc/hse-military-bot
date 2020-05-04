@@ -36,3 +36,18 @@ export async function resolveWriteUserSelection(
         );
     }
 }
+
+export async function resolveUpdateUserSelection(
+    chatId: number,
+    value: string | object,
+): Promise<void> {
+    try {
+        return await FirebaseUsers.instance
+            .ref(`/users/${chatId}`)
+            .update(value);
+    } catch (exception) {
+        throw FirebaseUsersResolverError(
+            "Error occurred in resolveWriteUserSelection resolver",
+        );
+    }
+}
