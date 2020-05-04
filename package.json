@@ -128,7 +128,7 @@
         "image-webpack-loader": "^6.0.0",
         "jest": "^25.4.0",
         "jest-cli": "^25.4.0",
-        "lint-staged": "^10.1.7",
+        "lint-staged": "^10.2.2",
         "nodemon": "^2.0.3",
         "prettier": "^2.0.5",
         "ts-loader": "^7.0.1",
