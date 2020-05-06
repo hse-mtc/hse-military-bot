@@ -1,5 +1,5 @@
 src/__tests__/__coverage__/
-.history
-.idea
-node_modules
-dist
+.history/
+.idea/
+node_modules/
+dist/
