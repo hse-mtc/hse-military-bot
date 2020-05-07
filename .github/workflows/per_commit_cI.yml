@@ -45,9 +45,6 @@ jobs:
             - name: Run tests
               run: npm run test:coverage
 
-            - name: Check for outdated packages
-              run: npm run packages:outdated
-
             # TODO: May be useful for swagger
             - run: git status
               # Is used for pushing (etc. Coverage results updating)
