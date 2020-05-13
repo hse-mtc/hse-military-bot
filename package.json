@@ -115,7 +115,7 @@
         "@types/node-fetch": "^2.5.7",
         "@types/response-time": "^2.3.4",
         "@types/serve-favicon": "^2.5.0",
-        "@typescript-eslint/eslint-plugin": "^2.31.0",
+        "@typescript-eslint/eslint-plugin": "^2.33.0",
         "@typescript-eslint/parser": "^2.31.0",
         "babel-jest": "^26.0.1",
         "babel-loader": "^8.1.0",
