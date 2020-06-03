@@ -21,9 +21,9 @@
         "removeComments": true,
         "resolveJsonModule": true,
         "sourceMap": true,
-        "inlineSourceMap": false,
         "strictNullChecks": true,
-        "target": "es2015",
+        "inlineSourceMap": false,
+        "target": "es2018",
         "types": [
             "node",
             "jest",

@@ -14,6 +14,9 @@
 [![dependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master)
 [![devDependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/dev-status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master?type=dev)
 
+[Project website](https://hse-military-bot.herokuapp.com/)
+[Documentation](https://mvshmakov.github.io/hse-military-bot/)
+
 Simply access HSE Military Training Center schedule, prepare news for informating comrades and receive full pack of stickers with people you know well.
 Stack of technologies used:
 
