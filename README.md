@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/mvshmakov/hse-military-bot)
+
 <p align="center">
   <img style="max-width: 40%;" src="public/images/logo.png" alt="HSE Military Bot Icon"/>
 </p>
