@@ -1,11 +1,10 @@
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/mvshmakov/hse-military-bot)
-
 <p align="center">
   <img style="max-width: 40%;" src="public/images/logo.png" alt="HSE Military Bot Icon"/>
 </p>
 
 ## <img src="public/images/logo.png" width="20"> HSE Military Training Center [bot](https://t.me/hse_military_bot) for schedule
 
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/mvshmakov/hse-military-bot)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/mvshmakov/hse-military-bot/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/mvshmakov/hse-military-bot.svg)](https://github.com/mvshmakov/hse-military-bot/releases/)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)

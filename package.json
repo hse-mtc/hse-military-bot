@@ -12,7 +12,7 @@
         "telegram",
         "bot"
     ],
-    "homepage": "https://iot-olap-clickhouse.herokuapp.com/",
+    "homepage": "https://hse-military-bot.herokuapp.com",
     "repository": {
         "type": "git",
         "url": "git://github.com/mvshmakov/hse-military-bot.git"
