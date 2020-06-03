@@ -9,16 +9,20 @@ const newsRoutes = Router();
 
 type TGetNewsRequestBody = {
     topic: string;
-    page?: number;
+    num?: number;
 };
 
-newsRoutes.get("/getNews", [
+// TODO: fix num, get rid of id and use page
+newsRoutes.post("/getNews", [
     authMiddleware,
-    (req: CustomRequest<TGetNewsRequestBody>, res: Response): void => {
-        const { page, topic } = req.body;
+    async (
+        req: CustomRequest<TGetNewsRequestBody>,
+        res: Response,
+    ): Promise<void> => {
+        const { topic, num } = req.body;
 
         if (!topic) {
-            res.status(400).send("'num' and 'topic' should be provided");
+            res.status(400).send("'page' and 'topic' should be provided");
             return;
         }
 
@@ -27,12 +31,12 @@ newsRoutes.get("/getNews", [
             return;
         }
 
-        // if (typeof num !== undefined && typeof num !== "number") {
-        //     res.status(400).send("'num' should be 'number'");
-        //     return;
-        // }
+        if (typeof num !== "number") {
+            res.status(400).send("'num' should be 'number'");
+            return;
+        }
 
-        res.status(200).send(resolveNewsArticles(topic, page));
+        res.status(200).send(await resolveNewsArticles(topic, num));
     },
 ]);
 

@@ -1,7 +1,7 @@
 {
     "_type": "export",
     "__export_format": 4,
-    "__export_date": "2020-06-01T12:56:28.879Z",
+    "__export_date": "2020-06-03T13:43:19.531Z",
     "__export_source": "insomnia.desktop.app:v7.1.1",
     "resources": [
         {
@@ -201,7 +201,7 @@
             "authentication": {},
             "body": {
                 "mimeType": "application/json",
-                "text": "{\n\t\"topic\": \"Внутренняя политика\",\n\t\"num\": \"15\"\n}\n"
+                "text": "{\n\t\"topic\": \"Внутренняя политика\",\n\t\"num\": 15\n}\n"
             },
             "created": 1587585865168,
             "description": "",
@@ -221,7 +221,7 @@
             "isPrivate": false,
             "metaSortKey": -1587586022120,
             "method": "POST",
-            "modified": 1587586082040,
+            "modified": 1591191613372,
             "name": "/getNews",
             "parameters": [],
             "parentId": "fld_260538bd7c3e432b8fdcdae128a0169d",
