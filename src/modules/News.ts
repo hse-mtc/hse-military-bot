@@ -1,11 +1,11 @@
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import makeError from "make-error";
 import { TArticle } from "google-news-rss";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 
-import BaseError from "@/modules/BaseError";
 // import resolveNewsArticles from "@/resolvers/news";
 import { resolveNewsFileConfigSync } from "@/resolvers/config";
 
-const NewsStorageError = BaseError.createError("NewsStorageError");
+const NewsStorageError = makeError("NewsStorageError");
 
 type TNewsObject = {
     articles: TArticle[];
@@ -15,7 +15,7 @@ type TNewsObject = {
 class NewsStorage {
     private _instance: TNewsObject;
 
-    get instanсe(): TNewsObject {
+    get instance(): TNewsObject {
         return this._instance;
     }
 
@@ -35,7 +35,7 @@ class NewsStorage {
             // this._instance = await resolveNewsArticles();
             this.dumpNews(this._instance, newsPath);
         } catch (exception) {
-            throw NewsStorageError("Cannot build NewsStorage");
+            throw new NewsStorageError("Cannot build NewsStorage");
         }
     }
 
@@ -44,7 +44,7 @@ class NewsStorage {
             const jsonString = JSON.stringify(builtNews);
             writeFileSync(parsedNewsPath, jsonString, "utf8");
         } catch (exception) {
-            throw NewsStorageError("Cannot dump NewsStorage");
+            throw new NewsStorageError("Cannot dump NewsStorage");
         }
     }
 }
