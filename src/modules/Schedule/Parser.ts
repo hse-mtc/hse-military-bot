@@ -1,3 +1,4 @@
+import makeError from "make-error";
 import { Workbook, Worksheet, CellValue, CellRichTextValue } from "exceljs";
 
 import {
@@ -11,7 +12,6 @@ import {
     hasOnlyValuesFromArray,
 } from "@/helpers/schedule";
 import { head, capitalizeFirstLetter } from "@/helpers/general";
-import BaseError from "@/modules/BaseError";
 
 import {
     TSchedule,
@@ -22,7 +22,7 @@ import {
     TScheduleMetaDates,
 } from ".";
 
-const ScheduleParserError = BaseError.createError("ScheduleParserError");
+const ScheduleParserError = makeError("ScheduleParserError");
 
 // A bunch of legacy, that I was too lazy to refactor, sorry ¯\_(ツ)_/¯
 class ScheduleParser {
@@ -122,7 +122,7 @@ class ScheduleParser {
         try {
             await workbook.xlsx.readFile(path);
         } catch (exception) {
-            throw ScheduleParserError("Cannot read xlsx file");
+            throw new ScheduleParserError("Cannot read xlsx file");
         }
 
         const worksheet = workbook.getWorksheet(1);

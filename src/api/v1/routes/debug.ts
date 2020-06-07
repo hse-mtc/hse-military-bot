@@ -1,14 +1,13 @@
 import * as path from "path";
 import * as heapdump from "heapdump";
+import makeError from "make-error";
 import { format } from "date-fns";
 import { Router, Response, Request } from "express";
 
 import Logger from "@/modules/Logger";
-import BaseError from "@/modules/BaseError";
-
 import { authMiddleware } from "../middlewares";
 
-const SentryError = BaseError.createError("SentryError");
+const TestSentryError = makeError("TestSentryError");
 
 const debugRoutes = Router();
 
@@ -45,7 +44,7 @@ debugRoutes.get("/heapdump", [
 debugRoutes.get("/debugSentry", [
     authMiddleware,
     (): void => {
-        throw SentryError("Sentry error!");
+        throw new TestSentryError("Test Sentry error!");
     },
 ]);
 

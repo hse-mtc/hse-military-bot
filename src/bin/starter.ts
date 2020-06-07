@@ -1,10 +1,7 @@
 import { join } from "path";
 
-import * as Sentry from "@sentry/node";
 import * as dotenv from "dotenv";
 import program from "commander";
-
-import { resolveSentryConfigSync } from "@/resolvers/config";
 
 import Bot from "@/modules/Bot";
 import Server from "@/modules/Server";
@@ -36,7 +33,6 @@ const starter = async (): Promise<void> => {
     });
 
     Logger.info(`Starting ${mode} mode...`);
-    Sentry.init(resolveSentryConfigSync());
 
     switch (mode) {
         case "debug":

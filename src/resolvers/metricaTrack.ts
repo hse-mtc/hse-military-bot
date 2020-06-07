@@ -1,9 +1,7 @@
+import makeError from "make-error";
 import Metrica from "@/modules/Metrica";
-import BaseError from "@/modules/BaseError";
 
-const MetricaTrackResolverError = BaseError.createError(
-    "MetricaTrackResolverError",
-);
+const MetricaTrackResolverError = makeError("MetricaTrackResolverError");
 
 export default function track(
     fromId: number,
@@ -13,7 +11,7 @@ export default function track(
     try {
         Metrica.instance.track(fromId, message, goal);
     } catch (exception) {
-        throw MetricaTrackResolverError(
+        throw new MetricaTrackResolverError(
             "Error occurred in metricaTrack resolver",
         );
     }

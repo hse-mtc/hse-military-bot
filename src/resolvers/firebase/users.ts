@@ -1,9 +1,7 @@
-import BaseError from "@/modules/BaseError";
+import makeError from "make-error";
 import { FirebaseUsers } from "@/modules/Firebase";
 
-const FirebaseUsersResolverError = BaseError.createError(
-    "FirebaseUsersResolverError",
-);
+const FirebaseUsersResolverError = makeError("FirebaseUsersResolverError");
 
 export async function resolveReadUserSelection(
     fromId: number,
@@ -15,7 +13,7 @@ export async function resolveReadUserSelection(
             .once("value")
             .then((snapshot) => snapshot.val() && snapshot.val()[field]);
     } catch (exception) {
-        throw FirebaseUsersResolverError(
+        throw new FirebaseUsersResolverError(
             "Error occurred in resolveReadUserSelection resolver",
         );
     }
@@ -31,7 +29,7 @@ export async function resolveWriteUserSelection(
             .ref(`/users/${chatId}/${field}`)
             .set(value);
     } catch (exception) {
-        throw FirebaseUsersResolverError(
+        throw new FirebaseUsersResolverError(
             "Error occurred in resolveWriteUserSelection resolver",
         );
     }
@@ -46,7 +44,7 @@ export async function resolveUpdateUserSelection(
             .ref(`/users/${chatId}`)
             .update(value);
     } catch (exception) {
-        throw FirebaseUsersResolverError(
+        throw new FirebaseUsersResolverError(
             "Error occurred in resolveWriteUserSelection resolver",
         );
     }

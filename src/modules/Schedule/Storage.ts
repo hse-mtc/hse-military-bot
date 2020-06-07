@@ -1,11 +1,10 @@
+import makeError from "make-error";
 import { existsSync, readFileSync, writeFileSync } from "fs";
-
-import BaseError from "@/modules/BaseError";
 import { resolveScheduleFileConfigSync } from "@/resolvers/config";
 
 import { ScheduleParser, TScheduleObject } from ".";
 
-const ScheduleStorageError = BaseError.createError("ScheduleStorageError");
+const ScheduleStorageError = makeError("ScheduleStorageError");
 
 class ScheduleStorage {
     private _instance: TScheduleObject;
@@ -39,7 +38,7 @@ class ScheduleStorage {
             this.dumpSchedule(this._instance, parsedSchedulePath);
         } catch (exception) {
             // TODO: нормальные трейсы у ошибок в логах
-            throw ScheduleStorageError("Cannot build ScheduleStorage");
+            throw new ScheduleStorageError("Cannot build ScheduleStorage");
         }
     }
 
@@ -51,7 +50,7 @@ class ScheduleStorage {
             const jsonString = JSON.stringify(builtSchedule);
             writeFileSync(parsedSchedulePath, jsonString, "utf8");
         } catch (exception) {
-            throw ScheduleStorageError("Cannot dump ScheduleStorage");
+            throw new ScheduleStorageError("Cannot dump ScheduleStorage");
         }
     }
 }

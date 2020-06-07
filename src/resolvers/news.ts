@@ -1,14 +1,12 @@
+import makeError from "make-error";
 import GoogleNewsRss, { TArticle } from "google-news-rss";
 
-import BaseError from "@/modules/BaseError";
 import { getFormattedDate } from "@/helpers/dates";
 import { DEFAULT_NUM_OF_ARTICLES } from "@/constants/configuration";
 
 const googleNews = new GoogleNewsRss();
 
-const NewsArticlesResolverError = BaseError.createError(
-    "NewsArticlesResolverError",
-);
+const NewsArticlesResolverError = makeError("NewsArticlesResolverError");
 
 const finalizeTopic = (topic: string): string =>
     topic === "Информационная безопасность"
@@ -28,7 +26,7 @@ export default async function resolveNewsArticles(
             "ru",
         );
     } catch (e) {
-        throw NewsArticlesResolverError(
+        throw new NewsArticlesResolverError(
             "Error occurred in resolveNewsArticles resolver",
         );
     }

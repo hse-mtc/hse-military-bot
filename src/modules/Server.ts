@@ -10,19 +10,20 @@ import rateLimit from "express-rate-limit";
 import addRequestId from "express-request-id";
 import express, { Response } from "express";
 
+import makeError from "make-error";
 import * as Sentry from "@sentry/node";
 
 import {
     resolveBotConfigSync,
     resolveEnvironmentSync,
+    resolveSentryConfigSync,
 } from "@/resolvers/config";
 import Bot from "@/modules/Bot";
-import BaseError from "@/modules/BaseError";
 import Logger, { ExpressLogger } from "@/modules/Logger";
 import setupRoutes from "@/api/v1/routes";
 
-const WebHookError = BaseError.createError("WebHookError");
-const ExpressInitError = BaseError.createError("ExpressInitError");
+const WebHookError = makeError("WebHookError");
+const ExpressInitError = makeError("ExpressInitError");
 
 interface CustomResponse extends Response {
     sentry: string;
@@ -57,7 +58,7 @@ class ExpressApp {
 
     private async _initializeBot(url: string, env: string): Promise<void> {
         if (!this._bot || this._bot.instance === null) {
-            throw ExpressInitError(
+            throw new ExpressInitError(
                 'Provide bot and use property "{ useBot: true }"',
             );
         }
@@ -83,7 +84,7 @@ class ExpressApp {
             );
 
             if (!isWebhookSet) {
-                throw WebHookError("Cannot set WebHook in production");
+                throw new WebHookError("Cannot set WebHook in production");
             }
         }
     }
@@ -92,6 +93,8 @@ class ExpressApp {
         const { env, port, url } = resolveEnvironmentSync();
 
         /* Use Sentry */
+        Sentry.init(resolveSentryConfigSync());
+
         this._app.use(
             Sentry.Handlers.requestHandler({
                 serverName: false,
@@ -143,17 +146,7 @@ class ExpressApp {
         /* Routes */
         setupRoutes(this._app);
 
-        this._app.use(
-            Sentry.Handlers.errorHandler({
-                shouldHandleError(error) {
-                    // Capture all 404 and 500 errors
-                    if (error.status === 404 || error.status === 500) {
-                        return true;
-                    }
-                    return false;
-                },
-            }),
-        );
+        this._app.use(Sentry.Handlers.errorHandler());
 
         /* Timeout checker */
         // TODO: wtf??
@@ -171,7 +164,7 @@ class ExpressApp {
         // @ts-ignore
         this._app.use((_req, res: CustomResponse) => {
             res.statusCode = 500;
-            res.end(res.sentry + "\n");
+            res.end(`${res.sentry ?? "Server Error"}\n`);
         });
 
         this._app.listen(port, () => {

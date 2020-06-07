@@ -1,9 +1,9 @@
 import * as firebase from "firebase-admin";
+import makeError from "make-error";
 
-import BaseError from "@/modules/BaseError";
 import { TFirebaseConfig } from "@/resolvers/config";
 
-const FirebaseError = BaseError.createError("FirebaseInitError");
+const FirebaseError = makeError("FirebaseInitError");
 
 export default abstract class AbstractFirebase {
     private _instance: firebase.database.Database;
@@ -30,7 +30,7 @@ export default abstract class AbstractFirebase {
                 })
                 .database();
         } catch (exception) {
-            throw FirebaseError("Cannot initialize Firebase");
+            throw new FirebaseError("Cannot initialize Firebase");
         }
     }
 }

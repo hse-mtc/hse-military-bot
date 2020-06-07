@@ -80,8 +80,10 @@ export const resolveNewsFileConfigSync = (): { newsPath: string } => ({
 
 export const resolveSentryConfigSync = (): {
     dsn: string;
+    debug: boolean;
     release: string;
 } => ({
     dsn: process.env.SENTRY_DSN || "",
+    debug: true,
     release: "hse-military-bot@2.0.0",
 });

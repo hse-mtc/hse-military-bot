@@ -4,13 +4,13 @@ import {
     TScheduleDayItem,
     TScheduleMeta,
 } from "@/modules/Schedule";
-import BaseError from "@/modules/BaseError";
+import makeError from "make-error";
 
-const ScheduleFromPlatoonResolverError = BaseError.createError(
+const ScheduleFromPlatoonResolverError = makeError(
     "ScheduleFromPlatoonResolverError",
 );
 
-const AvailableDatesFromPlatoonResolverError = BaseError.createError(
+const AvailableDatesFromPlatoonResolverError = makeError(
     "AvailableDatesFromPlatoonResolverError",
 );
 
@@ -56,7 +56,7 @@ export const resolveScheduleFromPlatoon = (
     const platoonType = resolvePlatoonTypeFromPlatoon(platoon);
 
     if (!scheduleObj || !platoonType) {
-        throw ScheduleFromPlatoonResolverError(
+        throw new ScheduleFromPlatoonResolverError(
             "ScheduleFromPlatoonResolverError occured",
         );
     }
@@ -70,7 +70,7 @@ export const resolvePlatoonsFromPlatoonType = (
     const scheduleMeta = resolveScheduleMeta();
 
     if (!scheduleMeta || !platoonType) {
-        throw ScheduleFromPlatoonResolverError(
+        throw new ScheduleFromPlatoonResolverError(
             "ScheduleFromPlatoonResolverError occured",
         );
     }
@@ -82,7 +82,7 @@ export const resolveAvailableDatesFromPlatoon = (platoon: string): string[] => {
     const scheduleMeta = resolveScheduleMeta();
 
     if (!scheduleMeta || !platoon) {
-        throw AvailableDatesFromPlatoonResolverError(
+        throw new AvailableDatesFromPlatoonResolverError(
             "AvailableDatesFromPlatoonResolverError occured",
         );
     }

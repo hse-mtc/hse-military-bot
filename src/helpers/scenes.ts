@@ -1,10 +1,10 @@
+import makeError from "make-error";
 import * as tt from "telegraf/typings/telegram-types";
 import { Markup, Stage, Extra } from "telegraf";
 
 import { TelegrafContext } from "telegraf/typings/context";
 import { SceneContextMessageUpdate } from "telegraf/typings/stage";
 
-import BaseError from "@/modules/BaseError";
 import track from "@/resolvers/metricaTrack";
 import { MENU_SCENARIO } from "@/constants/scenarios";
 import { MILITARY_STICKER_ID } from "@/constants/configuration";
@@ -12,8 +12,8 @@ import { TReplyFunction } from "@/typings/custom";
 
 const { inlineKeyboard, urlButton } = Markup;
 
-const EnsureFromIdError = BaseError.createError("EnsureFromIdError");
-const EnsureMessageError = BaseError.createError("EnsureMessageError");
+const EnsureFromIdError = makeError("EnsureFromIdError");
+const EnsureMessageError = makeError("EnsureMessageError");
 
 export const ensureFromId = (
     from: tt.User | undefined,
@@ -25,7 +25,7 @@ export const ensureFromId = (
     }
 
     if (!(from && from.id)) {
-        throw EnsureFromIdError("EnsureFromIdError should never occur");
+        throw new EnsureFromIdError("EnsureFromIdError should never occur");
     }
 
     return from.id;
@@ -41,7 +41,7 @@ export const ensureMessageText = (
     }
 
     if (!(message && message.text)) {
-        throw EnsureMessageError("EnsureMessageError should never occur");
+        throw new EnsureMessageError("EnsureMessageError should never occur");
     }
 
     return message.text;

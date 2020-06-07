@@ -1,12 +1,11 @@
 import { join } from "path";
 import { writeFileSync } from "fs";
-import { Parser } from "htmlparser2";
-import fetch from "node-fetch";
-import BaseError from "@/modules//BaseError";
 
-const ScheduleDownloaderError = BaseError.createError(
-    "ScheduleDownloaderError",
-);
+import fetch from "node-fetch";
+import makeError from "make-error";
+import { Parser } from "htmlparser2";
+
+const ScheduleDownloaderError = makeError("ScheduleDownloaderError");
 
 class ScheduleDownloader {
     private _baseUrl = "https://www.hse.ru";
@@ -18,7 +17,7 @@ class ScheduleDownloader {
         const scheduleHref = await this._parseHtml(html);
 
         if (scheduleHref === undefined) {
-            throw ScheduleDownloaderError("Cannot find href for schedule");
+            throw new ScheduleDownloaderError("Cannot find href for schedule");
         }
 
         await this._downloadAndSaveXlsx(`${this._baseUrl}${scheduleHref}`);
@@ -28,7 +27,7 @@ class ScheduleDownloader {
         const response = await fetch(this._scheduleUrl);
 
         if (!response.ok) {
-            throw ScheduleDownloaderError(
+            throw new ScheduleDownloaderError(
                 "Cannot find download html for schedule",
             );
         }
@@ -65,7 +64,7 @@ class ScheduleDownloader {
 
             writeFileSync(this._schedulePath, xlsxContent, "utf8");
         } catch (exception) {
-            throw ScheduleDownloaderError("Cannot download schedule xlsx");
+            throw new ScheduleDownloaderError("Cannot download schedule xlsx");
         }
     }
 }
