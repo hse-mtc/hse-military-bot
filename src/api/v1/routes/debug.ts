@@ -4,9 +4,17 @@ import { format } from "date-fns";
 import { Router, Response, Request } from "express";
 
 import Logger from "@/modules/Logger";
+import BaseError from "@/modules/BaseError";
+
 import { authMiddleware } from "../middlewares";
 
+const SentryError = BaseError.createError("SentryError");
+
 const debugRoutes = Router();
+
+debugRoutes.get("/ping", (_req: Request, res: Response) =>
+    res.status(200).send("ok"),
+);
 
 debugRoutes.get("/heapdump", [
     authMiddleware,
@@ -31,6 +39,13 @@ debugRoutes.get("/heapdump", [
                 ? Logger.error(err)
                 : Logger.info(`Heap dump snapshot: ${name}`),
         );
+    },
+]);
+
+debugRoutes.get("/debugSentry", [
+    authMiddleware,
+    (): void => {
+        throw SentryError("Sentry error!");
     },
 ]);
 

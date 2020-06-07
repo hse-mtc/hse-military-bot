@@ -9,7 +9,7 @@ export default class BaseError extends Error {
         }
     }
 
-    static createErrorGenerator(name: string) {
+    static createError(name: string) {
         return (message: string): BaseError => {
             return new BaseError(name, message);
         };

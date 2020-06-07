@@ -3,9 +3,9 @@ import { TArticle } from "google-news-rss";
 
 import BaseError from "@/modules/BaseError";
 // import resolveNewsArticles from "@/resolvers/news";
-import { resolveNewsFileConfig } from "@/resolvers/config";
+import { resolveNewsFileConfigSync } from "@/resolvers/config";
 
-const NewsStorageError = BaseError.createErrorGenerator("NewsStorageError");
+const NewsStorageError = BaseError.createError("NewsStorageError");
 
 type TNewsObject = {
     articles: TArticle[];
@@ -20,7 +20,7 @@ class NewsStorage {
     }
 
     async fromDumpOrBuild(): Promise<void> {
-        const { newsPath } = resolveNewsFileConfig();
+        const { newsPath } = resolveNewsFileConfigSync();
 
         // Trying to restore existing parsed News from JSON on disk
         if (existsSync(newsPath)) {

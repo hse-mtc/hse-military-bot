@@ -8,7 +8,9 @@ import cookieParser from "cookie-parser";
 import responseTime from "response-time";
 import rateLimit from "express-rate-limit";
 import addRequestId from "express-request-id";
-import express from "express";
+import express, { Response } from "express";
+
+import * as Sentry from "@sentry/node";
 
 import {
     resolveBotConfigSync,
@@ -19,8 +21,12 @@ import BaseError from "@/modules/BaseError";
 import Logger, { ExpressLogger } from "@/modules/Logger";
 import setupRoutes from "@/api/v1/routes";
 
-const WebHookError = BaseError.createErrorGenerator("WebHookError");
-const ExpressInitError = BaseError.createErrorGenerator("ExpressInitError");
+const WebHookError = BaseError.createError("WebHookError");
+const ExpressInitError = BaseError.createError("ExpressInitError");
+
+interface CustomResponse extends Response {
+    sentry: string;
+}
 
 // TODO: all functions from classes should have modifiers (private, public, readonly)
 class ExpressApp {
@@ -85,6 +91,15 @@ class ExpressApp {
     private async _configure(): Promise<void> {
         const { env, port, url } = resolveEnvironmentSync();
 
+        /* Use Sentry */
+        this._app.use(
+            Sentry.Handlers.requestHandler({
+                serverName: false,
+                user: false,
+                ip: true,
+            }),
+        );
+
         if (this._bot !== null) {
             await this._initializeBot(url, env);
         }
@@ -128,6 +143,18 @@ class ExpressApp {
         /* Routes */
         setupRoutes(this._app);
 
+        this._app.use(
+            Sentry.Handlers.errorHandler({
+                shouldHandleError(error) {
+                    // Capture all 404 and 500 errors
+                    if (error.status === 404 || error.status === 500) {
+                        return true;
+                    }
+                    return false;
+                },
+            }),
+        );
+
         /* Timeout checker */
         // TODO: wtf??
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -136,6 +163,15 @@ class ExpressApp {
             if (!req.timedout) {
                 next();
             }
+        });
+
+        /* Optional fallthrough error handler */
+        // TODO: wtf??
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        this._app.use((_req, res: CustomResponse) => {
+            res.statusCode = 500;
+            res.end(res.sentry + "\n");
         });
 
         this._app.listen(port, () => {

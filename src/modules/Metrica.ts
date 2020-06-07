@@ -4,7 +4,7 @@ import BaseError from "@/modules/BaseError";
 import { resolveMetricaConfigSync } from "@/resolvers/config";
 
 // TODO: all errors унести from classes
-const MetricaInitError = BaseError.createErrorGenerator("MetricaInitError");
+const MetricaInitError = BaseError.createError("MetricaInitError");
 
 class Metrica {
     private _instance: TMetricaTrackFunction;

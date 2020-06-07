@@ -1,8 +1,8 @@
 {
     "_type": "export",
     "__export_format": 4,
-    "__export_date": "2020-06-03T13:43:19.531Z",
-    "__export_source": "insomnia.desktop.app:v7.1.1",
+    "__export_date": "2020-06-07T13:29:06.844Z",
+    "__export_source": "insomnia.desktop.app:v2020.2.1",
     "resources": [
         {
             "_id": "req_50028f6275f4465ba2b088c89e306b41",
@@ -46,6 +46,7 @@
             "modified": 1580210487023,
             "name": "HSE Military bot",
             "parentId": null,
+            "scope": null,
             "_type": "workspace"
         },
         {
@@ -319,6 +320,36 @@
             "_type": "request"
         },
         {
+            "_id": "req_86e8897ea9b74f15ae513872f972dd5b",
+            "authentication": {},
+            "body": {},
+            "created": 1591536388000,
+            "description": "",
+            "headers": [
+                {
+                    "description": "",
+                    "id": "pair_81a42afd36b24bcca7485a999a3eebc3",
+                    "name": "authorization",
+                    "value": "1"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1587585947387,
+            "method": "GET",
+            "modified": 1591536521783,
+            "name": "/debugSentry",
+            "parameters": [],
+            "parentId": "fld_a5ade12af4ca495193e41e721ad84266",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "{{ apiProtocol  }}://{{ apiHost  }}:{{ apiPort  }}/debug-sentry",
+            "_type": "request"
+        },
+        {
             "_id": "env_a9c203d564c42663231d117743280f52740012b9",
             "color": null,
             "created": 1580210471038,
@@ -339,6 +370,16 @@
             "name": "Default Jar",
             "parentId": "wrk_db648f62b3b24a2cac4541d49bf15b4a",
             "_type": "cookie_jar"
+        },
+        {
+            "_id": "spc_de27f5fc37dd443b8b9ca9364b27f06c",
+            "contentType": "yaml",
+            "contents": "",
+            "created": 1591304851549,
+            "fileName": "HSE Military bot",
+            "modified": 1591304851549,
+            "parentId": "wrk_db648f62b3b24a2cac4541d49bf15b4a",
+            "_type": "api_spec"
         },
         {
             "_id": "env_b06d5d5731144423a697e213c53bb82d",

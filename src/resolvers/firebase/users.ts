@@ -1,7 +1,7 @@
 import BaseError from "@/modules/BaseError";
 import { FirebaseUsers } from "@/modules/Firebase";
 
-const FirebaseUsersResolverError = BaseError.createErrorGenerator(
+const FirebaseUsersResolverError = BaseError.createError(
     "FirebaseUsersResolverError",
 );
 

@@ -6,11 +6,11 @@ import {
 } from "@/modules/Schedule";
 import BaseError from "@/modules/BaseError";
 
-const ScheduleFromPlatoonResolverError = BaseError.createErrorGenerator(
+const ScheduleFromPlatoonResolverError = BaseError.createError(
     "ScheduleFromPlatoonResolverError",
 );
 
-const AvailableDatesFromPlatoonResolverError = BaseError.createErrorGenerator(
+const AvailableDatesFromPlatoonResolverError = BaseError.createError(
     "AvailableDatesFromPlatoonResolverError",
 );
 

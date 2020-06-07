@@ -48,7 +48,7 @@
         "test": "jest --config=configs/jest.json",
         "test:watch": "jest --watch --coverage --config=configs/jest.json",
         "test:coverage": "jest --coverage --config=configs/jest.json",
-        "type-check": "tsc --noEmit --pretty --incremental false --allowJs -t es5",
+        "type-check": "tsc --noEmit --pretty --esModuleInterop --incremental false --allowJs -t es5",
         "type-check:watch": "npm run type-check -- --watch"
     },
     "husky": {
@@ -65,6 +65,7 @@
         ]
     },
     "dependencies": {
+        "@sentry/node": "^5.16.1",
         "bot-metrica": "^1.0.2",
         "commander": "^5.1.0",
         "compression": "^1.7.4",

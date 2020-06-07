@@ -1,7 +1,7 @@
 import Metrica from "@/modules/Metrica";
 import BaseError from "@/modules/BaseError";
 
-const MetricaTrackResolverError = BaseError.createErrorGenerator(
+const MetricaTrackResolverError = BaseError.createError(
     "MetricaTrackResolverError",
 );
 

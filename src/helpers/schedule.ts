@@ -12,12 +12,12 @@ type TColumnDates = {
 
 export const getAllCellsFromRow = (
     worksheet: Worksheet,
-    rowIndeces: number[],
+    rowIndexes: number[],
     startingColumn = 0,
 ): { row: number; dates: TColumnDates }[] => {
     const arr: { row: number; dates: TColumnDates }[] = [];
 
-    rowIndeces.forEach((item) => {
+    rowIndexes.forEach((item) => {
         const arrForEachRow: TColumnDates = [];
 
         worksheet.getRow(item).eachCell((cell, colNumber) => {
@@ -62,7 +62,7 @@ export const getColorFromRowAndColumn = (
     return undefined;
 };
 
-export const getAllActiveIndeces = (
+export const getAllActiveIndexes = (
     worksheet: Worksheet,
     column: number,
     trigger: string,
@@ -118,7 +118,7 @@ export const getTrainingsColorPalette = (
     return colorPalette;
 };
 
-export const getColumnIndecesContainingString = (
+export const getColumnIndexesContainingString = (
     worksheet: Worksheet,
     str: string,
 ): number[] => {
@@ -139,7 +139,7 @@ export const getColumnIndecesContainingString = (
     return popSimilarValues(targetColumnNumber);
 };
 
-export const getRowIndecesContainingString = (
+export const getRowIndexesContainingString = (
     worksheet: Worksheet,
     str: string,
 ): number[] => {

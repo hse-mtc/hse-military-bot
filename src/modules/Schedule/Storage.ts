@@ -1,13 +1,11 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
 
 import BaseError from "@/modules/BaseError";
-import { resolveScheduleFileConfig } from "@/resolvers/config";
+import { resolveScheduleFileConfigSync } from "@/resolvers/config";
 
 import { ScheduleParser, TScheduleObject } from ".";
 
-const ScheduleStorageError = BaseError.createErrorGenerator(
-    "ScheduleStorageError",
-);
+const ScheduleStorageError = BaseError.createError("ScheduleStorageError");
 
 class ScheduleStorage {
     private _instance: TScheduleObject;
@@ -20,7 +18,7 @@ class ScheduleStorage {
         const {
             schedulePath,
             parsedSchedulePath,
-        } = resolveScheduleFileConfig();
+        } = resolveScheduleFileConfigSync();
 
         // Trying to restore existing parsed schedule from JSON on disk
         if (existsSync(parsedSchedulePath)) {

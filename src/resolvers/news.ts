@@ -6,7 +6,7 @@ import { DEFAULT_NUM_OF_ARTICLES } from "@/constants/configuration";
 
 const googleNews = new GoogleNewsRss();
 
-const NewsArticlesResolverError = BaseError.createErrorGenerator(
+const NewsArticlesResolverError = BaseError.createError(
     "NewsArticlesResolverError",
 );
 

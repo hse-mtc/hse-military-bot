@@ -3,7 +3,7 @@ import * as firebase from "firebase-admin";
 import BaseError from "@/modules/BaseError";
 import { TFirebaseConfig } from "@/resolvers/config";
 
-const FirebaseError = BaseError.createErrorGenerator("FirebaseInitError");
+const FirebaseError = BaseError.createError("FirebaseInitError");
 
 export default abstract class AbstractFirebase {
     private _instance: firebase.database.Database;

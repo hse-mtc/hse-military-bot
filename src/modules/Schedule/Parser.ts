@@ -1,12 +1,12 @@
 import { Workbook, Worksheet, CellValue, CellRichTextValue } from "exceljs";
 
 import {
-    getAllActiveIndeces,
+    getAllActiveIndexes,
     getAllCellsFromRow,
     getCellFromRowAndColumn,
     getColorFromRowAndColumn,
-    getColumnIndecesContainingString,
-    getRowIndecesContainingString,
+    getColumnIndexesContainingString,
+    getRowIndexesContainingString,
     getTrainingsColorPalette,
     hasOnlyValuesFromArray,
 } from "@/helpers/schedule";
@@ -22,9 +22,7 @@ import {
     TScheduleMetaDates,
 } from ".";
 
-const ScheduleParserError = BaseError.createErrorGenerator(
-    "ScheduleParserError",
-);
+const ScheduleParserError = BaseError.createError("ScheduleParserError");
 
 // A bunch of legacy, that I was too lazy to refactor, sorry ¯\_(ツ)_/¯
 class ScheduleParser {
@@ -60,26 +58,26 @@ class ScheduleParser {
         };
     }
 
-    private _getAllDateRowsFromActiveIndeces(
+    private _getAllDateRowsFromActiveIndexes(
         worksheet: Worksheet,
-        activeIndeces: number[],
+        activeIndexes: number[],
     ): number[] {
-        const datesRowIndeces = [
-            getRowIndecesContainingString(
+        const datesRowIndexes = [
+            getRowIndexesContainingString(
                 worksheet,
                 this._excelTriggers.weekday,
             )[1],
         ];
 
-        activeIndeces.reduce((prevRowIndex, currRowIndex) => {
+        activeIndexes.reduce((prevRowIndex, currRowIndex) => {
             if (currRowIndex - prevRowIndex !== 1) {
-                datesRowIndeces.push(currRowIndex - 1);
+                datesRowIndexes.push(currRowIndex - 1);
             }
 
             return currRowIndex;
         });
 
-        return datesRowIndeces;
+        return datesRowIndexes;
     }
 
     private getColumnsFromTriggers(
@@ -101,19 +99,19 @@ class ScheduleParser {
 
         return {
             platoonTypeColumn: head(
-                getColumnIndecesContainingString(worksheet, platoonType),
+                getColumnIndexesContainingString(worksheet, platoonType),
             ),
             platoonColumn: head(
-                getColumnIndecesContainingString(worksheet, platoon),
+                getColumnIndexesContainingString(worksheet, platoon),
             ),
             weekdayColumn: head(
-                getColumnIndecesContainingString(worksheet, weekday),
+                getColumnIndexesContainingString(worksheet, weekday),
             ),
             trainingsColumn: 3,
             // trainingsColumn: head(
-            //     getColumnIndecesContainingString(worksheet, trainings),
+            //     getColumnIndexesContainingString(worksheet, trainings),
             // ),
-            dateColumn: head(getColumnIndecesContainingString(worksheet, date)),
+            dateColumn: head(getColumnIndexesContainingString(worksheet, date)),
         };
     }
 
@@ -137,7 +135,7 @@ class ScheduleParser {
             dateColumn,
         } = this.getColumnsFromTriggers(worksheet);
 
-        const activeIndeces = getAllActiveIndeces(
+        const activeIndexes = getAllActiveIndexes(
             worksheet,
             platoonTypeColumn,
             this._excelTriggers.platoonType,
@@ -147,7 +145,7 @@ class ScheduleParser {
         const platoons: string[] = [];
         const weekdays: string[] = [];
 
-        activeIndeces.forEach((rowIndex, iter) => {
+        activeIndexes.forEach((rowIndex, iter) => {
             platoonTypes.push(
                 getCellFromRowAndColumn(worksheet, rowIndex, platoonTypeColumn),
             );
@@ -167,20 +165,20 @@ class ScheduleParser {
         );
 
         /* Get all date rows */
-        const datesRowIndeces = this._getAllDateRowsFromActiveIndeces(
+        const datesRowIndexes = this._getAllDateRowsFromActiveIndexes(
             worksheet,
-            activeIndeces,
+            activeIndexes,
         );
 
         /* Get all date columns */
         const datesAllColumns = getAllCellsFromRow(
             worksheet,
-            datesRowIndeces,
+            datesRowIndexes,
             dateColumn,
         );
 
         /* Get schedule for all date columns */
-        activeIndeces.forEach((rowIndex, iter) => {
+        activeIndexes.forEach((rowIndex, iter) => {
             /* Get current date row */
             let currDateRow: { row: number; index: number } = {
                 row: 0,
@@ -218,7 +216,7 @@ class ScheduleParser {
                         rowIndex,
                         prevDate.col,
                     );
-                    const currentlessonColor = getColorFromRowAndColumn(
+                    const currentLessonColor = getColorFromRowAndColumn(
                         worksheet,
                         rowIndex,
                         prevDate.col,
@@ -233,9 +231,9 @@ class ScheduleParser {
                         } else {
                             relativeLesson = currentLesson as string;
                         }
-                    } else if (currentlessonColor) {
+                    } else if (currentLessonColor) {
                         colorPalette.forEach((color) => {
-                            if (color.index === currentlessonColor) {
+                            if (color.index === currentLessonColor) {
                                 relativeLesson = color.value as string;
                             }
                         });

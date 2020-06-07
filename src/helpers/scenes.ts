@@ -12,8 +12,8 @@ import { TReplyFunction } from "@/typings/custom";
 
 const { inlineKeyboard, urlButton } = Markup;
 
-const EnsureFromIdError = BaseError.createErrorGenerator("EnsureFromIdError");
-const EnsureMessageError = BaseError.createErrorGenerator("EnsureMessageError");
+const EnsureFromIdError = BaseError.createError("EnsureFromIdError");
+const EnsureMessageError = BaseError.createError("EnsureMessageError");
 
 export const ensureFromId = (
     from: tt.User | undefined,

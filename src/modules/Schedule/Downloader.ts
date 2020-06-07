@@ -4,7 +4,7 @@ import { Parser } from "htmlparser2";
 import fetch from "node-fetch";
 import BaseError from "@/modules//BaseError";
 
-const ScheduleDownloaderError = BaseError.createErrorGenerator(
+const ScheduleDownloaderError = BaseError.createError(
     "ScheduleDownloaderError",
 );
 

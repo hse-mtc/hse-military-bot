@@ -58,7 +58,7 @@ export const resolveMetricaConfigSync = (): {
     pageTitle: "hse-military-bot",
 });
 
-export const resolveScheduleFileConfig = (): {
+export const resolveScheduleFileConfigSync = (): {
     schedulePath: string;
     parsedSchedulePath: string;
 } => ({
@@ -74,6 +74,14 @@ export const resolveScheduleFileConfig = (): {
     ),
 });
 
-export const resolveNewsFileConfig = (): { newsPath: string } => ({
+export const resolveNewsFileConfigSync = (): { newsPath: string } => ({
     newsPath: path.join(process.env.NODE_PATH ?? ".", "static", "news.json"),
+});
+
+export const resolveSentryConfigSync = (): {
+    dsn: string;
+    release: string;
+} => ({
+    dsn: process.env.SENTRY_DSN || "",
+    release: "hse-military-bot@2.0.0",
 });

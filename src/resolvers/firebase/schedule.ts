@@ -1,7 +1,7 @@
 import BaseError from "@/modules/BaseError";
 import { FirebaseSchedule } from "@/modules/Firebase";
 
-const FirebaseScheduleWriteResolverError = BaseError.createErrorGenerator(
+const FirebaseScheduleWriteResolverError = BaseError.createError(
     "FirebaseScheduleWriteResolverError",
 );
 
