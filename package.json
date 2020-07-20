@@ -112,7 +112,7 @@
         "@types/heapdump": "^0.3.1",
         "@types/helmet": "^0.0.46",
         "@types/htmlparser2": "^3.10.1",
-        "@types/jest": "^25.2.1",
+        "@types/jest": "^26.0.5",
         "@types/node": "^13.13.5",
         "@types/node-fetch": "^2.5.7",
         "@types/response-time": "^2.3.4",
