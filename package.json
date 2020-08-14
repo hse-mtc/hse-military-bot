@@ -80,7 +80,7 @@
         "express-request-id": "^1.4.1",
         "express-validator": "^6.4.1",
         "express-winston": "^4.0.3",
-        "firebase": "^7.14.2",
+        "firebase": "^7.18.0",
         "firebase-admin": "^8.11.0",
         "google-news-rss": "^0.4.1",
         "heapdump": "^0.3.15",
