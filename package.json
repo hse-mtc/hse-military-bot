@@ -110,7 +110,7 @@
         "@types/express-rate-limit": "^5.0.0",
         "@types/express-request-id": "^1.4.1",
         "@types/heapdump": "^0.3.1",
-        "@types/helmet": "^0.0.46",
+        "@types/helmet": "^0.0.48",
         "@types/htmlparser2": "^3.10.1",
         "@types/jest": "^25.2.1",
         "@types/node": "^13.13.5",
