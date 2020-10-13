@@ -132,7 +132,7 @@
         "jest-cli": "^26.0.1",
         "lint-staged": "^10.2.2",
         "nodemon": "^2.0.3",
-        "prettier": "^2.0.5",
+        "prettier": "^2.1.2",
         "ts-loader": "^7.0.2",
         "ts-node": "^8.10.1",
         "typescript": "^3.8.3",
