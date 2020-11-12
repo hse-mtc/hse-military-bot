@@ -9,7 +9,7 @@ describe("Schedule module", () => {
     });
 
     test("should correctly parse 1809 platoon for 15 january", () => {
-        const scheduleData = resolveScheduleFromPlatoon("1809", "15 января");
+        const scheduleData = resolveScheduleFromPlatoon("1809", "4 сентября");
         expect(scheduleData).toEqual(scheduleMock);
     });
 });
