@@ -1,8 +1,8 @@
 import {
     ScheduleStorage,
-    TScheduleObject,
-    TScheduleDayItem,
-    TScheduleMeta,
+    ScheduleObject,
+    ScheduleDayItem,
+    ScheduleMeta,
 } from "@/modules/Schedule";
 import makeError from "make-error";
 
@@ -14,10 +14,10 @@ const AvailableDatesFromPlatoonResolverError = makeError(
     "AvailableDatesFromPlatoonResolverError",
 );
 
-export const resolveFullSchedule = (): TScheduleObject =>
+export const resolveFullSchedule = (): ScheduleObject =>
     ScheduleStorage.instanсe;
 
-export const resolveScheduleMeta = (): TScheduleMeta =>
+export const resolveScheduleMeta = (): ScheduleMeta =>
     resolveFullSchedule().meta;
 
 export const resolvePlatoonTypes = (): string[] =>
@@ -51,7 +51,7 @@ export const resolvePlatoonTypeFromPlatoon = (
 export const resolveScheduleFromPlatoon = (
     platoon: string,
     date: string,
-): TScheduleDayItem => {
+): ScheduleDayItem => {
     const scheduleObj = resolveFullSchedule();
     const platoonType = resolvePlatoonTypeFromPlatoon(platoon);
 

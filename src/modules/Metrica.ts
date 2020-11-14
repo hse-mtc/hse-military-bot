@@ -1,14 +1,14 @@
 import makeError from "make-error";
-import BotMetrica, { TMetricaTrackFunction } from "bot-metrica";
+import BotMetrica, { MetricaTrackFunction } from "bot-metrica";
 import { resolveMetricaConfigSync } from "@/resolvers/config";
 
 // TODO: all errors унести from classes
 const MetricaInitError = makeError("MetricaInitError");
 
 class Metrica {
-    private _instance: TMetricaTrackFunction;
+    private _instance: MetricaTrackFunction;
 
-    get instance(): TMetricaTrackFunction {
+    get instance(): MetricaTrackFunction {
         return this._instance;
     }
 

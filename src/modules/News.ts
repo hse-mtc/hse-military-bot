@@ -1,5 +1,5 @@
 import makeError from "make-error";
-import { TArticle } from "google-news-rss";
+import { Article } from "google-news-rss";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 
 // import resolveNewsArticles from "@/resolvers/news";
@@ -7,15 +7,15 @@ import { resolveNewsFileConfigSync } from "@/resolvers/config";
 
 const NewsStorageError = makeError("NewsStorageError");
 
-type TNewsObject = {
-    articles: TArticle[];
+type NewsObject = {
+    articles: Article[];
     totalPages: number;
 };
 
 class NewsStorage {
-    private _instance: TNewsObject;
+    private _instance: NewsObject;
 
-    get instance(): TNewsObject {
+    get instance(): NewsObject {
         return this._instance;
     }
 
@@ -40,7 +40,7 @@ class NewsStorage {
         }
     }
 
-    dumpNews(builtNews: TNewsObject, parsedNewsPath: string): void {
+    dumpNews(builtNews: NewsObject, parsedNewsPath: string): void {
         try {
             const jsonString = JSON.stringify(builtNews);
             writeFileSync(parsedNewsPath, jsonString, "utf8");

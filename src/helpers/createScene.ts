@@ -8,7 +8,7 @@ import { SceneHandler } from "@/typings";
 
 const { enter } = Stage;
 
-type TCreateSceneParams = {
+type CreateSceneParams = {
     name: string;
     enterHandler?: SceneHandler;
     messageHandler?: SceneHandler;
@@ -22,7 +22,7 @@ export default function createScene({
     enterHandler,
     messageHandler,
     resultProcessor,
-}: TCreateSceneParams): Scene<SceneContextMessageUpdate> {
+}: CreateSceneParams): Scene<SceneContextMessageUpdate> {
     let newScene = new BaseScene<SceneContextMessageUpdate>(sceneName);
 
     if (enterHandler) {

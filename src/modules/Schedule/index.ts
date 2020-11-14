@@ -1,26 +1,26 @@
-export type TScheduleMetaPlatoonTypes = string[];
-export type TScheduleMetaPlatoons = {
+export type ScheduleMetaPlatoonTypes = string[];
+export type ScheduleMetaPlatoons = {
     [platoonType: string]: string[];
 };
-export type TScheduleMetaDates = {
+export type ScheduleMetaDates = {
     [platoon: string]: string[];
 };
 
-export type TScheduleMeta = {
+export type ScheduleMeta = {
     // [ "Офицеры - разведка", "Сержанты МСВ", "Офицеры ВКС", ... ],
-    platoonTypes: TScheduleMetaPlatoonTypes;
+    platoonTypes: ScheduleMetaPlatoonTypes;
     // { "Офицеры - разведка": [ "1606", "1909", ... ], "Сержанты МСВ": [Array], ... }
-    platoons: TScheduleMetaPlatoons;
+    platoons: ScheduleMetaPlatoons;
     // { "1701": [ "10 января", "17 января", ... ],"1702": [Array], ... }
-    dates: TScheduleMetaDates;
+    dates: ScheduleMetaDates;
 };
 
-export type TScheduleDayItem = {
+export type ScheduleDayItem = {
     weekday: string;
     schedule: string[];
 };
 
-export type TSchedule = {
+export type Schedule = {
     // {
     // 	"Офицеры - разведка": {
     // 		"1703": {
@@ -39,14 +39,14 @@ export type TSchedule = {
     //  }
     [platoonType: string]: {
         [platoon: string]: {
-            [date: string]: TScheduleDayItem;
+            [date: string]: ScheduleDayItem;
         };
     };
 };
 
-export type TScheduleObject = {
-    meta: TScheduleMeta;
-    schedule: TSchedule;
+export type ScheduleObject = {
+    meta: ScheduleMeta;
+    schedule: Schedule;
 };
 
 export { default as ScheduleParser } from "./Parser";

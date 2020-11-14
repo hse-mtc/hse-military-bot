@@ -1,17 +1,17 @@
 declare module "bot-metrica" {
-    type TBotMetricaConfig = {
+    type BotMetricaConfig = {
         host: string;
         path: string;
         token: string;
         pageTitle: string;
     };
 
-    export type TMetricaTrackFunction = {
+    export type MetricaTrackFunction = {
         track(fromId: number, message: string, goal: string): void;
     };
 
     export default function BotMetrica(
         counter: string,
-        config: TBotMetricaConfig,
-    ): TMetricaTrackFunction;
+        config: BotMetricaConfig,
+    ): MetricaTrackFunction;
 }

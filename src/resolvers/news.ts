@@ -1,5 +1,5 @@
 import makeError from "make-error";
-import GoogleNewsRss, { TArticle } from "google-news-rss";
+import GoogleNewsRss, { Article } from "google-news-rss";
 
 import { getFormattedDate } from "@/helpers/dates";
 import { DEFAULT_NUM_OF_ARTICLES } from "@/constants/configuration";
@@ -16,7 +16,7 @@ const finalizeTopic = (topic: string): string =>
 export default async function resolveNewsArticles(
     topic: string,
     numOfArticles = DEFAULT_NUM_OF_ARTICLES,
-): Promise<TArticle[]> {
+): Promise<Article[]> {
     let rawArticles;
 
     try {
@@ -32,7 +32,7 @@ export default async function resolveNewsArticles(
     }
 
     return rawArticles.slice(0, numOfArticles).map(
-        (article: TArticle): TArticle => {
+        (article: Article): Article => {
             article.pubDate = getFormattedDate(new Date(article.pubDate));
             return article;
         },

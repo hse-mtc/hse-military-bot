@@ -1,5 +1,5 @@
 declare module "google-news-rss" {
-    type TArticle = {
+    type Article = {
         title: string;
         link: string;
         pubDate: string;
@@ -14,6 +14,6 @@ declare module "google-news-rss" {
             numOfArticles: number,
             language: "ru" | "en",
             extraParams?: Record<string, unknown>,
-        ): Promise<TArticle[]>;
+        ): Promise<Article[]>;
     }
 }

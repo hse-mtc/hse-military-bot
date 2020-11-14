@@ -1,6 +1,6 @@
 import * as path from "path";
 
-export type TFirebaseConfig = {
+export type FirebaseConfig = {
     databaseURL: string;
     projectId: string;
     clientEmail: string;
@@ -9,7 +9,7 @@ export type TFirebaseConfig = {
 
 export const resolveFirebaseConfigSync = (
     databaseName: "users" | "schedule",
-): TFirebaseConfig =>
+): FirebaseConfig =>
     databaseName === "users"
         ? {
               databaseURL: process.env.FIREBASE_USERS_URL || "",

@@ -29,11 +29,11 @@ import { formatHtmlScheduleResponse } from "@/helpers/schedule";
 
 import { SceneHandler } from "@/typings";
 
-type TSession = {
+type Session = {
     defaultPlatoon: string;
 };
 
-const enterHandler: SceneHandler<TSession> = async ({
+const enterHandler: SceneHandler<Session> = async ({
     from,
     reply,
     scene,
@@ -81,7 +81,7 @@ const enterHandler: SceneHandler<TSession> = async ({
     return reply("Выберите дату 📅", markup);
 };
 
-const messageHandler: SceneHandler<TSession> = async ({
+const messageHandler: SceneHandler<Session> = async ({
     from,
     message,
     reply,

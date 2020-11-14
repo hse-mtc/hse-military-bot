@@ -7,7 +7,7 @@ import { authMiddleware } from "../middlewares";
 
 const newsRoutes = Router();
 
-type TGetNewsRequestBody = {
+type GetNewsRequestBody = {
     topic: string;
     num?: number;
 };
@@ -16,7 +16,7 @@ type TGetNewsRequestBody = {
 newsRoutes.post("/getNews", [
     authMiddleware,
     async (
-        req: CustomRequest<TGetNewsRequestBody>,
+        req: CustomRequest<GetNewsRequestBody>,
         res: Response,
     ): Promise<void> => {
         const { topic, num } = req.body;

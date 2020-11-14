@@ -14,12 +14,12 @@ import {
 import { head, capitalizeFirstLetter } from "@/helpers/general";
 
 import {
-    TSchedule,
-    TScheduleMeta,
-    TScheduleObject,
-    TScheduleMetaPlatoonTypes,
-    TScheduleMetaPlatoons,
-    TScheduleMetaDates,
+    Schedule,
+    ScheduleMeta,
+    ScheduleObject,
+    ScheduleMetaPlatoonTypes,
+    ScheduleMetaPlatoons,
+    ScheduleMetaDates,
 } from ".";
 
 const ScheduleParserError = makeError("ScheduleParserError");
@@ -35,10 +35,10 @@ class ScheduleParser {
         trainings: "Тренировки:",
     };
 
-    private _buildMeta(scheduleObj: TSchedule): TScheduleMeta {
-        const platoonTypesMeta: TScheduleMetaPlatoonTypes = [];
-        const platoonsMeta: TScheduleMetaPlatoons = {};
-        const datesMeta: TScheduleMetaDates = {};
+    private _buildMeta(scheduleObj: Schedule): ScheduleMeta {
+        const platoonTypesMeta: ScheduleMetaPlatoonTypes = [];
+        const platoonsMeta: ScheduleMetaPlatoons = {};
+        const datesMeta: ScheduleMetaDates = {};
 
         Object.keys(scheduleObj).forEach((platoonType) => {
             platoonTypesMeta.push(platoonType);
@@ -115,8 +115,8 @@ class ScheduleParser {
         };
     }
 
-    async parse(path: string): Promise<TScheduleObject> {
-        const schedule: TSchedule = {};
+    async parse(path: string): Promise<ScheduleObject> {
+        const schedule: Schedule = {};
         const workbook = new Workbook();
 
         try {

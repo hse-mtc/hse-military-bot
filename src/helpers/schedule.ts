@@ -1,11 +1,11 @@
 import { CellValue, Worksheet, FillPattern } from "exceljs";
 
 import { popSimilarValues } from "@/helpers/general";
-import { TScheduleDayItem } from "@/modules/Schedule";
+import { ScheduleDayItem } from "@/modules/Schedule";
 import { SCHEDULE_TIME } from "@/constants/dateTime";
 import { resolvePlatoonTypeFromPlatoon } from "@/resolvers/schedule";
 
-type TColumnDates = {
+type ColumnDates = {
     col: number;
     value: CellValue;
 }[];
@@ -14,11 +14,11 @@ export const getAllCellsFromRow = (
     worksheet: Worksheet,
     rowIndexes: number[],
     startingColumn = 0,
-): { row: number; dates: TColumnDates }[] => {
-    const arr: { row: number; dates: TColumnDates }[] = [];
+): { row: number; dates: ColumnDates }[] => {
+    const arr: { row: number; dates: ColumnDates }[] = [];
 
     rowIndexes.forEach((item) => {
-        const arrForEachRow: TColumnDates = [];
+        const arrForEachRow: ColumnDates = [];
 
         worksheet.getRow(item).eachCell((cell, colNumber) => {
             if (colNumber >= startingColumn) {
@@ -86,7 +86,7 @@ export const getAllActiveIndexes = (
     return arr;
 };
 
-type TColorPalette = {
+type ColorPalette = {
     index: number;
     value: CellValue;
 }[];
@@ -94,8 +94,8 @@ type TColorPalette = {
 export const getTrainingsColorPalette = (
     worksheet: Worksheet,
     column: number,
-): TColorPalette => {
-    const colorPalette: TColorPalette = [];
+): ColorPalette => {
+    const colorPalette: ColorPalette = [];
     const excelColumn = worksheet.getColumn(column);
 
     excelColumn.eachCell &&
@@ -179,7 +179,7 @@ export const hasOnlyValuesFromArray = (
 export const formatHtmlScheduleResponse = (
     platoon: string,
     date: string,
-    { weekday, schedule }: TScheduleDayItem,
+    { weekday, schedule }: ScheduleDayItem,
 ): string => {
     const platoonType = resolvePlatoonTypeFromPlatoon(platoon);
     const header = `${platoon} (${platoonType}), ${date} (${weekday}):\n`;

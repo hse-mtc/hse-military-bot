@@ -1,7 +1,7 @@
 import * as firebase from "firebase-admin";
 import makeError from "make-error";
 
-import { TFirebaseConfig } from "@/resolvers/config";
+import { FirebaseConfig } from "@/resolvers/config";
 
 const FirebaseError = makeError("FirebaseInitError");
 
@@ -17,7 +17,7 @@ export default abstract class AbstractFirebase {
         projectId,
         clientEmail,
         privateKey,
-    }: TFirebaseConfig): void {
+    }: FirebaseConfig): void {
         try {
             this._instance = firebase
                 .initializeApp({

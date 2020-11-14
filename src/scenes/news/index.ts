@@ -1,4 +1,4 @@
-import { TArticle } from "google-news-rss";
+import { Article } from "google-news-rss";
 import { Extra, Markup } from "telegraf";
 
 import { NEWS_SCENARIO } from "@/constants/scenarios";
@@ -17,7 +17,7 @@ import { SceneHandler } from "@/typings";
 
 const ARTICLES_DELIMITER = "*********************";
 
-const buildArticlesResponse = (articles: TArticle[]): string => {
+const buildArticlesResponse = (articles: Article[]): string => {
     return articles.reduce(
         (response, { title, link, pubDate }) =>
             `\n\n${response}

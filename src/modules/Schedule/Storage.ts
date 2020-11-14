@@ -2,14 +2,14 @@ import makeError from "make-error";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { resolveScheduleFileConfigSync } from "@/resolvers/config";
 
-import { ScheduleParser, TScheduleObject } from ".";
+import { ScheduleParser, ScheduleObject } from ".";
 
 const ScheduleStorageError = makeError("ScheduleStorageError");
 
 class ScheduleStorage {
-    private _instance: TScheduleObject;
+    private _instance: ScheduleObject;
 
-    get instanсe(): TScheduleObject {
+    get instanсe(): ScheduleObject {
         return this._instance;
     }
 
@@ -43,7 +43,7 @@ class ScheduleStorage {
     }
 
     dumpSchedule(
-        builtSchedule: TScheduleObject,
+        builtSchedule: ScheduleObject,
         parsedSchedulePath: string,
     ): void {
         try {

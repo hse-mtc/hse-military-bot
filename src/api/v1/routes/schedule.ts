@@ -34,7 +34,7 @@ scheduleRoutes.get("/getPlatoonTypes", [
     },
 ]);
 
-type TGetScheduleForPlatoonRequestBody = {
+type GetScheduleForPlatoonRequestBody = {
     date: string;
     platoon: string;
 };
@@ -43,7 +43,7 @@ type TGetScheduleForPlatoonRequestBody = {
 scheduleRoutes.post("/getScheduleForPlatoon", [
     authMiddleware,
     (
-        req: CustomRequest<TGetScheduleForPlatoonRequestBody>,
+        req: CustomRequest<GetScheduleForPlatoonRequestBody>,
         res: Response,
     ): void => {
         const { platoon, date } = req.body;
@@ -62,11 +62,17 @@ scheduleRoutes.post("/getScheduleForPlatoon", [
             );
         }
 
-        res.status(200).send(resolveScheduleFromPlatoon(platoon, date));
+        const result = resolveScheduleFromPlatoon(platoon, date);
+
+        if (!result) {
+            res.status(404).send("Bad Request. Date/platoon mismatch");
+        } else {
+            res.status(200).send(result);
+        }
     },
 ]);
 
-type TGetPlatoonTypeForPlatoonRequestBody = {
+type GetPlatoonTypeForPlatoonRequestBody = {
     platoon: string;
 };
 
@@ -74,7 +80,7 @@ type TGetPlatoonTypeForPlatoonRequestBody = {
 scheduleRoutes.post("/getPlatoonTypeForPlatoon", [
     authMiddleware,
     (
-        req: CustomRequest<TGetPlatoonTypeForPlatoonRequestBody>,
+        req: CustomRequest<GetPlatoonTypeForPlatoonRequestBody>,
         res: Response,
     ): void => {
         const { platoon } = req.body;
@@ -95,14 +101,14 @@ scheduleRoutes.post("/getPlatoonTypeForPlatoon", [
     },
 ]);
 
-type TGetAvailableDatesForPlatoonRequestBody = {
+type GetAvailableDatesForPlatoonRequestBody = {
     platoon: string;
 };
 
 scheduleRoutes.post("/getAvailableDatesForPlatoon", [
     authMiddleware,
     (
-        req: CustomRequest<TGetAvailableDatesForPlatoonRequestBody>,
+        req: CustomRequest<GetAvailableDatesForPlatoonRequestBody>,
         res: Response,
     ): void => {
         const { platoon } = req.body;
