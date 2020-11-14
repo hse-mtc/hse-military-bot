@@ -27,6 +27,7 @@
         "types": [
             "node",
             "jest",
+            "helmet",
             "bot-metrica",
             "google-news-rss",
             "telegraf-logger"
@@ -34,5 +35,5 @@
         "typeRoots": ["./src/typings", "./node_modules/@types"]
     },
     "include": ["./src/**/*"],
-    "exclude": ["node_modules", ".history", "admin"]
+    "exclude": ["node_modules", ".history"]
 }

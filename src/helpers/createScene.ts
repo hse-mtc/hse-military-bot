@@ -4,7 +4,7 @@ import { SceneContextMessageUpdate, Scene } from "telegraf/typings/stage";
 import { MENU_SCENARIO } from "@/constants/scenarios";
 import { GENERAL_CONTROLS } from "@/constants/controls";
 import { handleUnhandledMessageDefault } from "@/helpers/scenes";
-import { SceneHandler } from "@/typings/custom";
+import { SceneHandler } from "@/typings";
 
 const { enter } = Stage;
 

@@ -50,8 +50,8 @@ class Bot {
         } else {
             resolveUpdateUserSelection(from.id, {
                 ...from,
+                ...chat,
                 type: chat.type,
-                chat,
                 lastAccess: date,
             });
         }

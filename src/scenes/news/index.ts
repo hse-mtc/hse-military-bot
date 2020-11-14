@@ -13,9 +13,9 @@ import {
     makeKeyboardColumns,
 } from "@/helpers/scenes";
 import createScene from "@/helpers/createScene";
-import { SceneHandler } from "@/typings/custom";
+import { SceneHandler } from "@/typings";
 
-const ARTICLES_DELIMETER = "*********************";
+const ARTICLES_DELIMITER = "*********************";
 
 const buildArticlesResponse = (articles: TArticle[]): string => {
     return articles.reduce(
@@ -24,8 +24,8 @@ const buildArticlesResponse = (articles: TArticle[]): string => {
             \n${pubDate}
             \n${title}
             \n${link}
-            \n\n${ARTICLES_DELIMETER}`,
-        ARTICLES_DELIMETER,
+            \n\n${ARTICLES_DELIMITER}`,
+        ARTICLES_DELIMITER,
     );
 };
 

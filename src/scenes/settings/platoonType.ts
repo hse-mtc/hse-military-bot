@@ -15,8 +15,8 @@ import {
     ensureMessageText,
     ensureFromId,
 } from "@/helpers/scenes";
+import { SceneHandler } from "@/typings";
 import createScene from "@/helpers/createScene";
-import { SceneHandler } from "@/typings/custom";
 
 const enterHandler: SceneHandler = async ({ from, reply }) => {
     const fromId = ensureFromId(from, reply);

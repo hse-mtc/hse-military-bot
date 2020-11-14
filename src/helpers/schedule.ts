@@ -54,9 +54,11 @@ export const getColorFromRowAndColumn = (
     const { style } = cell;
 
     if (style.fill && style.fill.type === "pattern" && style.fill.fgColor) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore: type is incomplete in exceljs
-        return (cell.fill as FillPattern).fgColor.indexed;
+        // Type is incomplete in exceljs
+        const fgColor = (cell.fill as FillPattern).fgColor as {
+            indexed: number;
+        };
+        return fgColor.indexed;
     }
 
     return undefined;
@@ -102,12 +104,13 @@ export const getTrainingsColorPalette = (
                 return;
             }
 
-            const fgColor = (cell.fill as FillPattern).fgColor;
+            // Type is incomplete in exceljs
+            const fgColor = (cell.fill as FillPattern).fgColor as {
+                indexed: number;
+            };
 
             if (fgColor) {
                 colorPalette.push({
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore: type is incomplete in exceljs
                     index: fgColor.indexed,
                     value: worksheet.getRow(rowNumber).getCell(column + 2)
                         .value,

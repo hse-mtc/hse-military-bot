@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import responseTime from "response-time";
 import rateLimit from "express-rate-limit";
 import addRequestId from "express-request-id";
-import express, { Response } from "express";
+import express, { Express, Response } from "express";
 
 import makeError from "make-error";
 import * as Sentry from "@sentry/node";
@@ -31,10 +31,7 @@ interface CustomResponse extends Response {
 
 // TODO: all functions from classes should have modifiers (private, public, readonly)
 class ExpressApp {
-    // TODO: wtf??
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    private _app;
+    private _app: Express;
     private _bot: typeof Bot | null = null;
 
     private readonly _publicPath = path.join(
@@ -42,7 +39,7 @@ class ExpressApp {
         "public",
     );
 
-    async setup({ useBot }: { useBot: boolean }): Promise<void> {
+    async setup({ useBot }: { useBot: boolean }): Promise<Express> {
         this._app = express();
 
         if (useBot) {
@@ -54,6 +51,8 @@ class ExpressApp {
         } catch (exception) {
             Logger.error(`Error during starting server: ${exception}`);
         }
+
+        return this._app;
     }
 
     private async _initializeBot(url: string, env: string): Promise<void> {
@@ -149,9 +148,6 @@ class ExpressApp {
         this._app.use(Sentry.Handlers.errorHandler());
 
         /* Timeout checker */
-        // TODO: wtf??
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         this._app.use((req, _res, next) => {
             if (!req.timedout) {
                 next();
@@ -159,9 +155,6 @@ class ExpressApp {
         });
 
         /* Optional fallthrough error handler */
-        // TODO: wtf??
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         this._app.use((_req, res: CustomResponse) => {
             res.statusCode = 500;
             res.end(`${res.sentry ?? "Server Error"}\n`);

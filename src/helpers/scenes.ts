@@ -8,7 +8,7 @@ import { SceneContextMessageUpdate } from "telegraf/typings/stage";
 import track from "@/resolvers/metricaTrack";
 import { MENU_SCENARIO } from "@/constants/scenarios";
 import { MILITARY_STICKER_ID } from "@/constants/configuration";
-import { TReplyFunction } from "@/typings/custom";
+import { ReplyFunction } from "@/typings";
 
 const { inlineKeyboard, urlButton } = Markup;
 
@@ -17,7 +17,7 @@ const EnsureMessageError = makeError("EnsureMessageError");
 
 export const ensureFromId = (
     from: tt.User | undefined,
-    reply: TReplyFunction,
+    reply: ReplyFunction,
 ): number => {
     if (!from) {
         reply("Метод не поддерживается");
@@ -33,7 +33,7 @@ export const ensureFromId = (
 
 export const ensureMessageText = (
     message: tt.Message | undefined,
-    reply: TReplyFunction,
+    reply: ReplyFunction,
 ): string => {
     if (!message) {
         reply("Метод не поддерживается");
@@ -50,7 +50,7 @@ export const ensureMessageText = (
 export const ensureFromIdAndMessageText = (
     from: tt.User | undefined,
     message: tt.Message | undefined,
-    reply: TReplyFunction,
+    reply: ReplyFunction,
 ): [number, string] => [
     ensureFromId(from, reply),
     ensureMessageText(message, reply),

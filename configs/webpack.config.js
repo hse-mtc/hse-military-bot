@@ -57,13 +57,31 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 use: ["babel-loader", "ts-loader"],
-                exclude: /node_modules/,
+                exclude: [/node_modules/, /__tests__/],
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    "file-loader?hash=sha512&digest=hex&name=img/[hash].[ext]",
-                    "image-webpack-loader?bypassOnDebug&optipng.optimizationLevel=7&gifsicle.interlaced=false",
+                rules: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "img/[hash].[ext]",
+                            hash: "sha512",
+                            digest: "hex",
+                        },
+                    },
+                    {
+                        loader: "image-webpack-loader",
+                        options: {
+                            bypassOnDebug: true,
+                            optipng: {
+                                optimizationLevel: 7,
+                            },
+                            gifsicle: {
+                                interlaced: false,
+                            },
+                        },
+                    },
                 ],
             },
             {

@@ -32,6 +32,7 @@ class NewsStorage {
 
     async buildNews(newsPath: string): Promise<void> {
         try {
+            // TODO: wtf?
             // this._instance = await resolveNewsArticles();
             this.dumpNews(this._instance, newsPath);
         } catch (exception) {

@@ -13,7 +13,7 @@ import { resolvePlatoonsFromPlatoonType } from "@/resolvers/schedule";
 import createScene from "@/helpers/createScene";
 import { ensureFromIdAndMessageText } from "@/helpers/scenes";
 
-import { SceneHandler } from "@/typings/custom";
+import { SceneHandler } from "@/typings";
 import { makeKeyboardColumns } from "@/helpers/scenes";
 
 const enterHandler: SceneHandler = async ({ from, message, reply }) => {

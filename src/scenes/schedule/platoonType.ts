@@ -11,7 +11,7 @@ import {
     makeKeyboardColumns,
 } from "@/helpers/scenes";
 import createScene from "@/helpers/createScene";
-import { SceneHandler } from "@/typings/custom";
+import { SceneHandler } from "@/typings";
 
 const enterHandler: SceneHandler = ({ reply }) => {
     const platoonTypesControls = resolvePlatoonTypes();

@@ -119,3 +119,5 @@ dist
 src/__tests__/__coverage__
 admin/.ipynb_checkpoints
 admin/firebase-users-dumps
+
+tsconfig.ts-check.json

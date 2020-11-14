@@ -27,7 +27,7 @@ import {
 import createScene from "@/helpers/createScene";
 import { formatHtmlScheduleResponse } from "@/helpers/schedule";
 
-import { SceneHandler } from "@/typings/custom";
+import { SceneHandler } from "@/typings";
 
 type TSession = {
     defaultPlatoon: string;

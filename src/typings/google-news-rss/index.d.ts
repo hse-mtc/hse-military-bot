@@ -13,7 +13,7 @@ declare module "google-news-rss" {
             topic: string,
             numOfArticles: number,
             language: "ru" | "en",
-            extraParams?: {},
+            extraParams?: Record<string, unknown>,
         ): Promise<TArticle[]>;
     }
 }

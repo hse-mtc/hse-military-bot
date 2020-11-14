@@ -8,17 +8,17 @@ export interface CustomRequest<T> extends Request {
     body: T;
 }
 
-export type TReplyFunction = (
+export type ReplyFunction = (
     text: string,
     extra?: ExtraReplyMessage,
 ) => Promise<Message>;
 
-export type TReplyOrChangeScene =
+export type ReplyOrChangeScene =
     | Message
     | Middleware<SceneContextMessageUpdate>;
 
-export type SceneHandler<T = {}> = (
+export type SceneHandler<T = Record<string, unknown>> = (
     ctx: SceneContextMessageUpdate & {
         session: T;
     },
-) => Promise<TReplyOrChangeScene>;
+) => Promise<ReplyOrChangeScene>;
