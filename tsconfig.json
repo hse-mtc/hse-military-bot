@@ -27,7 +27,6 @@
         "types": [
             "node",
             "jest",
-            "helmet",
             "bot-metrica",
             "google-news-rss",
             "telegraf-logger"
