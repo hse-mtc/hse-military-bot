@@ -13,7 +13,7 @@ import { resolveReadUserSelection } from "@/resolvers/firebase";
 import createScene from "@/helpers/createScene";
 import { ensureFromId, handleStickerButton } from "@/helpers/scenes";
 
-import { SceneHandler } from "@/typings/custom";
+import { SceneHandler } from "@/typings";
 
 const { enter } = Stage;
 

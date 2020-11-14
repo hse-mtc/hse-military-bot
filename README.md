@@ -14,10 +14,11 @@
 [![dependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master)
 [![devDependencies Status](https://david-dm.org/mvshmakov/hse-military-bot/master/dev-status.svg)](https://david-dm.org/mvshmakov/hse-military-bot/master?type=dev)
 
-[Project website](https://hse-military-bot.herokuapp.com/)
-[Documentation](https://mvshmakov.github.io/hse-military-bot/)
+## [Project website](https://hse-military-bot.herokuapp.com/)
 
-Simply access HSE Military Training Center schedule, prepare news for informating comrades and receive full pack of stickers with people you know well.
+## [Documentation](https://mvshmakov.github.io/hse-military-bot/)
+
+Simply access HSE Military Training Center schedule, prepare news for informing comrades and receive full pack of stickers with people you know well.
 Stack of technologies used:
 
 -   Awesome [Telegraf](http://telegraf.js.org/) wrapper for [Telegram API](https://core.telegram.org/).
@@ -29,7 +30,7 @@ Stack of technologies used:
 
 ## To run an app on local machine:
 
-##### 1) Run `npm i` to install all dependences.
+##### 1) Run `npm i` to install all dependencies.
 
 ##### 2) Add an `.env` file in root directory with following fields:
 
@@ -103,6 +104,6 @@ TODO:
 
 -   Правильный хендл всех ошибок про асинхронщину (async/await)
 
-Обязательно используем 14 ноду (хипдамп может не собраться)
+Обязательно используем Node.js v14 (хипдамп может не собраться)
 Разработка из-под впн (vpnbook)
 jupyter lab (не notebook)

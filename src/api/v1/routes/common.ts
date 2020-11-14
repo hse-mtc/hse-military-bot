@@ -9,4 +9,8 @@ commonRoutes.get("/", (_req: Request, res: Response) =>
     ),
 );
 
+commonRoutes.get("/ping", (_req: Request, res: Response) =>
+    res.status(200).send("ok"),
+);
+
 export default commonRoutes;

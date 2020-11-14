@@ -1,7 +1,7 @@
 import { Router, Response } from "express";
 
 import resolveNewsArticles from "@/resolvers/news";
-import { CustomRequest } from "@/typings/custom";
+import { CustomRequest } from "@/typings";
 
 import { authMiddleware } from "../middlewares";
 

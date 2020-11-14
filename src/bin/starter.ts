@@ -81,4 +81,6 @@ const starter = async (): Promise<void> => {
     process.on("uncaughtException", (error) => Logger.error(error));
 };
 
+// No need to subscribe on uncaughtException due to pm2
+// which restarts on uncaughtException or SIGs
 starter();

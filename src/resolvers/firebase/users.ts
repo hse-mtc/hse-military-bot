@@ -22,7 +22,7 @@ export async function resolveReadUserSelection(
 export async function resolveWriteUserSelection(
     chatId: number,
     field: string,
-    value: string | object,
+    value: string | Record<string, unknown>,
 ): Promise<void> {
     try {
         return await FirebaseUsers.instance
@@ -37,7 +37,7 @@ export async function resolveWriteUserSelection(
 
 export async function resolveUpdateUserSelection(
     chatId: number,
-    value: string | object,
+    value: string | Record<string, unknown>,
 ): Promise<void> {
     try {
         return await FirebaseUsers.instance

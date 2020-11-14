@@ -3,7 +3,7 @@ declare module "telegraf-logger" {
     import { TelegrafContext } from "telegraf/typings/context";
 
     type TOptions = {
-        log: Function;
+        log: () => void;
         format?: string;
         contentLength?: number;
     };

@@ -4,7 +4,7 @@ import { GENERAL_CONTROLS } from "@/constants/controls";
 import { SETTINGS_SCENARIO } from "@/constants/scenarios";
 
 import createScene from "@/helpers/createScene";
-import { SceneHandler } from "@/typings/custom";
+import { SceneHandler } from "@/typings";
 
 const enterHandler: SceneHandler = async ({ reply }) => {
     await reply(

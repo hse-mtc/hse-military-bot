@@ -8,7 +8,7 @@ import {
     resolvePlatoonTypeFromPlatoon,
     resolveAvailableDatesFromPlatoon,
 } from "@/resolvers/schedule";
-import { CustomRequest } from "@/typings/custom";
+import { CustomRequest } from "@/typings";
 import { authMiddleware } from "../middlewares";
 
 const scheduleRoutes = Router();
