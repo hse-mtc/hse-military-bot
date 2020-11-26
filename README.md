@@ -21,7 +21,7 @@
 Simply access HSE Military Training Center schedule, prepare news for informing comrades and receive full pack of stickers with people you know well.
 Stack of technologies used:
 
--   Awesome [Telegraf](http://telegraf.js.org/) wrapper for [Telegram API](https://core.telegram.org/).
+-   Awesome [Telegraf](https://telegraf.js.org/) wrapper for [Telegram API](https://core.telegram.org/).
 -   [Heroku](https://heroku.com/) PaaS as hosting for app.
 -   [Firebase API](https://firebase.google.com/) as database for user preferences and in-app data validation.
 -   [exceljs](https://github.com/guyonroche/exceljs) for parsing and generating json-formatted schedule with metadata from \*.xlsx file.
