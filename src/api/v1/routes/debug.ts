@@ -23,7 +23,7 @@ debugRoutes.get("/heapdump", [
 
         const profileFilename = format(
             new Date(),
-            `${global.process.pid}_YYYY-MM-DDTHH:mm:ss`,
+            `${global.process.pid}_yyyy-MM-ddTHH:mm:ss`,
         );
 
         const filename = path.join(

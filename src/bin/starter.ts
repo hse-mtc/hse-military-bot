@@ -44,6 +44,10 @@ const starter = async (): Promise<void> => {
             Bot.setup();
             await Server.setup({ useBot: true });
 
+            if (["development", "debug"].includes(mode)) {
+                require("log-that-http");
+            }
+
             break;
         }
         case "serverOnly": {

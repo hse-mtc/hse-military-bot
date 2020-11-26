@@ -118,7 +118,16 @@ class ExpressApp {
         );
 
         /* Add some security */
-        this._app.use(helmet());
+        this._app.use(
+            helmet({
+                contentSecurityPolicy: {
+                    directives: {
+                        "default-src":
+                            "'self' 'unsafe-inline' mc.yandex.ru hse-military-bot.herokuapp.com",
+                    },
+                },
+            }),
+        );
 
         /* Add some compression */
         this._app.use(compression());
