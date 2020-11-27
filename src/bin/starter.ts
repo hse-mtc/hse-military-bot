@@ -15,7 +15,7 @@ program
     .option(
         "-m, --mode <string>",
         "Available modes: debug, serverOnly, development, production, downloader, parser",
-        "development",
+        "production",
     )
     .parse(process.argv);
 

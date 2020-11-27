@@ -22,8 +22,8 @@
     },
     "main": "dist/server.min.js",
     "engines": {
-        "node": "14.0.x",
-        "npm": "6.14.x"
+        "node": "14.x",
+        "npm": "6.x"
     },
     "scripts": {
         "build": "webpack --progress --config=configs/webpack.config.js",
@@ -38,7 +38,7 @@
         "packages:outdated": "npm outdated",
         "packages:upgrade": "npm upgrade --save",
         "packages:prune": "npm prune",
-        "start": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=production NODE_PATH=. pm2 start ./configs/pm2.config.js",
+        "start": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=production NODE_PATH=. pm2 start ./configs/pm2.config.js --env production",
         "pm2:dev": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=development NODE_PATH=. pm2-dev start ./configs/pm2.config.js",
         "pm2:dev:ts": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=development NODE_PATH=. pm2-dev start ts-node -- -P tsconfig.json ./src/bin/starter.ts",
         "start:dev": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=development NODE_PATH=. nodemon src/bin/starter.ts --config configs/nodemon.json",

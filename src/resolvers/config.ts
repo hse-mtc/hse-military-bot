@@ -33,7 +33,7 @@ export const resolveEnvironmentSync = (): {
     port: number;
     url: string;
 } => ({
-    env: process.env.ENV || "development",
+    env: process.env.ENV || "production",
     port: parseInt(process.env.PORT || "") || 3000,
     url: process.env.HEROKU_URL || "",
 });
