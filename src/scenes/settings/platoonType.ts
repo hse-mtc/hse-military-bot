@@ -36,14 +36,14 @@ const enterHandler: SceneHandler = async ({ from, reply }) => {
 
     if (defaultPlatoon === null) {
         return reply(
-            "Можно выбрать свой взвод и он всегда будет в главном меню! Для начала, выберите цикл:",
+            "Можно выбрать свой взвод и он всегда будет в главном меню! Для начала, выберите цикл",
             markup,
         );
     }
 
     if (!platoons.includes(defaultPlatoon)) {
         return reply(
-            `У вас неактуальный взвод: ${defaultPlatoon}, выберите новее. Для начала, выберите цикл:`,
+            `У вас неактуальный взвод: ${defaultPlatoon}, выберите новее. Для начала, выберите цикл`,
             markup,
         );
     }
@@ -51,7 +51,7 @@ const enterHandler: SceneHandler = async ({ from, reply }) => {
     const defaultPlatoonType = resolvePlatoonTypeFromPlatoon(defaultPlatoon);
 
     return reply(
-        `Ваш текущий цикл: ${defaultPlatoonType}. Выберите нужный цикл:`,
+        `Ваш текущий цикл: ${defaultPlatoonType}. Выберите нужный цикл`,
         markup,
     );
 };

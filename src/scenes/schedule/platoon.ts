@@ -25,7 +25,7 @@ const enterHandler: SceneHandler = ({ message, reply }) => {
     ];
 
     const markup = Extra.markup(Markup.keyboard(controls));
-    return reply("Выберите взвод:", markup);
+    return reply("Выберите взвод", markup);
 };
 
 const messageHandler: SceneHandler<{

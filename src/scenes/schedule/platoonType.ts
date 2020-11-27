@@ -21,7 +21,7 @@ const enterHandler: SceneHandler = ({ reply }) => {
     ];
 
     const markup = Extra.markup(Markup.keyboard(controls));
-    return reply("Выберите цикл:", markup);
+    return reply("Выберите цикл", markup);
 };
 
 const messageHandler: SceneHandler<{

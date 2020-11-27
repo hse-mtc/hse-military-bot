@@ -31,7 +31,7 @@ const enterHandler: SceneHandler<{
     ];
 
     const markup = Extra.markup(Markup.keyboard(controls));
-    return reply("Выберите дату 📅:", markup);
+    return reply("Выберите дату 📅", markup);
 };
 
 const messageHandler: SceneHandler<{

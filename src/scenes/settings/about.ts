@@ -34,7 +34,7 @@ const enterHandler: SceneHandler = async ({ reply }) => {
     const controls = [[GENERAL_CONTROLS.BACK, GENERAL_CONTROLS.MENU]];
 
     return reply(
-        "Выберите нужный пункт меню:",
+        "Выберите нужный пункт меню",
         Extra.markup(Markup.keyboard(controls)),
     );
 };

@@ -13,7 +13,7 @@ const enterHandler: SceneHandler = async ({ reply }) => {
     ];
 
     const markup = Extra.markup(Markup.keyboard(controls));
-    return reply("Выберите нужный пункт настроек:", markup);
+    return reply("Выберите нужный пункт настроек", markup);
 };
 
 export default createScene({

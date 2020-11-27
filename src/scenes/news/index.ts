@@ -36,7 +36,7 @@ const enterHandler: SceneHandler = ({ reply }) => {
     ];
     const markup = Extra.markup(Markup.keyboard(controls));
 
-    return reply("Выберите тему для проведения информирования:", markup);
+    return reply("Выберите тему для проведения информирования", markup);
 };
 
 const messageHandler: SceneHandler = async ({ from, message, reply }) => {

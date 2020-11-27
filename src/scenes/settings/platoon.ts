@@ -36,7 +36,7 @@ const enterHandler: SceneHandler = async ({ from, message, reply }) => {
 
     const markup = Extra.markup(Markup.keyboard(controls));
     return reply(
-        `Ваш текущий взвод: ${defaultPlatoon}. Выберите нужный взвод:`,
+        `Ваш текущий взвод: ${defaultPlatoon}. Выберите нужный взвод`,
         markup,
     );
 };

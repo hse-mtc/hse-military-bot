@@ -37,7 +37,7 @@ const enterHandler: SceneHandler = async ({ from, reply }) => {
     const controls = constructMenuControls(defaultPlatoon);
     const markup = Extra.markup(Markup.keyboard(controls));
 
-    return reply("Выберите нужный пункт меню:", markup);
+    return reply("Выберите нужный пункт меню", markup);
 };
 
 export default createScene({
