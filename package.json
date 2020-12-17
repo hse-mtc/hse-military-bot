@@ -65,7 +65,7 @@
         ]
     },
     "dependencies": {
-        "@sentry/node": "^5.27.6",
+        "@sentry/node": "^5.29.1",
         "bot-metrica": "^1.0.2",
         "commander": "^6.2.0",
         "compression": "^1.7.4",
