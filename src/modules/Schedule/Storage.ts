@@ -13,14 +13,14 @@ class ScheduleStorage {
         return this._instance;
     }
 
-    async fromDumpOrBuild(): Promise<void> {
+    async fromDumpOrBuild({ forceBuild = false }): Promise<void> {
         const {
             schedulePath,
             parsedSchedulePath,
         } = resolveScheduleFileConfigSync();
 
         // Trying to restore existing parsed schedule from JSON on disk
-        if (existsSync(parsedSchedulePath)) {
+        if (existsSync(parsedSchedulePath) && !forceBuild) {
             this._instance = JSON.parse(
                 readFileSync(parsedSchedulePath, "utf8"),
             );

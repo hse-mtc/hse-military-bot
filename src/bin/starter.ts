@@ -77,7 +77,9 @@ const starter = async (): Promise<void> => {
     }
 
     try {
-        await ScheduleStorage.fromDumpOrBuild();
+        await ScheduleStorage.fromDumpOrBuild({
+            forceBuild: mode === "downloader",
+        });
     } catch (exception) {
         Logger.error(`Error happened in ScheduleStorage: ${exception}`);
     }

@@ -10,7 +10,7 @@ const ScheduleDownloaderError = makeError("ScheduleDownloaderError");
 class ScheduleDownloader {
     private _baseUrl = "https://www.hse.ru";
     private _scheduleUrl = `${this._baseUrl}/org/hse/ouk/mil/schedule`;
-    private _schedulePath = join(__dirname, "../../static/schedule.xlsx");
+    private _schedulePath = join(__dirname, "../../../static/schedule.xlsx");
 
     public async downloadSchedule(): Promise<void> {
         const html = await this._getPlainHtml();
