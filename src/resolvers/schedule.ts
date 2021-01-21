@@ -15,7 +15,7 @@ const AvailableDatesFromPlatoonResolverError = makeError(
 );
 
 export const resolveFullSchedule = (): ScheduleObject =>
-    ScheduleStorage.instanсe;
+    ScheduleStorage.instance;
 
 export const resolveScheduleMeta = (): ScheduleMeta =>
     resolveFullSchedule().meta;

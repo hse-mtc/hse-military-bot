@@ -9,7 +9,7 @@ const ScheduleStorageError = makeError("ScheduleStorageError");
 class ScheduleStorage {
     private _instance: ScheduleObject;
 
-    get instanсe(): ScheduleObject {
+    get instance(): ScheduleObject {
         return this._instance;
     }
 
