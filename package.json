@@ -31,6 +31,7 @@
         "clean": "rm -rfd node_modules webpack-bundle-analyzer.html && npm run clean:dist",
         "clean:dist": "rm -rfd dist",
         "configure": "ln -snf ../src ./node_modules/@",
+        "heroku-prebuild": "npm install --dev",
         "postinstall": "npm dedupe && npm run configure",
         "prettier": "prettier --write './src/**/*.{js,ts,json}' './configs/**/*.{js,ts,json}' '.' --ignore-path='./.prettierignore'",
         "prettier:check": "prettier --check './src/**/*.{js,ts,json}' './configs/**/*.{js,ts,json}' '.' --ignore-path='./.prettierignore'",
