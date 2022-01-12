@@ -8,8 +8,8 @@ describe("Schedule module", () => {
         ScheduleStorage.fromDumpOrBuild({});
     });
 
-    test("should correctly parse 2009 platoon for 27 october", () => {
-        const scheduleData = resolveScheduleFromPlatoon("2009", "27 октября");
+    test("should correctly parse 2109 platoon for 27 April", () => {
+        const scheduleData = resolveScheduleFromPlatoon("2009", "27 апреля");
         expect(scheduleData).toEqual(scheduleMock);
     });
 });
