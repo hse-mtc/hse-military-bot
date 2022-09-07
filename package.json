@@ -44,6 +44,7 @@
         "pm2:dev:ts": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=development NODE_PATH=. pm2-dev start ts-node -- -P tsconfig.json ./src/bin/starter.ts",
         "start:dev": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=development NODE_PATH=. nodemon src/bin/starter.ts --config configs/nodemon.json",
         "start:dev:express": "DEBUG='express:*' && npm run start:dev",
+        "start:dev:parser": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=development NODE_PATH=. nodemon src/bin/starter.ts --mode=parser --config configs/nodemon.json",
         "start:dev:schedule": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=development NODE_PATH=. nodemon src/bin/starter.ts --mode=downloader --config configs/nodemon.json",
         "start:dev:serverOnly": "NODE_HEAPDUMP_OPTIONS=nosignal ENV=development NODE_PATH=. nodemon src/bin/starter.ts --mode=serverOnly --config configs/nodemon.json",
         "test": "jest --config=configs/jest.json",

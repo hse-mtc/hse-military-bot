@@ -50,6 +50,8 @@ const starter = async (): Promise<void> => {
 
             break;
         }
+        case "parser":
+            break;
         case "serverOnly": {
             Metrica.setup();
             await Server.setup({ useBot: false });
